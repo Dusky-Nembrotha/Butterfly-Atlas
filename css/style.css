@@ -289,3 +289,5 @@ button{font-family:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
+
+[hidden]{display:none !important}
