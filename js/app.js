@@ -50,20 +50,64 @@
   function thumb(p) { return p.urlThumb || ""; }
   function large(p) { return p.urlLarge || p.urlThumb || ""; }
 
-  // Inline SVG "specimen plate" placeholder (used for sample data / missing images)
+  // Inline SVG hand-drawn "field sketch" — shown when a photo is missing,
+  // framed as the collector's own ink drawing. Wing shape + ink vary by species.
   function placeholder(p, w, h) {
-    var col = famColor(p.family);
     var name = (p.species || "Indet.").replace(/&/g, "&amp;");
+    var fam = p.family || "";
+    // sepia inks with a faint family-tinted wash
+    var ink = "#4a3a24";
+    var washMap = {
+      Papilionidae: "#b99127", Pieridae: "#7c8a3f", Nymphalidae: "#3f5c7a",
+      Lycaenidae: "#6f5a94", Riodinidae: "#a8622f", Hesperiidae: "#8a5a34"
+    };
+    var wash = washMap[fam] || "#7a6a4a";
+    // pick a wing silhouette by family so drawings differ
+    var swallowtail = (fam === "Papilionidae");
+    var pointed = (fam === "Pieridae" || fam === "Hesperiidae");
+
+    // half-butterfly drawn once, mirrored via scale(-1,1)
+    var fore, hind, tail = "";
+    if (swallowtail) {
+      fore = "M2,-6 C-30,-58 -92,-58 -104,-20 C-110,2 -78,14 -44,10 C-16,7 -2,-4 2,-14";
+      hind = "M2,10 C-28,18 -66,26 -76,54 C-82,72 -60,84 -42,76 C-18,66 -2,34 2,16";
+      tail = "M-58,72 C-60,90 -62,102 -66,114";
+    } else if (pointed) {
+      fore = "M2,-6 C-26,-56 -86,-50 -100,-14 C-106,6 -74,16 -46,10 C-18,5 -2,-6 2,-16";
+      hind = "M2,10 C-24,16 -56,22 -66,44 C-72,60 -52,70 -36,64 C-14,56 -2,30 2,15";
+    } else { // rounded nymphalid
+      fore = "M2,-6 C-34,-54 -96,-44 -100,-6 C-102,20 -66,24 -40,16 C-16,9 -2,-2 2,-14";
+      hind = "M2,12 C-26,20 -62,26 -70,50 C-76,68 -54,80 -34,72 C-12,63 -2,32 2,16";
+    }
+
+    var half =
+      '<path d="' + fore + '"/>' +
+      '<path d="' + hind + '"/>' +
+      (tail ? '<path d="' + tail + '"/>' : '') +
+      // venation
+      '<path d="M-4,-8 C-30,-26 -60,-30 -86,-20" opacity=".55"/>' +
+      '<path d="M-4,-4 C-28,-6 -54,-2 -74,6" opacity=".5"/>' +
+      '<path d="M-2,14 C-24,26 -44,40 -56,56" opacity=".5"/>' +
+      '<circle cx="-64" cy="40" r="4" opacity=".55"/>';
+
     var svg =
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="' + w + '" height="' + h + '" role="img" aria-label="' + name + ' (no photograph)">' +
-      '<rect width="320" height="240" fill="#dee1d6"/>' +
-      '<g fill="none" stroke="' + col + '" stroke-width="2" opacity=".8" transform="translate(160,112)">' +
-      '<path d="M0,-6 C-38,-64 -104,-52 -96,-8 C-90,26 -40,26 0,6 C40,26 90,26 96,-8 C104,-52 38,-64 0,-6 Z"/>' +
-      '<path d="M0,6 C-26,44 -60,52 -70,34 C-78,20 -44,10 0,10 C44,10 78,20 70,34 C60,52 26,44 0,6 Z"/>' +
-      '<line x1="0" y1="-10" x2="0" y2="44"/>' +
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="' + w + '" height="' + h + '" role="img" aria-label="' + name + ' — field sketch">' +
+      '<rect width="320" height="240" fill="none"/>' +
+      // faint pencil frame
+      '<rect x="10" y="10" width="300" height="220" fill="none" stroke="' + ink + '" stroke-width="1" opacity=".28"/>' +
+      '<g transform="translate(160,104)" fill="' + wash + '" fill-opacity="0.10">' +
+        '<g>' + half + '</g><g transform="scale(-1,1)">' + half + '</g>' +
       '</g>' +
-      '<text x="160" y="210" font-family="Georgia,serif" font-style="italic" font-size="15" fill="#3a4a45" text-anchor="middle">' + name + '</text>' +
-      '<text x="160" y="30" font-family="monospace" font-size="9" letter-spacing="2" fill="#8a9187" text-anchor="middle">NO PLATE ON FILE</text>' +
+      '<g transform="translate(160,104)" fill="none" stroke="' + ink + '" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<g>' + half + '</g><g transform="scale(-1,1)">' + half + '</g>' +
+        // body
+        '<path d="M0,-16 C3,6 3,34 0,58 C-3,34 -3,6 0,-16 Z" fill="' + ink + '" fill-opacity=".5"/>' +
+        // antennae
+        '<path d="M-2,-16 C-10,-34 -20,-42 -28,-45"/><path d="M2,-16 C10,-34 20,-42 28,-45"/>' +
+        '<circle cx="-29" cy="-46" r="1.8" fill="' + ink + '"/><circle cx="29" cy="-46" r="1.8" fill="' + ink + '"/>' +
+      '</g>' +
+      '<text x="160" y="224" font-family="Georgia,serif" font-style="italic" font-size="15" fill="' + ink + '" text-anchor="middle">' + name + '</text>' +
+      '<text x="160" y="28" font-family="Courier,monospace" font-size="8.5" letter-spacing="2.5" fill="' + ink + '" fill-opacity=".6" text-anchor="middle">SKETCH FROM LIFE — NO PLATE</text>' +
       '</svg>';
     return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   }
@@ -217,7 +261,7 @@
       if (f.genus && p.genus !== f.genus) return false;
       if (f.country && p.country !== f.country) return false;
       if (f.album && p.albumTitle !== f.album) return false;
-      if (f.geoOnly && !(isFinite(p.lat) && isFinite(p.lon))) return false;
+      if (f.geoOnly && !(hasCoords(p))) return false;
       if (ymin && (!p.year || p.year < ymin)) return false;
       if (ymax && (!p.year || p.year > ymax)) return false;
       if (terms.length) {
@@ -306,7 +350,7 @@
     if (p.year) meta.appendChild(el("span", null, String(p.year)));
     lab.appendChild(meta);
     if (p.location) lab.appendChild(el("span", "loc", p.location));
-    if (isFinite(p.lat) && isFinite(p.lon)) {
+    if (hasCoords(p)) {
       lab.appendChild(el("span", "coord", fmtCoord(p.lat, p.lon)));
     }
     c.appendChild(lab);
@@ -314,6 +358,12 @@
     return c;
   }
 
+  // Number.isFinite (unlike the global isFinite) does NOT coerce null/undefined
+  // to 0, so records with no coordinates correctly show nothing instead of
+  // a fake "0.000° N 0.000° E".
+  function hasCoords(p) {
+    return Number.isFinite(p.lat) && Number.isFinite(p.lon) && !(p.lat === 0 && p.lon === 0);
+  }
   function fmtCoord(lat, lon) {
     var a = Math.abs(lat).toFixed(3) + "° " + (lat >= 0 ? "N" : "S");
     var b = Math.abs(lon).toFixed(3) + "° " + (lon >= 0 ? "E" : "W");
@@ -348,7 +398,7 @@
     state.cluster.clearLayers();
     var seenFam = {}, bounds = [];
     state.filtered.forEach(function (p) {
-      if (!(isFinite(p.lat) && isFinite(p.lon))) return;
+      if (!(hasCoords(p))) return;
       var col = famColor(p.family);
       seenFam[p.family || "Other"] = col;
       var m = L.circleMarker([p.lat, p.lon], {
@@ -413,7 +463,7 @@
     var facts = el("dl", "factrow");
     addFact(facts, "Locality", p.location || "—");
     addFact(facts, "Country", p.country || "—");
-    if (isFinite(p.lat) && isFinite(p.lon)) addFact(facts, "Coordinates", fmtCoord(p.lat, p.lon));
+    if (hasCoords(p)) addFact(facts, "Coordinates", fmtCoord(p.lat, p.lon));
     addFact(facts, "Date", p.date || "—");
     if (p.albumTitle) addFact(facts, "Album", p.albumTitle);
     body.appendChild(facts);
@@ -458,7 +508,7 @@
   }
 
   function makeMiniMap(p) {
-    if (!(isFinite(p.lat) && isFinite(p.lon)) || typeof L === "undefined") return document.createComment("no-map");
+    if (!(hasCoords(p)) || typeof L === "undefined") return document.createComment("no-map");
     return document.createComment("mini-placeholder"); // mini map added after insert (needs layout)
   }
 
@@ -542,7 +592,7 @@
   var _origOpen = openModal;
   openModal = function (p) {
     _origOpen(p);
-    if (isFinite(p.lat) && isFinite(p.lon) && typeof L !== "undefined") {
+    if (hasCoords(p) && typeof L !== "undefined") {
       var host = el("div", "modal-mini"); host.id = "modalMini";
       var body = $(".modal-body"); if (body) body.appendChild(host);
       setTimeout(function () {
