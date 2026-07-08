@@ -30,8 +30,9 @@
     view: "specimens",
     map: null,
     cluster: null,
-    miniMap: null,
     mapMarkers: [],       // {marker, key} for the current map draw, so tooltip visibility can be toggled by zoom
+    miniMap: null,
+    distMap: null,
     filters: { q: "", family: "", genus: "", album: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
   };
 
@@ -50,7 +51,11 @@
   /* ---------- image URLs ---------- */
   function thumb(p) { return p.urlThumb || ""; }
   function large(p) { return p.urlLarge || p.urlThumb || ""; }
-  function full(p) { return p.urlOriginal || p.urlLarge || p.urlThumb || ""; }
+  // Deliberately NOT urlOriginal by default — that's Flickr's raw camera
+  // file (often 10-40MB) and is why the lightbox used to load so slowly.
+  // urlZoom (2048px) is sharp enough for on-screen zooming at a fraction
+  // of the size; urlOriginal is only used as an absolute last resort.
+  function full(p) { return p.urlZoom || p.urlLarge || p.urlThumb || p.urlOriginal || ""; }
 
   // Inline SVG hand-drawn "field sketch" — shown when a photo is missing,
   // framed as the collector's own ink drawing. Wing shape + ink vary by species.
@@ -129,6 +134,8 @@
   }
 
   function init(data) {
+    if (state._initialized) return; // guard against DOMContentLoaded firing more than once
+    state._initialized = true;
     state.all = (data.photos || []).map(function (p, i) {
       p._i = i;
       p.year = p.year || (p.date ? parseInt(String(p.date).slice(0, 4), 10) : null);
@@ -166,15 +173,15 @@
 
   /* ---------- stats ---------- */
   function buildStats() {
-    var species = {}, families = {}, countries = {};
+    var species = {}, genera = {}, countries = {};
     state.all.forEach(function (p) {
       if (p.species) species[p.species] = 1;
-      if (p.family) families[p.family] = 1;
+      if (p.genus) genera[p.genus] = 1;
       if (p.country) countries[p.country] = 1;
     });
     setStat("photos", state.all.length);
     setStat("species", Object.keys(species).length);
-    setStat("families", Object.keys(families).length);
+    setStat("genera", Object.keys(genera).length);
     setStat("countries", Object.keys(countries).length);
   }
   function setStat(k, v) { var n = $('[data-stat="' + k + '"]'); if (n) n.textContent = v.toLocaleString(); }
@@ -556,11 +563,11 @@
     img.onerror = function () { img.onerror = null; img.src = placeholder(p, 800, 600); };
     img.tabIndex = 0;
     img.setAttribute("role", "button");
-    img.setAttribute("aria-label", "View photo full screen");
+    img.setAttribute("aria-label", "View photo enlarged");
     img.addEventListener("click", function () { openLightbox(p); });
     img.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(p); } });
     fig.appendChild(img);
-    fig.appendChild(el("span", "zoom-hint", "⤢ Tap photo to view full screen"));
+    fig.appendChild(el("span", "zoom-hint", "⤢ Tap photo to enlarge"));
 
     var body = el("div", "modal-body");
     var det = el("div", "determination");
@@ -585,6 +592,14 @@
     if (hasCoords(p)) addFact(facts, "Coordinates", fmtCoord(p.lat, p.lon));
     addFact(facts, "Date", p.date || "—");
     if (p.albumTitle) addFact(facts, "Album", p.albumTitle);
+    // camera EXIF — only present if the collector was run with --exif
+    var exif = p.exif || {};
+    var cameraLabel = [exif.cameraMake, exif.camera].filter(Boolean).join(" ");
+    if (cameraLabel) addFact(facts, "Camera", cameraLabel);
+    if (exif.lens) addFact(facts, "Lens", exif.lens);
+    var settings = [exif.focalLength, exif.aperture ? ("f/" + exif.aperture.replace(/^f\//i, "")) : "", exif.exposure, exif.iso ? ("ISO " + exif.iso) : ""]
+      .filter(Boolean).join("  ·  ");
+    if (settings) addFact(facts, "Exposure", settings);
     body.appendChild(facts);
 
     var wiki = el("p", "wiki loading", "Looking up species notes…"); wiki.id = "wiki"; body.appendChild(wiki);
@@ -597,6 +612,25 @@
     links.appendChild(link("Wikipedia", "https://en.wikipedia.org/wiki/" + (p.species || "").replace(/ /g, "_")));
     if (p.flickrPage) links.appendChild(link("On Flickr", p.flickrPage));
     body.appendChild(links);
+
+    // Flickr comments — only present if the collector was run with --comments
+    if (p.comments && p.comments.length) {
+      var cwrap = el("div", "flickr-comments");
+      cwrap.appendChild(el("h3", null, p.comments.length + " comment" + (p.comments.length === 1 ? "" : "s") + " on Flickr"));
+      p.comments.forEach(function (c) {
+        var item = el("div", "comment");
+        var head = el("p", "comment-head");
+        head.appendChild(el("strong", null, c.author || "Someone"));
+        if (c.date) {
+          var d = new Date(Number(c.date) * 1000);
+          if (!isNaN(d)) head.appendChild(el("span", "comment-date", " · " + d.toISOString().slice(0, 10)));
+        }
+        item.appendChild(head);
+        item.appendChild(el("p", "comment-text", c.text || ""));
+        cwrap.appendChild(item);
+      });
+      body.appendChild(cwrap);
+    }
 
     // same-species strip
     var same = state.all.filter(function (x) { return x.species && x.species === p.species; });
@@ -657,8 +691,10 @@
 
   function closeModal() {
     var root = $("#modalRoot"); if (root.hidden) return;
-    root.hidden = true; root.innerHTML = ""; document.body.style.overflow = "";
-    state.miniMap = null;
+    root.hidden = true; root.innerHTML = "";
+    if (state.miniMap) { try { state.miniMap.remove(); } catch (e) {} state.miniMap = null; }
+    if (state.distMap) { try { state.distMap.remove(); } catch (e) {} state.distMap = null; }
+    document.body.style.overflow = "";
   }
 
   /* ---------- lightbox: true full-screen photo view ---------- */
@@ -666,25 +702,125 @@
     closeLightbox(); // just in case
     var box = el("div", "lightbox");
     box.id = "lightboxRoot";
+    var stage = el("div", "lightbox-stage");
     var img = new Image();
     img.alt = p.species || "specimen";
+    img.className = "lightbox-img";
     img.src = full(p) || placeholder(p, 1200, 900);
     img.onerror = function () { img.onerror = null; img.src = placeholder(p, 1200, 900); };
-    var close = el("button", "lightbox-close", "×"); close.setAttribute("aria-label", "Close full screen");
+    stage.appendChild(img);
+
+    var close = el("button", "lightbox-close", "×"); close.setAttribute("aria-label", "Close");
     close.addEventListener("click", closeLightbox);
-    box.appendChild(img);
+    var controls = el("div", "lightbox-controls");
+    var zoomIn = el("button", null, "+"); zoomIn.setAttribute("aria-label", "Zoom in");
+    var zoomOut = el("button", null, "–"); zoomOut.setAttribute("aria-label", "Zoom out");
+    var zoomReset = el("button", null, "1:1"); zoomReset.setAttribute("aria-label", "Reset zoom");
+    controls.appendChild(zoomOut); controls.appendChild(zoomReset); controls.appendChild(zoomIn);
+
+    box.appendChild(stage);
+    box.appendChild(controls);
     box.appendChild(close);
     box.addEventListener("click", function (e) { if (e.target === box) closeLightbox(); });
     document.body.appendChild(box);
     document.body.style.overflow = "hidden";
     close.focus();
-    // best-effort true device fullscreen where supported; harmless if not.
-    try { if (box.requestFullscreen) box.requestFullscreen().catch(function () {}); } catch (e) {}
+
+    initLightboxZoom(stage, img, zoomIn, zoomOut, zoomReset);
   }
+
+  // Wheel zoom, double-click/double-tap zoom, pinch-to-zoom, and
+  // drag-to-pan once zoomed — all clamped between 1x and 5x, centred on
+  // wherever the user is pointing rather than always the image centre.
+  function initLightboxZoom(stage, img, btnIn, btnOut, btnReset) {
+    var scale = 1, tx = 0, ty = 0, MIN = 1, MAX = 5;
+    var dragging = false, startX = 0, startY = 0, startTx = 0, startTy = 0;
+    var pinchStartDist = 0, pinchStartScale = 1;
+
+    function apply() {
+      img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")";
+      img.style.cursor = scale > 1 ? "grab" : "zoom-in";
+      stage.classList.toggle("is-zoomed", scale > 1);
+    }
+    function clampPan() {
+      // keep the image roughly on-stage rather than letting it drift away entirely
+      var maxT = (scale - 1) * 260;
+      tx = Math.max(-maxT, Math.min(maxT, tx));
+      ty = Math.max(-maxT, Math.min(maxT, ty));
+    }
+    function zoomTo(newScale, cx, cy) {
+      newScale = Math.max(MIN, Math.min(MAX, newScale));
+      if (newScale === 1) { tx = 0; ty = 0; }
+      scale = newScale;
+      clampPan();
+      apply();
+    }
+
+    stage.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      zoomTo(scale - e.deltaY * 0.0025 * scale);
+    }, { passive: false });
+
+    stage.addEventListener("dblclick", function (e) {
+      zoomTo(scale > 1 ? 1 : 2.5);
+    });
+
+    // drag to pan (mouse)
+    stage.addEventListener("mousedown", function (e) {
+      if (scale <= 1) return;
+      dragging = true; startX = e.clientX; startY = e.clientY; startTx = tx; startTy = ty;
+      img.style.cursor = "grabbing";
+    });
+    function onWinMouseMove(e) {
+      if (!dragging) return;
+      tx = startTx + (e.clientX - startX);
+      ty = startTy + (e.clientY - startY);
+      clampPan(); apply();
+    }
+    function onWinMouseUp() { dragging = false; if (scale > 1) img.style.cursor = "grab"; }
+    window.addEventListener("mousemove", onWinMouseMove);
+    window.addEventListener("mouseup", onWinMouseUp);
+    // cleaned up in closeLightbox() via this reference, so repeated opens
+    // never pile up duplicate window-level listeners
+    state.lightboxCleanup = function () {
+      window.removeEventListener("mousemove", onWinMouseMove);
+      window.removeEventListener("mouseup", onWinMouseUp);
+    };
+
+    // touch: single-finger pan, two-finger pinch zoom
+    stage.addEventListener("touchstart", function (e) {
+      if (e.touches.length === 2) {
+        pinchStartDist = touchDist(e.touches);
+        pinchStartScale = scale;
+      } else if (e.touches.length === 1 && scale > 1) {
+        dragging = true; startX = e.touches[0].clientX; startY = e.touches[0].clientY; startTx = tx; startTy = ty;
+      }
+    }, { passive: true });
+    stage.addEventListener("touchmove", function (e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var d = touchDist(e.touches);
+        zoomTo(pinchStartScale * (d / pinchStartDist));
+      } else if (e.touches.length === 1 && dragging) {
+        tx = startTx + (e.touches[0].clientX - startX);
+        ty = startTy + (e.touches[0].clientY - startY);
+        clampPan(); apply();
+      }
+    }, { passive: false });
+    stage.addEventListener("touchend", function () { dragging = false; });
+    function touchDist(t) { var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
+
+    btnIn.addEventListener("click", function () { zoomTo(scale + 0.75); });
+    btnOut.addEventListener("click", function () { zoomTo(scale - 0.75); });
+    btnReset.addEventListener("click", function () { zoomTo(1); });
+
+    apply();
+  }
+
   function closeLightbox() {
     var box = document.getElementById("lightboxRoot");
     if (!box) return;
-    try { if (document.fullscreenElement) document.exitFullscreen().catch(function () {}); } catch (e) {}
+    if (state.lightboxCleanup) { state.lightboxCleanup(); state.lightboxCleanup = null; }
     box.remove();
     // restore body scroll lock state: keep locked if the record modal is still open
     var modalOpen = $("#modalRoot") && !$("#modalRoot").hidden;
@@ -780,6 +916,14 @@
   /* ---------- mini map + species distribution map (added after modal is in DOM) ---------- */
   var _origOpen = openModal;
   openModal = function (p) {
+    // Clicking a thumbnail in the "same species" strip re-opens the modal
+    // WITHOUT going through closeModal() first — so any previous mini-map /
+    // distribution-map Leaflet instances must be torn down here, or their
+    // stale internal state (pending invalidateSize timers, sizing caches
+    // bound to now-detached DOM nodes) can corrupt the next map's layout.
+    if (state.miniMap) { try { state.miniMap.remove(); } catch (e) {} state.miniMap = null; }
+    if (state.distMap) { try { state.distMap.remove(); } catch (e) {} state.distMap = null; }
+
     _origOpen(p);
     var mbody = $(".modal-body");
 
@@ -789,7 +933,7 @@
       setTimeout(function () {
         try {
           state.miniMap = L.map(host, { zoomControl: false, attributionControl: false, dragging: true, scrollWheelZoom: false }).setView([p.lat, p.lon], 5);
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(state.miniMap);
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(state.miniMap);
           L.circleMarker([p.lat, p.lon], { radius: 8, color: "#fff", weight: 2, fillColor: famColor(p.family), fillOpacity: 1 }).addTo(state.miniMap);
           state.miniMap.invalidateSize();
         } catch (e) {}
@@ -818,7 +962,8 @@
     host.dataset.built = "1";
     try {
       var map = L.map(host, { zoomControl: true, attributionControl: false, scrollWheelZoom: false, worldCopyJump: true }).setView([15, 10], 1);
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
+      state.distMap = map;
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
       L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.point",
         { attribution: "GBIF" }).addTo(map);
       setTimeout(function () { map.invalidateSize(); }, 60);
