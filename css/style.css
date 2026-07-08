@@ -13,9 +13,9 @@
   --ink-soft:#5c4a32;
   --sepia:#6f5636;
   --faint:#8a744f;
-  --seal:#8f3a2f;        /* wax-red */
-  --olive:#6a7148;       /* botanical ink */
-  --azure:#3f5c7a;       /* faded blue ink */
+  --seal:#8f3a2f;
+  --olive:#6a7148;
+  --azure:#3f5c7a;
   --gilt:#a5812c;
   --line:#c3ac7f;
   --line-soft:#d3c19a;
@@ -28,11 +28,9 @@
 
   --maxw:1260px;
   --shadow:0 2px 0 rgba(47,37,23,.05), 0 14px 30px -22px rgba(47,37,23,.55);
-  /* paper grain */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  /* scattered hand-drawn butterfly doodles, tiled across the page */
-  --doodles:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%232f2517%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(230,40) rotate(22) scale(1.1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(120,220) rotate(30) scale(1.0)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(340,240) rotate(-25) scale(0.85)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(50,360) rotate(15) scale(1.05)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(430,340) rotate(20) scale(0.75)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(180,120) rotate(40) scale(0.7)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
-  --doodles-green:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%233d4a2e%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(230,40) rotate(22) scale(1.1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(120,220) rotate(30) scale(1.0)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(340,240) rotate(-25) scale(0.85)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(50,360) rotate(15) scale(1.05)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(430,340) rotate(20) scale(0.75)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(180,120) rotate(40) scale(0.7)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
+  --doodles:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%232f2517%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
+  --doodles-green:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%233d4a2e%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
   --board-green:#dfe6d1;
 }
 
@@ -78,7 +76,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   background:
     linear-gradient(180deg, rgba(255,251,240,.5), rgba(255,251,240,0) 60%);
 }
-.masthead::after{ /* ruled baseline flourish */
+.masthead::after{
   content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:var(--rule);opacity:.6;
 }
 .masthead-inner{
@@ -97,7 +95,23 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .masthead h1::first-letter{color:var(--seal)}
 .lede{max-width:52ch;margin:1rem 0 0;color:var(--ink-soft);font-size:1.06rem;font-style:italic}
 
-.masthead-sketch{width:150px;height:126px;color:var(--sepia);opacity:.85;transform:rotate(-3deg)}
+.credit{display:flex;gap:.7rem;align-items:flex-start;margin:1rem 0 0;max-width:52ch}
+.credit-avatar{width:44px;height:44px;border-radius:50%;border:1px solid var(--ink);object-fit:cover;flex:0 0 44px;background:var(--paper-2)}
+.credit-text{min-width:0}
+.credit-name{margin:0;font-size:.92rem;color:var(--ink-soft)}
+.credit-name strong{color:var(--ink);font-weight:500}
+.bio{margin-top:.25rem}
+.bio summary{
+  cursor:pointer;font-family:var(--f-body);font-size:.84rem;color:var(--seal);
+  text-decoration:underline;text-underline-offset:2px;list-style:none;
+}
+.bio summary::-webkit-details-marker{display:none}
+.bio summary::before{content:"▸ ";display:inline-block;transition:transform .15s ease}
+.bio[open] summary::before{transform:rotate(90deg)}
+.bio p{margin:.6rem 0 0;font-size:.9rem;line-height:1.55;color:var(--ink-soft);max-width:54ch}
+.bio p+p{margin-top:.7rem}
+
+.masthead-sketch{width:190px;height:154px;color:var(--sepia);opacity:.9;transform:rotate(-3deg)}
 
 .collection-stats{
   display:grid;grid-template-columns:repeat(2,auto);gap:.1rem 1.6rem;margin:0;
@@ -105,7 +119,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow);
   transform:rotate(1.4deg);position:relative;
 }
-.collection-stats::before,.collection-stats::after{ /* tape corners */
+.collection-stats::before,.collection-stats::after{
   content:"";position:absolute;width:52px;height:20px;
   background:rgba(143,58,47,.22);border:1px solid rgba(143,58,47,.3);
   top:-9px;transform:rotate(-6deg);
@@ -205,7 +219,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   box-shadow:var(--shadow);text-align:left;padding:0;display:flex;flex-direction:column;
   transition:transform .2s ease, box-shadow .2s ease;position:relative;
 }
-.specimen::before{ /* the pin */
+.specimen::before{
   content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);
   width:9px;height:9px;border-radius:50%;z-index:2;
   background:radial-gradient(circle at 35% 30%, #b9564a, var(--seal) 60%, #5f231c);
@@ -251,84 +265,19 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .modal-root{position:fixed;inset:0;z-index:900;display:flex;align-items:flex-start;justify-content:center;padding:4vh 1rem;overflow:auto}
 .modal-backdrop{position:fixed;inset:0;background:rgba(35,26,14,.6);backdrop-filter:blur(2px)}
 .modal{
-  position:relative;max-width:920px;width:100%;background:var(--card);
+  position:relative;max-width:1220px;width:100%;background:var(--card);
   border:1px solid var(--ink);border-radius:2px;box-shadow:0 34px 80px -30px rgba(0,0,0,.7);overflow:hidden;
   background-image:var(--grain);
 }
 .modal-close{position:absolute;right:.7rem;top:.7rem;z-index:3;border:1px solid var(--ink);background:var(--card);width:36px;height:36px;border-radius:50%;font-size:1.2rem}
-.modal-grid{display:grid;grid-template-columns:1.05fr 1fr}
-.modal-fig{background:var(--paper-2);min-height:300px;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);position:relative}
+.modal-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.modal-fig{background:var(--paper-2);min-height:420px;width:100%;display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);position:relative;overflow:hidden}
 .modal-fig img{cursor:zoom-in}
 .zoom-hint{
   position:absolute;left:.6rem;bottom:.6rem;font-family:var(--f-type);font-size:.66rem;
   color:#fff;background:rgba(20,15,8,.55);padding:.3rem .55rem;border-radius:2px;pointer-events:none;
 }
 
-/* ---------- Lightbox: true full-screen photo view ---------- */
+/* ---------- Lightbox: large (not edge-to-edge) zoomable photo view ---------- */
 .lightbox{
-  position:fixed;inset:0;z-index:1000;background:rgba(10,7,3,.94);
-  display:flex;align-items:center;justify-content:center;padding:2vh 2vw;
-}
-.lightbox img{max-width:96vw;max-height:96vh;width:auto;height:auto;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.lightbox-close{
-  position:fixed;top:1rem;right:1.2rem;width:44px;height:44px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.4);color:#fff;font-size:1.4rem;line-height:1;
-}
-.modal-fig img{width:100%;height:100%;object-fit:cover;max-height:72vh;filter:sepia(.12) saturate(.96)}
-.modal-body{padding:1.7rem 1.7rem 1.9rem}
-.modal-body .determination{border-bottom:1.5px solid var(--rule);padding-bottom:1rem;margin-bottom:1rem}
-.modal-body .eyebrow{color:var(--seal)}
-.modal-body h2.sci{font-size:2.3rem;line-height:1.03;color:var(--ink);margin-top:.15rem}
-.modal-body .common{font-family:var(--f-body);font-style:normal;font-weight:400;font-size:1.2rem;color:var(--ink-soft);margin-top:.15rem}
-.taxo{list-style:none;padding:0;margin:1rem 0;display:flex;flex-wrap:wrap;gap:.4rem;font-family:var(--f-type);font-size:.74rem}
-.taxo li{padding:.28rem .55rem;border:1px solid var(--line);border-radius:2px;color:var(--ink);background:var(--paper)}
-.taxo li b{color:var(--ink);font-weight:400}
-.factrow{display:grid;grid-template-columns:auto 1fr;gap:.35rem .9rem;font-size:1.02rem;margin:.9rem 0}
-.factrow dt{font-family:var(--f-type);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);align-self:center}
-.factrow dd{margin:0;color:var(--ink);font-style:italic}
-.wiki{font-size:1.04rem;color:var(--ink-soft);line-height:1.6;margin:.6rem 0 0}
-.wiki.loading{color:var(--sepia);font-family:var(--f-body);font-size:1rem;font-style:italic}
-.outlinks{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
-.outlinks a{font-family:var(--f-type);font-size:.68rem;padding:.42rem .7rem;border:1px solid var(--ink);border-radius:2px;text-decoration:none;color:var(--ink);background:var(--paper);box-shadow:1px 1px 0 rgba(47,37,23,.15)}
-.outlinks a:hover{background:var(--ink);color:var(--paper)}
-.modal-mini{height:180px;margin-top:1.1rem;border:1px solid var(--ink);border-radius:2px}
-.dist-label{margin:1.1rem 0 .4rem;font-family:var(--f-type);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.gbif-dist{height:220px;border:1px solid var(--ink);border-radius:2px;background:var(--paper-2)}
-.dist-pending{margin:0;padding:1.6rem 1rem;text-align:center;font-size:.85rem;font-style:italic;color:var(--faint)}
-.same-species{margin-top:1.2rem}
-.same-species h3{font-family:var(--f-type);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:.5rem}
-.same-strip{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.3rem}
-.same-strip .thumb{flex:0 0 78px;height:62px;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--paper-2)}
-.same-strip .thumb img{width:100%;height:100%;object-fit:cover;filter:sepia(.12)}
-
-/* ---------- Footer ---------- */
-.site-foot{border-top:2px solid var(--ink);padding:1.6rem 1.5rem 2.4rem;max-width:var(--maxw);margin:0 auto;color:var(--ink-soft);font-size:1rem;position:relative}
-.foot-doodle{width:80px;height:auto;color:var(--sepia);float:right;margin:-.4rem .2rem 0 1rem}
-.site-foot p{margin:.2rem 0}
-.site-foot p:first-child{font-family:var(--f-hand);font-size:1.3rem;color:var(--sepia)}
-.foot-meta{font-family:var(--f-type);font-size:.66rem;color:var(--faint);letter-spacing:.02em;margin-top:.4rem;clear:both}
-
-/* ---------- Responsive ---------- */
-@media (max-width:900px){
-  .layout{grid-template-columns:1fr}
-  .filters{position:static}
-  .masthead-inner{grid-template-columns:1fr auto;align-items:start}
-  .masthead-sketch{display:none}
-  .collection-stats{grid-template-columns:repeat(4,1fr);justify-items:start;transform:rotate(.6deg)}
-  .modal-grid{grid-template-columns:1fr}
-  .modal-fig{border-right:0;border-bottom:1px solid var(--line)}
-}
-@media (max-width:560px){
-  body{font-size:17px}
-  .masthead-inner{padding:1.9rem 1.1rem 1.1rem;grid-template-columns:1fr}
-  .collection-stats{grid-template-columns:repeat(2,1fr)}
-  .toolbar-inner{flex-wrap:wrap}
-  .search-wrap{max-width:none;order:2;flex-basis:100%}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
-  .specimen:nth-child(n){transform:none}
-}
-
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-
-/* ensure the hidden attribute always wins over display rules (fixes invisible overlay eating clicks) */
-[hidden]{display:none !important}
+  position:fixed;inset:0;
