@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lepidoptera Atlas — a field collection of the world's butterflies</title>
+<meta name="description" content="A searchable, mapped collection of butterfly species photographed around the world — with taxonomy, locations, and dates for lepidopterists." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#results">Skip to collection</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-title">
+      <p class="eyebrow">Field notes &amp; specimens · order Lepidoptera</p>
+      <h1>The Butterfly Atlas</h1>
+      <p class="lede">A working notebook of butterflies spotted and pinned from travels around the world &mdash; each page noted with its species, the place it was found, and the day. Kept in the hope it's useful to fellow enthusiasts.</p>
+    </div>
+    <svg class="masthead-sketch" viewBox="0 0 240 200" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <!-- body -->
+        <path d="M120,44 C123,70 124,110 120,150 C116,110 117,70 120,44 Z" fill="rgba(60,44,26,.06)"/>
+        <line x1="120" y1="150" x2="120" y2="168"/>
+        <!-- antennae -->
+        <path d="M120,46 C112,30 100,22 92,20"/><path d="M120,46 C128,30 140,22 148,20"/>
+        <circle cx="91" cy="19" r="2"/><circle cx="149" cy="19" r="2"/>
+        <!-- left forewing -->
+        <path d="M118,54 C86,20 40,18 24,44 C12,64 34,86 70,92 C96,96 112,80 118,66"/>
+        <!-- left hindwing w/ tail -->
+        <path d="M118,96 C92,104 54,110 44,134 C38,150 58,162 78,156 C100,150 114,124 118,104"/>
+        <path d="M60,150 C56,166 52,176 46,184"/>
+        <!-- right forewing -->
+        <path d="M122,54 C154,20 200,18 216,44 C228,64 206,86 170,92 C144,96 128,80 122,66"/>
+        <!-- right hindwing w/ tail -->
+        <path d="M122,96 C148,104 186,110 196,134 C202,150 182,162 162,156 C140,150 126,124 122,104"/>
+        <path d="M180,150 C184,166 188,176 194,184"/>
+        <!-- venation hints -->
+        <path d="M116,60 C92,52 62,52 40,60" opacity=".5"/>
+        <path d="M124,60 C148,52 178,52 200,60" opacity=".5"/>
+        <path d="M116,104 C96,112 74,122 62,138" opacity=".45"/>
+        <path d="M124,104 C144,112 166,122 178,138" opacity=".45"/>
+        <!-- eyespots -->
+        <circle cx="60" cy="128" r="4" opacity=".6"/><circle cx="180" cy="128" r="4" opacity=".6"/>
+      </g>
+    </svg>
+    <dl class="collection-stats" id="collectionStats" aria-label="Collection tally">
+      <div><dt>Specimens</dt><dd data-stat="photos">&mdash;</dd></div>
+      <div><dt>Species</dt><dd data-stat="species">&mdash;</dd></div>
+      <div><dt>Families</dt><dd data-stat="families">&mdash;</dd></div>
+      <div><dt>Countries</dt><dd data-stat="countries">&mdash;</dd></div>
+    </dl>
+  </div>
+  <p class="sample-banner" id="sampleBanner" hidden>
+    These are <strong>sample pages</strong> &mdash; run the collector (see README) to bind in the full collection from Flickr.
+  </p>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 104.47 10.03l4.75 4.75 1.06-1.06-4.75-4.75A6 6 0 0010 4zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9z"/></svg>
+      <input type="search" id="search" placeholder="Search species, place, family…" autocomplete="off" aria-label="Search the collection" />
+    </div>
+    <div class="view-toggle" role="tablist" aria-label="View">
+      <button id="viewSpecimens" role="tab" aria-selected="true" class="is-active">Specimens</button>
+      <button id="viewMap" role="tab" aria-selected="false">Map</button>
+    </div>
+  </div>
+</div>
+
+<main class="layout">
+  <aside class="filters" id="filters" aria-label="Filters">
+    <div class="filters-head">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <circle cx="12" cy="12" r="9.5"/>
+          <path d="M15.5,8.5 L12,12 L8.5,15.5 L12,12 L15.5,8.5" fill="currentColor" opacity=".5"/>
+          <path d="M12,3.5 L12,5.5 M12,18.5 L12,20.5 M3.5,12 L5.5,12 M18.5,12 L20.5,12"/>
+        </svg>
+        Refine
+      </h2>
+      <button id="resetFilters" class="reset" type="button">Clear all</button>
+    </div>
+
+    <div class="field">
+      <label for="fFamily">Family</label>
+      <select id="fFamily"><option value="">All families</option></select>
+    </div>
+    <div class="field">
+      <label for="fGenus">Genus</label>
+      <select id="fGenus"><option value="">All genera</option></select>
+    </div>
+    <div class="field">
+      <label for="fCountry">Country</label>
+      <select id="fCountry"><option value="">All countries</option></select>
+    </div>
+    <div class="field">
+      <label for="fAlbum">Album</label>
+      <select id="fAlbum"><option value="">All albums</option></select>
+    </div>
+
+    <div class="field">
+      <label>Year</label>
+      <div class="year-range">
+        <input type="number" id="fYearMin" inputmode="numeric" placeholder="from" aria-label="Year from" />
+        <span class="dash">–</span>
+        <input type="number" id="fYearMax" inputmode="numeric" placeholder="to" aria-label="Year to" />
+      </div>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" id="fGeo" /> Mapped records only
+    </label>
+
+    <p class="filter-hint">Every determination links out to GBIF, iNaturalist and Wikipedia.</p>
+  </aside>
+
+  <section class="results" id="results" aria-live="polite">
+    <div class="results-bar">
+      <p class="count" id="resultCount">—</p>
+      <div class="sort-wrap">
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="species">Species A–Z</option>
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="country">Country</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="active-chips" id="activeChips" aria-label="Active filters"></div>
+
+    <div class="grid" id="grid"></div>
+    <div class="sentinel" id="sentinel" aria-hidden="true"></div>
+    <p class="empty" id="empty" hidden>No specimens match these filters. <button type="button" id="emptyReset" class="linklike">Clear filters</button></p>
+
+    <div class="map-panel" id="mapPanel" hidden>
+      <div id="map"></div>
+      <div class="map-legend" id="mapLegend" aria-label="Map legend"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <svg class="foot-doodle" viewBox="0 0 120 70" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".55">
+      <path d="M60,14 C58,30 58,46 60,58"/>
+      <path d="M58,16 C36,4 12,10 8,26 C5,38 22,44 42,38 C52,35 57,26 58,20"/>
+      <path d="M58,34 C40,38 20,42 14,56 C11,64 26,70 38,64 C50,58 57,44 58,36"/>
+      <path d="M62,16 C84,4 108,10 112,26 C115,38 98,44 78,38 C68,35 63,26 62,20" transform="translate(0,0)"/>
+      <path d="M62,34 C80,38 100,42 106,56 C109,64 94,70 82,64 C70,58 63,44 62,36"/>
+      <path d="M58,14 C52,4 44,-1 38,-2"/><path d="M62,14 C68,4 76,-1 82,-2"/>
+    </g>
+  </svg>
+  <p>With thanks to <span id="photographer">Robert Godden</span>, whose photographs and field notes fill these pages.</p>
+  <p class="foot-meta">Taxonomy via GBIF · species notes via Wikipedia &amp; iNaturalist · basemap © OpenStreetMap contributors, © CARTO. <span id="generatedAt"></span></p>
+</footer>
+
+<div class="modal-root" id="modalRoot" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
