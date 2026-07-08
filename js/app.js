@@ -33,7 +33,7 @@
     mapMarkers: [],       // {marker, key} for the current map draw, so tooltip visibility can be toggled by zoom
     miniMap: null,
     distMap: null,
-    filters: { q: "", family: "", genus: "", album: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
+    filters: { q: "", family: "", genus: "", order: "", album: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
   };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -152,6 +152,7 @@
       if (s) {
         p.family = p.family || s.family;
         p.genus = p.genus || s.genus;
+        p.order = p.order || s.order;
         p.commonName = p.commonName || s.commonName;
       }
       if (!p.genus && p.species) p.genus = p.species.split(" ")[0];
@@ -247,7 +248,7 @@
   }
 
   function resetFilters() {
-    state.filters = { q: "", family: "", genus: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort, locationKey: "" };
+    state.filters = { q: "", family: "", genus: "", order: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort, locationKey: "" };
     state.filters.locationLabel = "";
     syncControls(); apply();
   }
@@ -273,6 +274,7 @@
     state.filtered = state.all.filter(function (p) {
       if (f.family && p.family !== f.family) return false;
       if (f.genus && p.genus !== f.genus) return false;
+      if (f.order && p.order !== f.order) return false;
       if (f.country && p.country !== f.country) return false;
       if (f.album && p.albumTitle !== f.album) return false;
       if (f.geoOnly && !(hasCoords(p))) return false;
@@ -324,6 +326,7 @@
     if (f.q) chips.push(["Search: " + f.q, function () { f.q = ""; $("#search").value = ""; }]);
     if (f.family) chips.push(["Family: " + f.family, function () { f.family = ""; }]);
     if (f.genus) chips.push(["Genus: " + f.genus, function () { f.genus = ""; }]);
+    if (f.order) chips.push(["Order: " + f.order, function () { f.order = ""; }]);
     if (f.country) chips.push(["Country: " + f.country, function () { f.country = ""; }]);
     if (f.album) chips.push(["Album: " + f.album, function () { f.album = ""; }]);
     if (f.yearMin || f.yearMax) chips.push(["Year: " + (f.yearMin || "…") + "–" + (f.yearMax || "…"), function () { f.yearMin = ""; f.yearMax = ""; }]);
@@ -571,7 +574,7 @@
 
     var body = el("div", "modal-body");
     var det = el("div", "determination");
-    det.appendChild(el("p", "eyebrow", "Determination"));
+    det.appendChild(el("p", "eyebrow", "Species"));
     var h = el("h2", "sci", p.species || "Unidentified"); det.appendChild(h);
     var existingCommon = p.commonName || (state.species[p.species] || {}).commonName || "";
     var commonEl = el("p", "common", existingCommon);
@@ -587,11 +590,11 @@
 
     // field data
     var facts = el("dl", "factrow");
-    addFact(facts, "Locality", p.location || "—");
-    addFact(facts, "Country", p.country || "—");
+    addClickableFact(facts, "Locality", p.location || "—", hasCoords(p) ? function () { filterByLocality(p); } : null);
+    addClickableFact(facts, "Country", p.country || "—", p.country ? function () { filterByField("country", p.country); } : null);
     if (hasCoords(p)) addFact(facts, "Coordinates", fmtCoord(p.lat, p.lon));
-    addFact(facts, "Date", p.date || "—");
-    if (p.albumTitle) addFact(facts, "Album", p.albumTitle);
+    addClickableFact(facts, "Date", p.date || "—", p.year ? function () { filterByYear(p.year); } : null);
+    if (p.albumTitle) addClickableFact(facts, "Album", p.albumTitle, function () { filterByField("album", p.albumTitle); });
     // camera EXIF — only present if the collector was run with --exif
     var exif = p.exif || {};
     var cameraLabel = [exif.cameraMake, exif.camera].filter(Boolean).join(" ");
@@ -667,17 +670,66 @@
 
   function renderTaxo(ul, s) {
     ul.innerHTML = "";
-    var ranks = [["Order", s.order], ["Family", s.family], ["Genus", s.genus]];
+    var ranks = [["order", "Order", s.order], ["family", "Family", s.family], ["genus", "Genus", s.genus]];
     ranks.forEach(function (r) {
-      if (!r[1]) return;
+      var field = r[0], label = r[1], value = r[2];
+      if (!value) return;
       var li = document.createElement("li");
-      li.innerHTML = r[0] + " <b>" + esc(r[1]) + "</b>";
+      var btn = el("button", "taxo-link");
+      btn.type = "button";
+      btn.innerHTML = label + " <b>" + esc(value) + "</b>";
+      btn.addEventListener("click", function () { filterByField(field, value); });
+      li.appendChild(btn);
       ul.appendChild(li);
     });
     if (!ul.children.length) ul.innerHTML = "<li>Taxonomy pending…</li>";
   }
 
   function addFact(dl, k, v) { dl.appendChild(el("dt", null, k)); dl.appendChild(el("dd", null, v)); }
+
+  // Same as addFact, but the value is a button that filters the board when
+  // clicked — used for Locality/Country/Date/Album in the record popup.
+  function addClickableFact(dl, k, v, onClick) {
+    dl.appendChild(el("dt", null, k));
+    var dd = document.createElement("dd");
+    if (onClick && v && v !== "—") {
+      var btn = el("button", "fact-link", v);
+      btn.type = "button";
+      btn.addEventListener("click", onClick);
+      dd.appendChild(btn);
+    } else {
+      dd.textContent = v;
+    }
+    dl.appendChild(dd);
+  }
+
+  // Click-to-filter handlers for the record popup: apply the relevant
+  // filter, jump back to the specimens board, and close the modal.
+  function filterByField(field, value) {
+    if (!value) return;
+    state.filters[field] = value;
+    navigateToFiltered();
+  }
+  function filterByLocality(p) {
+    var key = locationKey(p);
+    if (!key) return;
+    state.filters.locationKey = key;
+    state.filters.locationLabel = p.location || p.country || "selected point";
+    navigateToFiltered();
+  }
+  function filterByYear(year) {
+    if (!year) return;
+    state.filters.yearMin = String(year);
+    state.filters.yearMax = String(year);
+    navigateToFiltered();
+  }
+  function navigateToFiltered() {
+    syncControls();
+    apply();
+    setView("specimens");
+    closeModal();
+    var results = $("#results"); if (results && results.scrollIntoView) results.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
   function link(label, href) { var a = el("a", null, label); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; }
   function gbifLink(species) {
     var s = state.species[species] || {};
@@ -969,7 +1021,7 @@
       // tones that all but disappear on a light map; dark tiles give them
       // real contrast, and country outlines/labels still read clearly.
       L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
-      L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.point",
+      L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.poly&bin=hex&hexPerTile=20",
         { attribution: "GBIF" }).addTo(map);
 
       // Zoom to the actual extent of this species' occurrences, rather than
