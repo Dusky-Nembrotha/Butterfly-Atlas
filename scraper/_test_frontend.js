@@ -98,3 +98,36 @@ setTimeout(() => {
     }, 260);
   }, 60);
 }, 120);
+
+// --- additional checks: GBIF link + lightbox (appended) ---
+setTimeout(() => {
+  const doc = window.document;
+  const card = doc.querySelector(".specimen");
+  card.dispatchEvent(new window.Event("click"));
+  setTimeout(() => {
+    const gbif = doc.getElementById("gbifOutlink");
+    console.log("GBIF link href (before enrich):", gbif && gbif.href);
+    setTimeout(() => {
+      const gbif2 = doc.getElementById("gbifOutlink");
+      console.log("GBIF link href (after enrich):", gbif2 && gbif2.href);
+      const okGbif = gbif2 && /\/species\/\d+$/.test(gbif2.href) && !/taxon\/search/.test(gbif2.href);
+      console.log("GBIF link is a direct species page (not /taxon/search):", okGbif);
+      const img = doc.querySelector(".modal-fig img");
+      img.dispatchEvent(new window.Event("click"));
+      setTimeout(() => {
+        const lb = doc.getElementById("lightboxRoot");
+        console.log("lightbox opened:", !!lb);
+        const okLb1 = !!lb;
+        doc.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape" }));
+        setTimeout(() => {
+          const lbGone = !doc.getElementById("lightboxRoot");
+          const modalStill = doc.getElementById("modalRoot").hidden === false;
+          console.log("ESC closed lightbox only:", lbGone, "modal still open:", modalStill);
+          const ok2 = lbGone && modalStill && okGbif && okLb1;
+          console.log("\n==== EXTRA " + (ok2 ? "PASS" : "FAIL") + " ====");
+          process.exit(ok2 ? 0 : 1);
+        }, 30);
+      }, 30);
+    }, 250);
+  }, 60);
+}, 400);

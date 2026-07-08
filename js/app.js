@@ -31,7 +31,8 @@
     map: null,
     cluster: null,
     miniMap: null,
-    filters: { q: "", family: "", genus: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species" }
+    mapMarkers: [],       // {marker, key} for the current map draw, so tooltip visibility can be toggled by zoom
+    filters: { q: "", family: "", genus: "", album: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
   };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -49,6 +50,7 @@
   /* ---------- image URLs ---------- */
   function thumb(p) { return p.urlThumb || ""; }
   function large(p) { return p.urlLarge || p.urlThumb || ""; }
+  function full(p) { return p.urlOriginal || p.urlLarge || p.urlThumb || ""; }
 
   // Inline SVG hand-drawn "field sketch" — shown when a photo is missing,
   // framed as the collector's own ink drawing. Wing shape + ink vary by species.
@@ -230,11 +232,16 @@
       io.observe($("#sentinel"));
     }
     window.addEventListener("popstate", function () { readHash(); syncControls(); apply(); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        if (document.getElementById("lightboxRoot")) closeLightbox(); else closeModal();
+      }
+    });
   }
 
   function resetFilters() {
-    state.filters = { q: "", family: "", genus: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort };
+    state.filters = { q: "", family: "", genus: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort, locationKey: "" };
+    state.filters.locationLabel = "";
     syncControls(); apply();
   }
   function syncControls() {
@@ -262,6 +269,7 @@
       if (f.country && p.country !== f.country) return false;
       if (f.album && p.albumTitle !== f.album) return false;
       if (f.geoOnly && !(hasCoords(p))) return false;
+      if (f.locationKey && locationKey(p) !== f.locationKey) return false;
       if (ymin && (!p.year || p.year < ymin)) return false;
       if (ymax && (!p.year || p.year > ymax)) return false;
       if (terms.length) {
@@ -283,6 +291,9 @@
   function sortFiltered() {
     var s = state.filters.sort;
     state.filtered.sort(function (a, b) {
+      // unidentified specimens always sink to the end, whatever the sort mode
+      var aU = !a.species, bU = !b.species;
+      if (aU !== bU) return aU ? 1 : -1;
       if (s === "date-desc") return (b.date || "").localeCompare(a.date || "");
       if (s === "date-asc") return (a.date || "").localeCompare(b.date || "");
       if (s === "country") return (a.country || "").localeCompare(b.country || "") || (a.species || "").localeCompare(b.species || "");
@@ -310,6 +321,7 @@
     if (f.album) chips.push(["Album: " + f.album, function () { f.album = ""; }]);
     if (f.yearMin || f.yearMax) chips.push(["Year: " + (f.yearMin || "…") + "–" + (f.yearMax || "…"), function () { f.yearMin = ""; f.yearMax = ""; }]);
     if (f.geoOnly) chips.push(["Mapped only", function () { f.geoOnly = false; }]);
+    if (f.locationKey) chips.push(["Location: " + (f.locationLabel || "selected point"), function () { f.locationKey = ""; f.locationLabel = ""; }]);
     chips.forEach(function (c) {
       var chip = el("span", "chip"); chip.appendChild(document.createTextNode(c[0]));
       var x = el("button", null, "×"); x.setAttribute("aria-label", "Remove filter");
@@ -364,6 +376,14 @@
   function hasCoords(p) {
     return Number.isFinite(p.lat) && Number.isFinite(p.lon) && !(p.lat === 0 && p.lon === 0);
   }
+  // Groups records that share (effectively) the same map point — used both
+  // to aggregate overlapping map markers and to power the "view these
+  // specimens" filter when a map location is clicked.
+  function locationKey(p) {
+    if (!hasCoords(p)) return "";
+    return p.lat.toFixed(4) + "," + p.lon.toFixed(4);
+  }
+
   function fmtCoord(lat, lon) {
     var a = Math.abs(lat).toFixed(3) + "° " + (lat >= 0 ? "N" : "S");
     var b = Math.abs(lon).toFixed(3) + "° " + (lon >= 0 ? "E" : "W");
@@ -389,39 +409,127 @@
     if (typeof L === "undefined") { $("#mapPanel").innerHTML = "<p class='empty'>Map library unavailable (offline?).</p>"; return; }
     if (!state.map) {
       state.map = L.map("map", { worldCopyJump: true, scrollWheelZoom: true }).setView([10, 0], 2);
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+
+      // Clear, well-labelled base map (CARTO Voyager — free for this kind of
+      // light use, and far easier to read than the previously-filtered tiles).
+      var base = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
         attribution: '© OpenStreetMap contributors © CARTO', subdomains: "abcd", maxZoom: 19
       }).addTo(state.map);
+
+      // Satellite imagery laid over the top at partial opacity, so terrain
+      // is visible without drowning out the map's labels and roads.
+      var satellite = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        { attribution: "Imagery © Esri", maxZoom: 19, opacity: 0.6 }
+      ).addTo(state.map);
+
+      L.control.layers(null, { "Satellite overlay": satellite }, { collapsed: false, position: "topright" }).addTo(state.map);
+
       state.cluster = L.markerClusterGroup ? L.markerClusterGroup({ maxClusterRadius: 42 }) : L.layerGroup();
       state.map.addLayer(state.cluster);
     }
     state.cluster.clearLayers();
-    var seenFam = {}, bounds = [];
+    state.mapMarkers = [];
+
+    // Aggregate records that share (almost) the same coordinates into a
+    // single marker — many localities in this collection are geocoded to a
+    // country/region centroid, so dozens of photos can land on the exact
+    // same point. One labelled marker per location reads far better than a
+    // pile of identical overlapping dots.
+    var groups = {};
     state.filtered.forEach(function (p) {
-      if (!(hasCoords(p))) return;
-      var col = famColor(p.family);
-      seenFam[p.family || "Other"] = col;
-      var m = L.circleMarker([p.lat, p.lon], {
-        radius: 6, color: "#fff", weight: 1, fillColor: col, fillOpacity: .9
+      var k = locationKey(p);
+      if (!k) return;
+      if (!groups[k]) groups[k] = { lat: p.lat, lon: p.lon, photos: [], locNames: {}, families: {} };
+      var g = groups[k];
+      g.photos.push(p);
+      var locName = p.location || p.country || "Unknown location";
+      g.locNames[locName] = (g.locNames[locName] || 0) + 1;
+      var fam = p.family || "Other";
+      g.families[fam] = (g.families[fam] || 0) + 1;
+    });
+
+    var seenFam = {}, bounds = [];
+    Object.keys(groups).forEach(function (k) {
+      var g = groups[k];
+      var count = g.photos.length;
+      var label = topKey(g.locNames);
+      var famKey = topKey(g.families);
+      var col = famColor(famKey === "Other" ? "" : famKey);
+      seenFam[famKey] = col;
+
+      var radius = Math.min(8 + Math.sqrt(count) * 2.6, 26);
+      var m = L.circleMarker([g.lat, g.lon], {
+        radius: radius, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: .85
       });
-      m.bindPopup(popupHTML(p));
+      m.bindTooltip(esc(label) + " (" + count + ")", { permanent: true, direction: "top", className: "loc-label", opacity: 0.92 });
+      m.bindPopup(locationPopupHTML(g, k));
       m.on("popupopen", function (e) {
-        var btn = e.popup._contentNode.querySelector("button[data-open]");
-        if (btn) btn.addEventListener("click", function () { openModal(p); });
+        var btn = e.popup._contentNode.querySelector("button[data-view]");
+        if (btn) btn.addEventListener("click", function () { viewLocationOnBoard(k, label); });
       });
       state.cluster.addLayer(m);
-      bounds.push([p.lat, p.lon]);
+      state.mapMarkers.push(m);
+      bounds.push([g.lat, g.lon]);
     });
+
+    updateLocationLabelVisibility();
+    if (!state.map._labelZoomBound) {
+      state.map.on("zoomend", updateLocationLabelVisibility);
+      state.map._labelZoomBound = true;
+    }
+
     buildLegend(seenFam);
     if (bounds.length) { try { state.map.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 }); } catch (e) {} }
     setTimeout(function () { state.map.invalidateSize(); }, 60);
   }
-  function popupHTML(p) {
-    return '<span class="sci">' + esc(p.species || "Unidentified") + '</span>' +
-      (p.commonName ? '<div>' + esc(p.commonName) + '</div>' : '') +
-      '<div class="pmeta">' + esc(p.location || "") + (p.year ? " · " + p.year : "") + '</div>' +
-      '<button data-open>Open record</button>';
+
+  function topKey(counts) {
+    var best = "", bestN = -1;
+    Object.keys(counts).forEach(function (k) { if (counts[k] > bestN) { best = k; bestN = counts[k]; } });
+    return best;
   }
+
+  // Location labels only show once zoomed in enough to be legible and
+  // non-overlapping; zoomed out, the marker cluster bubbles do that job instead.
+  var LABEL_MIN_ZOOM = 6;
+  function updateLocationLabelVisibility() {
+    if (!state.map) return;
+    var show = state.map.getZoom() >= LABEL_MIN_ZOOM;
+    state.mapMarkers.forEach(function (m) {
+      if (show) m.openTooltip(); else m.closeTooltip();
+    });
+  }
+
+  function dateRangeLabel(photos) {
+    var dates = photos.map(function (p) { return p.date; }).filter(Boolean).sort();
+    if (!dates.length) return "date unknown";
+    if (dates[0] === dates[dates.length - 1]) return dates[0];
+    return dates[0] + " – " + dates[dates.length - 1];
+  }
+
+  function locationPopupHTML(g, key) {
+    var speciesSet = {};
+    g.photos.forEach(function (p) { if (p.species) speciesSet[p.species] = 1; });
+    var speciesCount = Object.keys(speciesSet).length;
+    var label = topKey(g.locNames);
+    var country = topKey(g.photos.reduce(function (acc, p) { if (p.country) acc[p.country] = (acc[p.country] || 0) + 1; return acc; }, {}));
+    return '<span class="sci" style="font-style:normal">' + esc(label) + '</span>' +
+      (country && country !== label ? '<div class="pmeta">' + esc(country) + '</div>' : '') +
+      '<div class="pmeta">' + esc(dateRangeLabel(g.photos)) + '</div>' +
+      '<div class="pmeta">' + g.photos.length + ' photo' + (g.photos.length === 1 ? "" : "s") +
+      ' · ' + speciesCount + ' species' + '</div>' +
+      '<button data-view>View these specimens →</button>';
+  }
+
+  function viewLocationOnBoard(key, label) {
+    state.filters.locationKey = key;
+    state.filters.locationLabel = label;
+    apply();
+    setView("specimens");
+    var results = $("#results"); if (results && results.scrollIntoView) results.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function buildLegend(map) {
     var box = $("#mapLegend"); box.innerHTML = "";
     var keys = Object.keys(map).sort();
@@ -446,7 +554,13 @@
     var img = new Image(); img.alt = p.species || "specimen";
     img.src = large(p) || placeholder(p, 800, 600);
     img.onerror = function () { img.onerror = null; img.src = placeholder(p, 800, 600); };
+    img.tabIndex = 0;
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-label", "View photo full screen");
+    img.addEventListener("click", function () { openLightbox(p); });
+    img.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(p); } });
     fig.appendChild(img);
+    fig.appendChild(el("span", "zoom-hint", "⤢ Tap photo to view full screen"));
 
     var body = el("div", "modal-body");
     var det = el("div", "determination");
@@ -473,7 +587,7 @@
     // out-links
     var links = el("div", "outlinks");
     var q = encodeURIComponent(p.species || "");
-    links.appendChild(link("GBIF", "https://www.gbif.org/species/search?q=" + q));
+    links.appendChild(gbifLink(p.species));
     links.appendChild(link("iNaturalist", "https://www.inaturalist.org/taxa/search?q=" + q));
     links.appendChild(link("Wikipedia", "https://en.wikipedia.org/wiki/" + (p.species || "").replace(/ /g, "_")));
     if (p.flickrPage) links.appendChild(link("On Flickr", p.flickrPage));
@@ -526,11 +640,50 @@
 
   function addFact(dl, k, v) { dl.appendChild(el("dt", null, k)); dl.appendChild(el("dd", null, v)); }
   function link(label, href) { var a = el("a", null, label); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; }
+  function gbifLink(species) {
+    var s = state.species[species] || {};
+    var a = s.gbifKey
+      ? link("GBIF", "https://www.gbif.org/species/" + s.gbifKey)
+      : link("GBIF", "https://www.gbif.org/taxon/search?q=" + encodeURIComponent(species || ""));
+    a.id = "gbifOutlink";
+    a.dataset.species = species || "";
+    return a;
+  }
 
   function closeModal() {
     var root = $("#modalRoot"); if (root.hidden) return;
     root.hidden = true; root.innerHTML = ""; document.body.style.overflow = "";
     state.miniMap = null;
+  }
+
+  /* ---------- lightbox: true full-screen photo view ---------- */
+  function openLightbox(p) {
+    closeLightbox(); // just in case
+    var box = el("div", "lightbox");
+    box.id = "lightboxRoot";
+    var img = new Image();
+    img.alt = p.species || "specimen";
+    img.src = full(p) || placeholder(p, 1200, 900);
+    img.onerror = function () { img.onerror = null; img.src = placeholder(p, 1200, 900); };
+    var close = el("button", "lightbox-close", "×"); close.setAttribute("aria-label", "Close full screen");
+    close.addEventListener("click", closeLightbox);
+    box.appendChild(img);
+    box.appendChild(close);
+    box.addEventListener("click", function (e) { if (e.target === box) closeLightbox(); });
+    document.body.appendChild(box);
+    document.body.style.overflow = "hidden";
+    close.focus();
+    // best-effort true device fullscreen where supported; harmless if not.
+    try { if (box.requestFullscreen) box.requestFullscreen().catch(function () {}); } catch (e) {}
+  }
+  function closeLightbox() {
+    var box = document.getElementById("lightboxRoot");
+    if (!box) return;
+    try { if (document.fullscreenElement) document.exitFullscreen().catch(function () {}); } catch (e) {}
+    box.remove();
+    // restore body scroll lock state: keep locked if the record modal is still open
+    var modalOpen = $("#modalRoot") && !$("#modalRoot").hidden;
+    document.body.style.overflow = modalOpen ? "hidden" : "";
   }
 
   /* ---------- enrichment: GBIF + Wikipedia (cached) ---------- */
@@ -585,6 +738,10 @@
     ["order", "family", "genus", "gbifKey"].forEach(function (k) { if (out[k] && !s[k]) s[k] = out[k]; });
     var ul = $("#taxo"); if (ul) renderTaxo(ul, s);
     setWiki(out.wiki || "No encyclopaedic summary found for this species.");
+    var gl = $("#gbifOutlink");
+    if (gl && gl.dataset.species === species && s.gbifKey) {
+      gl.href = "https://www.gbif.org/species/" + s.gbifKey;
+    }
   }
   function setWiki(text) { var w = $("#wiki"); if (w) { w.textContent = text; w.classList.remove("loading"); } }
 

@@ -55,17 +55,14 @@ IMG = "https://live.staticflickr.com/{server}/{id}_{secret}{suf}.jpg"
 # Title parsing  (pure functions — covered by --self-test)
 # ----------------------------------------------------------------------------
 
-# A binomial: Genus species. Genus capitalised, epithet lower-case.
-SCI_RE = re.compile(r"\b([A-Z][a-z]+)\s+([a-z][a-z\-]{1,})\b")
-EPITHET_RE = re.compile(r"^[a-z][a-z\-]{1,}$")
-
-# "(Genus species)" or "(Genus species f. form)" / "ssp."/"var."/"subsp." —
-# this is the collection's actual style: common name, then the scientific
-# name in parentheses, e.g. "Glanville Fritillary, (Melitaea cinxia), Hurst
-# Castle, Hampshire, UK 21/05/2011".
-PAREN_SCI_RE = re.compile(
-    r"\(([A-Z][a-z]+)\s+([a-z][a-z\-]{1,})"
-    r"(?:\s+(?:f\.|ssp\.|subsp\.|var\.)\s*([a-z][a-z\-]{1,}))?\)"
+# Core binomial pattern: Genus, optional (Subgenus), species epithet, optional
+# form/subspecies marker. Deliberately tolerant of stray parentheses around
+# any part of it (collectors write this several different ways — with the
+# whole name wrapped in parens, with just a subgenus in parens, or bare) —
+# the regex just needs Genus, then species, in that order, close together.
+CORE_BINOM_RE = re.compile(
+    r"\b([A-Z][a-z]+)\b(?:\s*\(([A-Z][a-z]+)\))?\s+([a-z][a-z\-]{1,})"
+    r"(?:\s+(?:f\.|ssp\.|subsp\.|var\.)\s*([a-z][a-z\-]{1,}))?"
 )
 
 # Trailing "DD/MM/YYYY" (the date is read from Flickr's own metadata, not
@@ -73,14 +70,28 @@ PAREN_SCI_RE = re.compile(
 DATE_TAIL_RE = re.compile(r"\s+\d{1,2}/\d{1,2}/\d{4}\s*$")
 ELEV_TAIL_RE = re.compile(r"\s+\d+\s*m\s*$", re.IGNORECASE)
 
-# Common English/descriptive words that appear after a name but are NOT a
-# subspecies epithet — used to avoid mis-reading "Genus species basking" etc.
-DESCRIPTORS = {
+# Words that can appear immediately after a capitalised word without forming
+# a genus+species pair — used to reject false matches in locality text like
+# "San Pedro de Bedoya" (San + de would otherwise look like a binomial) or
+# descriptive notes like "Charaxes candiope basking on fruit".
+PARTICLES = {
+    "de", "del", "la", "las", "di", "van", "von", "der", "den", "y", "e",
+    "of", "and", "the", "upper", "lower", "near", "between", "above",
+    "below", "on", "at", "in",
     "female", "male", "form", "ssp", "sp", "aberration", "ab", "basking",
-    "mating", "pair", "underside", "upperside", "dorsal", "ventral", "on",
-    "at", "in", "the", "and", "feeding", "puddling", "resting", "larva",
-    "caterpillar", "pupa", "egg", "roosting", "nectaring", "possibly",
-    "probably", "cf", "aff", "type", "wet", "dry", "season",
+    "mating", "pair", "underside", "upperside", "dorsal", "ventral",
+    "feeding", "puddling", "resting", "larva", "caterpillar", "pupa", "egg",
+    "roosting", "nectaring", "possibly", "probably", "cf", "aff", "type",
+    "wet", "dry", "season",
+}
+# Capitalised words that are almost always part of a place name, not a genus
+# — excluded so e.g. "Mount Kenya" or "San Pedro" is never read as a binomial.
+PLACE_WORDS = {
+    "san", "santa", "mount", "mt", "lake", "north", "south", "east", "west",
+    "upper", "lower", "new", "fort", "port", "cape", "sierra", "isla",
+    "isle", "bahia", "bay", "rio", "punta", "playa", "puerto", "cerro",
+    "volcan", "parque", "reserva", "reserve", "national", "park", "forest",
+    "wood", "hill", "hills", "valley", "ridge", "camp",
 }
 
 # Rough country lexicon for the collection (extend freely — matching is best-effort).
@@ -92,59 +103,62 @@ COUNTRIES = {
     "italy", "greece", "portugal", "thailand", "vietnam", "panama",
 }
 
+def _find_binomial(text):
+    """Scan left-to-right for the first plausible Genus[+species] match,
+    skipping candidates that are really locality or descriptive text."""
+    for m in CORE_BINOM_RE.finditer(text):
+        genus, epithet = m.group(1), m.group(3)
+        if genus.lower() in PLACE_WORDS:
+            continue
+        if epithet.lower() in PARTICLES:
+            continue
+        return m
+    return None
+
 def parse_title(title, album_title=""):
     """Return (species, subspecies, location, country, common_name).
 
-    Handles two title styles seen in this collection:
-      1. "Genus species, Locality, Country"                       (leading binomial)
-      2. "Common Name, (Genus species [f. form]), Locality, Country"  (common name + parens)
-    Tolerant of extra descriptive text and missing parts. Falls back to the
-    album title for country/location context.
+    Collectors in this set write scientific names several different ways —
+    leading binomial ("Genus species, Locality, Country"), common name with
+    the binomial fully parenthesised ("Common, (Genus species), Locality,
+    Country"), or common name with just a subgenus parenthesised ("Common,
+    Genus (Subgenus) species, Locality, Country"). Rather than special-case
+    each style, this scans the whole title for the first plausible binomial
+    wherever it falls, then treats whatever comes before it as the common
+    name and whatever comes after as locality/country. Falls back to the
+    album title for country context when nothing is found at all.
     """
     title = (title or "").strip()
     title = DATE_TAIL_RE.sub("", title)
     title = ELEV_TAIL_RE.sub("", title)
 
     species = subspecies = common = ""
+    loc_parts = []
 
-    m = PAREN_SCI_RE.search(title)
+    m = _find_binomial(title)
     if m:
-        species = "%s %s" % (m.group(1), m.group(2))
-        subspecies = m.group(3) or ""
-        common = title[:m.start()].strip(" ,")
-        rest = title[m.end():].strip(" ,")
-        loc_parts = [p.strip() for p in rest.split(",") if p.strip()]
-    else:
-        parts = [p.strip() for p in title.split(",") if p.strip()]
-        # The scientific name lives in the first comma-segment.
-        name_seg = parts[0] if parts else title
-        mm = SCI_RE.search(name_seg)
-        if mm:
-            species = "%s %s" % (mm.group(1), mm.group(2))
-            # Accept a subspecies only if the token immediately after the epithet
-            # is itself a clean Latin epithet (not a descriptive English word).
-            after = name_seg[mm.end():].strip().split()
-            if after:
-                cand = after[0].strip(".,").lower()
-                if EPITHET_RE.match(cand) and cand not in DESCRIPTORS:
+        species = "%s %s" % (m.group(1), m.group(3))
+        subspecies = m.group(4) or ""
+        end_pos = m.end()
+        if not subspecies:
+            # Some titles give a bare trinomial with no "f./ssp." marker at
+            # all, e.g. "Morpho helenor helenor" — accept the next word as a
+            # subspecies only if it's a clean Latin epithet, not a place or
+            # descriptive word (so "candiope basking" is correctly rejected).
+            tail = re.match(r"\s+([a-z][a-z\-]{1,})\b", title[end_pos:])
+            if tail:
+                cand = tail.group(1).lower()
+                if cand not in PARTICLES and cand not in PLACE_WORDS:
                     subspecies = cand
-
-        loc_parts = []
-        if len(parts) > 1:
-            # drop the first segment if it merely holds the scientific name
-            first = parts[0]
-            if species and species.lower() in first.lower():
-                loc_parts = parts[1:]
-            else:
-                loc_parts = parts
-        else:
-            # single segment: remove the binomial to leave any trailing locality
-            if species:
-                leftover = title.replace(species, "").strip(" ,-")
-                if subspecies:
-                    leftover = leftover.replace(subspecies, "").strip(" ,-")
-                if leftover:
-                    loc_parts = [leftover]
+                    end_pos += tail.end()
+        common = re.sub(r"[\s,\(]+$", "", title[:m.start()])
+        common = re.sub(r"\s*\([A-Z][a-z]+\)\s*$", "", common).strip()
+        rest = re.sub(r"^[\s,\)]+", "", title[end_pos:])
+        loc_parts = [p.strip(" )") for p in rest.split(",") if p.strip(" )")]
+    else:
+        # nothing recognisable as a binomial — keep the whole title as
+        # locality text rather than inventing a species that isn't there.
+        loc_parts = [p.strip() for p in title.split(",") if p.strip()]
 
     location = ", ".join(loc_parts).strip()
     country = ""
@@ -529,6 +543,15 @@ def self_test():
          ("Argynnis paphia", "valesina", "UK", "Silver-washed Fritillary")),
         ("Glanville Fritillary, (Melitaea cinxia), Hurst Castle, Hampshire, UK 21/05/2011",
          ("Melitaea cinxia", "", "UK", "Glanville Fritillary")),
+        # subgenus given in its own parens between genus and species — this
+        # is the pattern that was falling through to "Unidentified".
+        ("Peneleos, Acraea (Telchinia) peneleos, Bwindi Impenetrable Forest, Uganda 19/11/2017",
+         ("Acraea peneleos", "", "Uganda", "Peneleos")),
+        ("Peneleos (Acraea) Telchinia peneleos, Bwindi Impenetrable Forest, Uganda 19/11/2017",
+         ("Telchinia peneleos", "", "Uganda", "Peneleos")),  # stray "(Acraea)" cleaned off the common name
+        # locality text that could look like a binomial ("San" + "Pedro") must
+        # NOT be mistaken for a species when a real one precedes it — this is
+        # implicitly checked by the Peacock case above already resolving Spain.
     ]
     ok = True
     for title, exp in cases:
