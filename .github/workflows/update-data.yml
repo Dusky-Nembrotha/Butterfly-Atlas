@@ -1,0 +1,51 @@
+name: Update butterfly data
+
+# Runs the collector and commits a refreshed data/butterflies.json.
+# - Weekly on Monday 04:00 UTC
+# - Or manually from the Actions tab ("Run workflow")
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+    inputs:
+      user:
+        description: "Flickr username, NSID, or photos URL"
+        required: true
+        default: "robertgodden"
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scraper/requirements.txt
+
+      - name: Run collector
+        env:
+          # Optional but recommended: add a free Flickr API key as a repo secret
+          # named FLICKR_API_KEY (Settings -> Secrets and variables -> Actions).
+          # If absent, the collector falls back to keyless site-key mode.
+          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
+        run: |
+          python3 scraper/fetch_flickr.py --user "${{ github.event.inputs.user || 'robertgodden' }}"
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/butterflies.json scraper/geocache.json scraper/taxocache.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update butterfly data ($(date -u +%Y-%m-%d))"
+            git push
+          fi

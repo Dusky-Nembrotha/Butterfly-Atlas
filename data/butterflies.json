@@ -1,0 +1,335 @@
+{
+  "generated": "2026-07-07T00:00:00Z",
+  "source": "https://www.flickr.com/photos/robertgodden",
+  "is_sample": true,
+  "note": "This is placeholder sample data so the site renders before the scraper runs. Run scraper/fetch_flickr.py (or the GitHub Action) to replace it with the real collection.",
+  "albums": [
+    {
+      "id": "s1",
+      "title": "Uganda",
+      "count": 3
+    },
+    {
+      "id": "s2",
+      "title": "Brazil",
+      "count": 2
+    },
+    {
+      "id": "s3",
+      "title": "Peru",
+      "count": 2
+    },
+    {
+      "id": "s4",
+      "title": "Ecuador",
+      "count": 1
+    },
+    {
+      "id": "s5",
+      "title": "Spain",
+      "count": 1
+    }
+  ],
+  "species": {
+    "Danaus plexippus": {
+      "genus": "Danaus",
+      "family": "Nymphalidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Monarch",
+      "gbifKey": 1898286,
+      "wikiSummary": "The monarch butterfly is a milkweed butterfly famous for its long annual multigenerational migration across North America.",
+      "count": 1
+    },
+    "Morpho helenor": {
+      "genus": "Morpho",
+      "family": "Nymphalidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Helenor Blue Morpho",
+      "gbifKey": 1900959,
+      "wikiSummary": "A brilliant iridescent-blue morpho of Central and South American forests; the blue is structural, produced by microscopic scale ridges rather than pigment.",
+      "count": 1
+    },
+    "Papilio dardanus": {
+      "genus": "Papilio",
+      "family": "Papilionidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "African Swallowtail",
+      "gbifKey": 1795841,
+      "wikiSummary": "The mocker swallowtail, a large African species celebrated for its extreme female-limited polymorphism and Batesian mimicry.",
+      "count": 1
+    },
+    "Charaxes candiope": {
+      "genus": "Charaxes",
+      "family": "Nymphalidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Green-veined Charaxes",
+      "gbifKey": 5137030,
+      "wikiSummary": "A fast, powerful African brush-footed butterfly with hooked forewings and twin tails, often found feeding on tree sap and fallen fruit.",
+      "count": 1
+    },
+    "Acraea zetes": {
+      "genus": "Acraea",
+      "family": "Nymphalidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Large Spotted Acraea",
+      "gbifKey": 1899540,
+      "wikiSummary": "A widespread African acraeine with translucent, warningly coloured wings signalling distastefulness to predators.",
+      "count": 1
+    },
+    "Heliconius erato": {
+      "genus": "Heliconius",
+      "family": "Nymphalidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Red Postman",
+      "gbifKey": 1905386,
+      "wikiSummary": "A neotropical longwing famous for Mullerian mimicry, co-mimicry with Heliconius melpomene, and its role in speciation research.",
+      "count": 1
+    },
+    "Catasticta nimbice": {
+      "genus": "Catasticta",
+      "family": "Pieridae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Mexican Dartwhite",
+      "gbifKey": 1920506,
+      "wikiSummary": "A montane neotropical white found along Andean and Central American cloud-forest edges.",
+      "count": 1
+    },
+    "Iphiclides feisthamelii": {
+      "genus": "Iphiclides",
+      "family": "Papilionidae",
+      "order": "Lepidoptera",
+      "class": "Insecta",
+      "phylum": "Arthropoda",
+      "kingdom": "Animalia",
+      "commonName": "Southern Scarce Swallowtail",
+      "gbifKey": 7708175,
+      "wikiSummary": "An Iberian and North African swallowtail with bold black striping and long tails, favouring blackthorn and almond scrub.",
+      "count": 1
+    }
+  },
+  "photos": [
+    {
+      "id": "sample1",
+      "title": "Papilio dardanus, Bwindi, Uganda",
+      "species": "Papilio dardanus",
+      "commonName": "African Swallowtail",
+      "location": "Bwindi, Uganda",
+      "country": "Uganda",
+      "lat": -1.0801,
+      "lon": 29.6725,
+      "date": "2026-02-14",
+      "year": 2026,
+      "albumId": "s1",
+      "albumTitle": "Uganda",
+      "tags": [
+        "swallowtail",
+        "papilionidae"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": "Female form, forest edge."
+    },
+    {
+      "id": "sample2",
+      "title": "Charaxes candiope, Kibale, Uganda",
+      "species": "Charaxes candiope",
+      "commonName": "Green-veined Charaxes",
+      "location": "Kibale, Uganda",
+      "country": "Uganda",
+      "lat": 0.4863,
+      "lon": 30.39,
+      "date": "2026-02-16",
+      "year": 2026,
+      "albumId": "s1",
+      "albumTitle": "Uganda",
+      "tags": [
+        "charaxes"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    },
+    {
+      "id": "sample3",
+      "title": "Acraea zetes, Entebbe, Uganda",
+      "species": "Acraea zetes",
+      "commonName": "Large Spotted Acraea",
+      "location": "Entebbe, Uganda",
+      "country": "Uganda",
+      "lat": 0.0512,
+      "lon": 32.4637,
+      "date": "2026-02-18",
+      "year": 2026,
+      "albumId": "s1",
+      "albumTitle": "Uganda",
+      "tags": [
+        "acraea"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    },
+    {
+      "id": "sample4",
+      "title": "Morpho helenor, Manaus, Brazil",
+      "species": "Morpho helenor",
+      "commonName": "Helenor Blue Morpho",
+      "location": "Manaus, Brazil",
+      "country": "Brazil",
+      "lat": -3.119,
+      "lon": -60.0217,
+      "date": "2025-11-03",
+      "year": 2025,
+      "albumId": "s2",
+      "albumTitle": "Brazil",
+      "tags": [
+        "morpho",
+        "blue"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": "Basking, wings open."
+    },
+    {
+      "id": "sample5",
+      "title": "Heliconius erato, Manaus, Brazil",
+      "species": "Heliconius erato",
+      "commonName": "Red Postman",
+      "location": "Manaus, Brazil",
+      "country": "Brazil",
+      "lat": -3.119,
+      "lon": -60.0217,
+      "date": "2025-11-04",
+      "year": 2025,
+      "albumId": "s2",
+      "albumTitle": "Brazil",
+      "tags": [
+        "heliconius",
+        "longwing"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    },
+    {
+      "id": "sample6",
+      "title": "Danaus plexippus, Cusco, Peru",
+      "species": "Danaus plexippus",
+      "commonName": "Monarch",
+      "location": "Cusco, Peru",
+      "country": "Peru",
+      "lat": -13.532,
+      "lon": -71.9675,
+      "date": "2025-09-21",
+      "year": 2025,
+      "albumId": "s3",
+      "albumTitle": "Peru",
+      "tags": [
+        "danaus",
+        "migratory"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    },
+    {
+      "id": "sample7",
+      "title": "Catasticta nimbice, Machu Picchu, Peru",
+      "species": "Catasticta nimbice",
+      "commonName": "Mexican Dartwhite",
+      "location": "Machu Picchu, Peru",
+      "country": "Peru",
+      "lat": -13.1631,
+      "lon": -72.545,
+      "date": "2025-09-23",
+      "year": 2025,
+      "albumId": "s3",
+      "albumTitle": "Peru",
+      "tags": [
+        "pieridae"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    },
+    {
+      "id": "sample8",
+      "title": "Heliconius erato, Mindo, Ecuador",
+      "species": "Heliconius erato",
+      "commonName": "Red Postman",
+      "location": "Mindo, Ecuador",
+      "country": "Ecuador",
+      "lat": -0.051,
+      "lon": -78.775,
+      "date": "2025-08-12",
+      "year": 2025,
+      "albumId": "s4",
+      "albumTitle": "Ecuador",
+      "tags": [
+        "heliconius"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": "Cloud forest."
+    },
+    {
+      "id": "sample9",
+      "title": "Iphiclides feisthamelii, Andalucia, Spain",
+      "species": "Iphiclides feisthamelii",
+      "commonName": "Southern Scarce Swallowtail",
+      "location": "Andalucia, Spain",
+      "country": "Spain",
+      "lat": 37.3891,
+      "lon": -5.9845,
+      "date": "2025-05-30",
+      "year": 2025,
+      "albumId": "s5",
+      "albumTitle": "Spain",
+      "tags": [
+        "swallowtail"
+      ],
+      "urlThumb": "",
+      "urlLarge": "",
+      "urlOriginal": "",
+      "flickrPage": "https://www.flickr.com/photos/robertgodden",
+      "description": ""
+    }
+  ]
+}

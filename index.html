@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lepidoptera Atlas — a field collection of the world's butterflies</title>
+<meta name="description" content="A searchable, mapped collection of butterfly species photographed around the world — with taxonomy, locations, and dates for lepidopterists." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#results">Skip to collection</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-title">
+      <p class="eyebrow">A field collection · order Lepidoptera</p>
+      <h1>The Butterfly Atlas</h1>
+      <p class="lede">Photographs of wild butterflies from around the world, catalogued by species, place, and date — a working reference for lepidopterists.</p>
+    </div>
+    <dl class="collection-stats" id="collectionStats" aria-label="Collection statistics">
+      <div><dt>Specimens</dt><dd data-stat="photos">—</dd></div>
+      <div><dt>Species</dt><dd data-stat="species">—</dd></div>
+      <div><dt>Families</dt><dd data-stat="families">—</dd></div>
+      <div><dt>Countries</dt><dd data-stat="countries">—</dd></div>
+    </dl>
+  </div>
+  <p class="sample-banner" id="sampleBanner" hidden>
+    Showing <strong>sample data</strong>. Run the collector (see README) to load the full collection from Flickr.
+  </p>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4a6 6 0 104.47 10.03l4.75 4.75 1.06-1.06-4.75-4.75A6 6 0 0010 4zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9z"/></svg>
+      <input type="search" id="search" placeholder="Search species, place, family…" autocomplete="off" aria-label="Search the collection" />
+    </div>
+    <div class="view-toggle" role="tablist" aria-label="View">
+      <button id="viewSpecimens" role="tab" aria-selected="true" class="is-active">Specimens</button>
+      <button id="viewMap" role="tab" aria-selected="false">Map</button>
+    </div>
+  </div>
+</div>
+
+<main class="layout">
+  <aside class="filters" id="filters" aria-label="Filters">
+    <div class="filters-head">
+      <h2>Refine</h2>
+      <button id="resetFilters" class="reset" type="button">Clear all</button>
+    </div>
+
+    <div class="field">
+      <label for="fFamily">Family</label>
+      <select id="fFamily"><option value="">All families</option></select>
+    </div>
+    <div class="field">
+      <label for="fGenus">Genus</label>
+      <select id="fGenus"><option value="">All genera</option></select>
+    </div>
+    <div class="field">
+      <label for="fCountry">Country</label>
+      <select id="fCountry"><option value="">All countries</option></select>
+    </div>
+    <div class="field">
+      <label for="fAlbum">Album</label>
+      <select id="fAlbum"><option value="">All albums</option></select>
+    </div>
+
+    <div class="field">
+      <label>Year</label>
+      <div class="year-range">
+        <input type="number" id="fYearMin" inputmode="numeric" placeholder="from" aria-label="Year from" />
+        <span class="dash">–</span>
+        <input type="number" id="fYearMax" inputmode="numeric" placeholder="to" aria-label="Year to" />
+      </div>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" id="fGeo" /> Mapped records only
+    </label>
+
+    <p class="filter-hint">Every determination links out to GBIF, iNaturalist and Wikipedia.</p>
+  </aside>
+
+  <section class="results" id="results" aria-live="polite">
+    <div class="results-bar">
+      <p class="count" id="resultCount">—</p>
+      <div class="sort-wrap">
+        <label for="sort">Sort</label>
+        <select id="sort">
+          <option value="species">Species A–Z</option>
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="country">Country</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="active-chips" id="activeChips" aria-label="Active filters"></div>
+
+    <div class="grid" id="grid"></div>
+    <div class="sentinel" id="sentinel" aria-hidden="true"></div>
+    <p class="empty" id="empty" hidden>No specimens match these filters. <button type="button" id="emptyReset" class="linklike">Clear filters</button></p>
+
+    <div class="map-panel" id="mapPanel" hidden>
+      <div id="map"></div>
+      <div class="map-legend" id="mapLegend" aria-label="Map legend"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <p>Photographs © <span id="photographer">Robert Godden</span>. Catalogue built from his Flickr collection.</p>
+  <p class="foot-meta">Taxonomy via GBIF · species notes via Wikipedia &amp; iNaturalist · basemap © OpenStreetMap contributors, © CARTO. <span id="generatedAt"></span></p>
+</footer>
+
+<div class="modal-root" id="modalRoot" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
