@@ -933,7 +933,9 @@
       setTimeout(function () {
         try {
           state.miniMap = L.map(host, { zoomControl: false, attributionControl: false, dragging: true, scrollWheelZoom: false }).setView([p.lat, p.lon], 5);
+          // Same look as the main map: Voyager base + satellite overlay at 60% opacity.
           L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(state.miniMap);
+          L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { opacity: 0.6 }).addTo(state.miniMap);
           L.circleMarker([p.lat, p.lon], { radius: 8, color: "#fff", weight: 2, fillColor: famColor(p.family), fillOpacity: 1 }).addTo(state.miniMap);
           state.miniMap.invalidateSize();
         } catch (e) {}
@@ -963,10 +965,28 @@
     try {
       var map = L.map(host, { zoomControl: true, attributionControl: false, scrollWheelZoom: false, worldCopyJump: true }).setView([15, 10], 1);
       state.distMap = map;
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
+      // Dark basemap — GBIF's occurrence points render in warm yellow/orange
+      // tones that all but disappear on a light map; dark tiles give them
+      // real contrast, and country outlines/labels still read clearly.
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
       L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.point",
         { attribution: "GBIF" }).addTo(map);
-      setTimeout(function () { map.invalidateSize(); }, 60);
+
+      // Zoom to the actual extent of this species' occurrences, rather than
+      // sitting at a fixed whole-world view — fetch a sample of real
+      // occurrence coordinates and fit the map to their bounding box.
+      fetch("https://api.gbif.org/v1/occurrence/search?taxonKey=" + key + "&hasCoordinate=true&limit=300")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          var pts = ((j && j.results) || [])
+            .map(function (r) { return [r.decimalLatitude, r.decimalLongitude]; })
+            .filter(function (pt) { return Number.isFinite(pt[0]) && Number.isFinite(pt[1]); });
+          if (pts.length) {
+            try { map.fitBounds(pts, { padding: [24, 24], maxZoom: 6 }); } catch (e) {}
+          }
+        })
+        .catch(function () {})
+        .then(function () { setTimeout(function () { map.invalidateSize(); }, 60); });
     } catch (e) {
       host.innerHTML = '<p class="dist-pending">Distribution map unavailable.</p>';
     }
