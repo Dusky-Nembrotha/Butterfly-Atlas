@@ -292,6 +292,9 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .outlinks a{font-family:var(--f-type);font-size:.68rem;padding:.42rem .7rem;border:1px solid var(--ink);border-radius:2px;text-decoration:none;color:var(--ink);background:var(--paper);box-shadow:1px 1px 0 rgba(47,37,23,.15)}
 .outlinks a:hover{background:var(--ink);color:var(--paper)}
 .modal-mini{height:180px;margin-top:1.1rem;border:1px solid var(--ink);border-radius:2px}
+.dist-label{margin:1.1rem 0 .4rem;font-family:var(--f-type);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.gbif-dist{height:220px;border:1px solid var(--ink);border-radius:2px;background:var(--paper-2)}
+.dist-pending{margin:0;padding:1.6rem 1rem;text-align:center;font-size:.85rem;font-style:italic;color:var(--faint)}
 .same-species{margin-top:1.2rem}
 .same-species h3{font-family:var(--f-type);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:.5rem}
 .same-strip{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.3rem}

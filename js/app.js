@@ -566,7 +566,12 @@
     var det = el("div", "determination");
     det.appendChild(el("p", "eyebrow", "Determination"));
     var h = el("h2", "sci", p.species || "Unidentified"); det.appendChild(h);
-    if (p.commonName) det.appendChild(el("p", "common", p.commonName));
+    var existingCommon = p.commonName || (state.species[p.species] || {}).commonName || "";
+    var commonEl = el("p", "common", existingCommon);
+    commonEl.id = "modalCommonName";
+    commonEl.dataset.species = p.species || "";
+    commonEl.hidden = !existingCommon;
+    det.appendChild(commonEl);
     body.appendChild(det);
 
     // taxonomy chips (from species table; refined by GBIF below)
@@ -718,14 +723,29 @@
       }).catch(function () {});
 
     Promise.all([gbif, wiki]).then(function () {
-      // fall back to genus page if species page had nothing
+      var steps = [];
       if (!out.wiki) {
         var genus = species.split(" ")[0];
-        return fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(genus))
+        steps.push(fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(genus))
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (j) { if (j && j.extract) out.wiki = j.extract + " (genus)"; })
-          .catch(function () {});
+          .catch(function () {}));
       }
+      // Common name: only ask GBIF if the collector's own title (or an
+      // earlier lookup) didn't already give us one.
+      var hasCommon = state.species[species] && state.species[species].commonName;
+      if (out.gbifKey && !hasCommon) {
+        steps.push(fetch("https://api.gbif.org/v1/species/" + out.gbifKey + "/vernacularNames")
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) {
+            var results = (j && j.results) || [];
+            var eng = results.filter(function (v) { return v.language === "eng" && v.vernacularName; })[0];
+            var any = results.filter(function (v) { return v.vernacularName; })[0];
+            var pick = eng || any;
+            if (pick) out.commonName = pick.vernacularName;
+          }).catch(function () {}));
+      }
+      return Promise.all(steps);
     }).then(function () {
       cacheSet("sp:" + species, out);
       applyEnrichment(species, out);
@@ -735,23 +755,37 @@
   function applyEnrichment(species, out) {
     // merge into species table so taxonomy chips + future opens improve
     var s = state.species[species] = state.species[species] || {};
-    ["order", "family", "genus", "gbifKey"].forEach(function (k) { if (out[k] && !s[k]) s[k] = out[k]; });
+    ["order", "family", "genus", "gbifKey", "commonName"].forEach(function (k) { if (out[k] && !s[k]) s[k] = out[k]; });
     var ul = $("#taxo"); if (ul) renderTaxo(ul, s);
     setWiki(out.wiki || "No encyclopaedic summary found for this species.");
+
     var gl = $("#gbifOutlink");
     if (gl && gl.dataset.species === species && s.gbifKey) {
       gl.href = "https://www.gbif.org/species/" + s.gbifKey;
     }
+
+    var cn = $("#modalCommonName");
+    if (cn && cn.dataset.species === species && !cn.textContent && s.commonName) {
+      cn.textContent = s.commonName;
+      cn.hidden = false;
+    }
+
+    var distHost = document.getElementById("distMap");
+    if (distHost && distHost.dataset.species === species && s.gbifKey && !distHost.dataset.built) {
+      buildDistributionMap(distHost, s.gbifKey);
+    }
   }
   function setWiki(text) { var w = $("#wiki"); if (w) { w.textContent = text; w.classList.remove("loading"); } }
 
-  /* ---------- mini map after modal is in DOM ---------- */
+  /* ---------- mini map + species distribution map (added after modal is in DOM) ---------- */
   var _origOpen = openModal;
   openModal = function (p) {
     _origOpen(p);
+    var mbody = $(".modal-body");
+
     if (hasCoords(p) && typeof L !== "undefined") {
       var host = el("div", "modal-mini"); host.id = "modalMini";
-      var body = $(".modal-body"); if (body) body.appendChild(host);
+      if (mbody) mbody.appendChild(host);
       setTimeout(function () {
         try {
           state.miniMap = L.map(host, { zoomControl: false, attributionControl: false, dragging: true, scrollWheelZoom: false }).setView([p.lat, p.lon], 5);
@@ -761,7 +795,38 @@
         } catch (e) {}
       }, 40);
     }
+
+    // Species-level occurrence map from GBIF (distinct from the mini-map
+    // above, which just marks where this one photo was taken).
+    if (p.species && mbody) {
+      mbody.appendChild(el("p", "dist-label", "Global distribution (GBIF)"));
+      var distHost = el("div", "gbif-dist"); distHost.id = "distMap";
+      distHost.dataset.species = p.species;
+      mbody.appendChild(distHost);
+      var existingKey = (state.species[p.species] || {}).gbifKey;
+      if (existingKey) {
+        buildDistributionMap(distHost, existingKey);
+      } else {
+        distHost.innerHTML = '<p class="dist-pending">Resolving taxon…</p>';
+      }
+    }
   };
+
+  function buildDistributionMap(host, key) {
+    if (typeof L === "undefined") { host.innerHTML = '<p class="dist-pending">Map library unavailable.</p>'; return; }
+    host.innerHTML = "";
+    host.dataset.built = "1";
+    try {
+      var map = L.map(host, { zoomControl: true, attributionControl: false, scrollWheelZoom: false, worldCopyJump: true }).setView([15, 10], 1);
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
+      L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.point",
+        { attribution: "GBIF" }).addTo(map);
+      setTimeout(function () { map.invalidateSize(); }, 60);
+    } catch (e) {
+      host.innerHTML = '<p class="dist-pending">Distribution map unavailable.</p>';
+    }
+  }
+
 
   /* ---------- URL hash state ---------- */
   function writeHash() {
