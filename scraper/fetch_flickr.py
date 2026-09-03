@@ -618,7 +618,11 @@ def main():
         # Keep the window/output readable in IDLE instead of a bare traceback line.
         print("\nERROR: %s" % e)
         raise
-    input("\nDone. Press Enter to close.")
+    try:
+        input("\nDone. Press Enter to close.")
+    except EOFError:
+        # Non-interactive (CI, piped stdin): nothing to wait for.
+        pass
 
 
 if __name__ == "__main__":
