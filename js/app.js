@@ -188,21 +188,94 @@
   function setStat(k, v) { var n = $('[data-stat="' + k + '"]'); if (n) n.textContent = v.toLocaleString(); }
 
   /* ---------- filter option lists ---------- */
+  // The six recognised true-butterfly families (Papilionoidea + Hesperioidea).
+  // GBIF's fuzzy species-match occasionally mis-identifies a garbled or
+  // unusual species string against a completely wrong taxon (a fly, a
+  // fungus, a moth family) — this allow-list keeps that pollution out of
+  // the Family/Genus filters rather than showing "Tachinidae" as an option
+  // in a butterfly collection.
+  var BUTTERFLY_FAMILIES = FAMILY_COLORS; // same six keys, reused as a lookup set
+  function isBadFamily(fam) { return !!fam && !BUTTERFLY_FAMILIES[fam]; }
+
+  // Canonical country names, so "UK"/"U.K."/"United Kingdom" all collapse to
+  // one dropdown entry, and a locality mistakenly stored where the country
+  // should be (e.g. a nature reserve name) doesn't create a bogus "country".
+  var COUNTRY_CANON = {
+    "uganda": "Uganda", "brazil": "Brazil", "argentina": "Argentina", "romania": "Romania",
+    "turkey": "Turkey", "peru": "Peru", "ghana": "Ghana", "ecuador": "Ecuador", "spain": "Spain",
+    "bolivia": "Bolivia", "armenia": "Armenia",
+    "united kingdom": "United Kingdom", "uk": "United Kingdom", "u.k.": "United Kingdom",
+    "england": "United Kingdom", "scotland": "United Kingdom", "wales": "United Kingdom",
+    "northern ireland": "United Kingdom",
+    "colombia": "Colombia", "costa rica": "Costa Rica", "mexico": "Mexico", "kenya": "Kenya",
+    "tanzania": "Tanzania", "south africa": "South Africa", "india": "India", "malaysia": "Malaysia",
+    "indonesia": "Indonesia",
+    "usa": "United States", "u.s.a.": "United States", "us": "United States", "united states": "United States",
+    "france": "France", "italy": "Italy", "greece": "Greece", "portugal": "Portugal",
+    "thailand": "Thailand", "vietnam": "Vietnam", "panama": "Panama"
+  };
+  var COUNTRY_KEYS_BY_LENGTH = Object.keys(COUNTRY_CANON).sort(function (a, b) { return b.length - a.length; });
+  function canonicalCountryString(s) {
+    if (!s) return null;
+    var cleaned = s.replace(/\d{4}/g, "").trim().toLowerCase();
+    if (COUNTRY_CANON[cleaned]) return COUNTRY_CANON[cleaned];
+    // whole-word substring match, longest alias first (avoids partial-word false hits)
+    for (var i = 0; i < COUNTRY_KEYS_BY_LENGTH.length; i++) {
+      var key = COUNTRY_KEYS_BY_LENGTH[i];
+      var re = new RegExp("\\b" + key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i");
+      if (re.test(cleaned)) return COUNTRY_CANON[key];
+    }
+    return null;
+  }
+  // A record's canonical country: try its own country field, then fall back
+  // to the album title (albums in this collection are reliably named after
+  // the place) — this is what correctly resolves a record whose "country"
+  // field actually holds a locality name (e.g. a reserve) instead.
+  function canonicalCountry(p) {
+    return canonicalCountryString(p.country) || canonicalCountryString(p.albumTitle) || null;
+  }
+
   function buildFilterOptions() {
-    var fam = {}, gen = {}, ctry = {};
+    var fam = {}, ctry = {};
+    var genusByFamily = {}, allGenus = {};
     state.all.forEach(function (p) {
-      if (p.family) fam[p.family] = (fam[p.family] || 0) + 1;
-      if (p.genus) gen[p.genus] = (gen[p.genus] || 0) + 1;
-      if (p.country) ctry[p.country] = (ctry[p.country] || 0) + 1;
+      if (p.family && !isBadFamily(p.family)) fam[p.family] = (fam[p.family] || 0) + 1;
+      if (p.genus && !isBadFamily(p.family)) {
+        allGenus[p.genus] = (allGenus[p.genus] || 0) + 1;
+        if (p.family) {
+          genusByFamily[p.family] = genusByFamily[p.family] || {};
+          genusByFamily[p.family][p.genus] = (genusByFamily[p.family][p.genus] || 0) + 1;
+        }
+      }
+      var cc = canonicalCountry(p);
+      if (cc) ctry[cc] = (ctry[cc] || 0) + 1;
     });
+    state._genusByFamily = genusByFamily;
+    state._allGenusCounts = allGenus;
     fillSelect($("#fFamily"), fam, true);
-    fillSelect($("#fGenus"), gen, true);
+    updateGenusOptions("");
     fillSelect($("#fCountry"), ctry, true);
     var albs = {};
     state.albums.forEach(function (a) { albs[a.title] = a.count || 0; });
     if (!Object.keys(albs).length) state.all.forEach(function (p) { if (p.albumTitle) albs[p.albumTitle] = (albs[p.albumTitle] || 0) + 1; });
     fillSelect($("#fAlbum"), albs, false);
   }
+
+  // Rebuilds the Genus dropdown to only list genera consistent with the
+  // given family (or every known-good genus, if no family is selected).
+  // If the currently-selected genus isn't valid for the new family, it's
+  // cleared rather than left silently filtering on a stale value.
+  function updateGenusOptions(familyValue) {
+    var sel = $("#fGenus"); if (!sel) return;
+    var counts = familyValue ? (state._genusByFamily[familyValue] || {}) : state._allGenusCounts;
+    sel.innerHTML = '<option value="">All genera</option>';
+    fillSelect(sel, counts, true);
+    if (state.filters.genus && !counts[state.filters.genus]) {
+      state.filters.genus = "";
+    }
+    sel.value = state.filters.genus;
+  }
+
   function fillSelect(sel, counts, showCount) {
     if (!sel) return;
     var keys = Object.keys(counts).sort();
@@ -220,10 +293,18 @@
       clearTimeout(deb); var v = e.target.value;
       deb = setTimeout(function () { state.filters.q = v.trim().toLowerCase(); apply(); }, 140);
     });
-    [["#fFamily", "family"], ["#fGenus", "genus"], ["#fCountry", "country"], ["#fAlbum", "album"], ["#sort", "sort"]].forEach(function (pair) {
+    [["#fGenus", "genus"], ["#fCountry", "country"], ["#fAlbum", "album"], ["#sort", "sort"]].forEach(function (pair) {
       var node = $(pair[0]); if (!node) return;
       node.addEventListener("change", function () { state.filters[pair[1]] = node.value; apply(); });
     });
+    var fFamily = $("#fFamily");
+    if (fFamily) {
+      fFamily.addEventListener("change", function () {
+        state.filters.family = fFamily.value;
+        updateGenusOptions(fFamily.value); // keeps Genus consistent with the chosen Family
+        apply();
+      });
+    }
     $("#fYearMin").addEventListener("input", function () { state.filters.yearMin = this.value; apply(); });
     $("#fYearMax").addEventListener("input", function () { state.filters.yearMax = this.value; apply(); });
     $("#fGeo").addEventListener("change", function () { state.filters.geoOnly = this.checked; apply(); });
@@ -255,7 +336,7 @@
   function syncControls() {
     $("#search").value = state.filters.q;
     $("#fFamily").value = state.filters.family;
-    $("#fGenus").value = state.filters.genus;
+    updateGenusOptions(state.filters.family); // keep Genus options consistent with Family on load/reset too
     $("#fCountry").value = state.filters.country;
     $("#fAlbum").value = state.filters.album;
     $("#fYearMin").value = state.filters.yearMin;
@@ -275,7 +356,7 @@
       if (f.family && p.family !== f.family) return false;
       if (f.genus && p.genus !== f.genus) return false;
       if (f.order && p.order !== f.order) return false;
-      if (f.country && p.country !== f.country) return false;
+      if (f.country && canonicalCountry(p) !== f.country) return false;
       if (f.album && p.albumTitle !== f.album) return false;
       if (f.geoOnly && !(hasCoords(p))) return false;
       if (f.locationKey && locationKey(p) !== f.locationKey) return false;
@@ -450,13 +531,14 @@
     state.filtered.forEach(function (p) {
       var k = locationKey(p);
       if (!k) return;
-      if (!groups[k]) groups[k] = { lat: p.lat, lon: p.lon, photos: [], locNames: {}, families: {} };
+      if (!groups[k]) groups[k] = { lat: p.lat, lon: p.lon, photos: [], locNames: {}, families: {}, approxCount: 0 };
       var g = groups[k];
       g.photos.push(p);
       var locName = p.location || p.country || "Unknown location";
       g.locNames[locName] = (g.locNames[locName] || 0) + 1;
       var fam = p.family || "Other";
       g.families[fam] = (g.families[fam] || 0) + 1;
+      if (p.geoApprox) g.approxCount++;
     });
 
     var seenFam = {}, bounds = [];
@@ -466,13 +548,16 @@
       var label = topKey(g.locNames);
       var famKey = topKey(g.families);
       var col = famColor(famKey === "Other" ? "" : famKey);
+      var isApprox = g.approxCount > 0; // true if any photo here relied on a fallback geocode
       seenFam[famKey] = col;
 
       var radius = Math.min(8 + Math.sqrt(count) * 2.6, 26);
       var m = L.circleMarker([g.lat, g.lon], {
-        radius: radius, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: .85
+        radius: radius, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: .85,
+        dashArray: isApprox ? "3,3" : null // dashed ring flags an approximate (fallback-geocoded) point
       });
-      m.bindTooltip(esc(label) + " (" + count + ")", { permanent: true, direction: "top", className: "loc-label", opacity: 0.92 });
+      var tooltipText = esc(label) + " (" + count + ")" + (isApprox ? " ~approx." : "");
+      m.bindTooltip(tooltipText, { permanent: true, direction: "top", className: "loc-label", opacity: 0.92 });
       m.bindPopup(locationPopupHTML(g, k));
       m.on("popupopen", function (e) {
         var btn = e.popup._contentNode.querySelector("button[data-view]");
@@ -524,11 +609,14 @@
     var speciesCount = Object.keys(speciesSet).length;
     var label = topKey(g.locNames);
     var country = topKey(g.photos.reduce(function (acc, p) { if (p.country) acc[p.country] = (acc[p.country] || 0) + 1; return acc; }, {}));
+    var isApprox = g.approxCount > 0;
     return '<span class="sci" style="font-style:normal">' + esc(label) + '</span>' +
       (country && country !== label ? '<div class="pmeta">' + esc(country) + '</div>' : '') +
       '<div class="pmeta">' + esc(dateRangeLabel(g.photos)) + '</div>' +
       '<div class="pmeta">' + g.photos.length + ' photo' + (g.photos.length === 1 ? "" : "s") +
       ' · ' + speciesCount + ' species' + '</div>' +
+      (isApprox ? '<div class="pmeta pmeta-approx">Pin is approximate — an exact address for "' + esc(label) +
+        '" couldn\'t be found, so this uses a broader area/region match instead.</div>' : '') +
       '<button data-view>View these specimens →</button>';
   }
 
