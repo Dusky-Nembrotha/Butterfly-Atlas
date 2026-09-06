@@ -13,9 +13,9 @@
   --ink-soft:#5c4a32;
   --sepia:#6f5636;
   --faint:#8a744f;
-  --seal:#8f3a2f;        /* wax-red */
-  --olive:#6a7148;       /* botanical ink */
-  --azure:#3f5c7a;       /* faded blue ink */
+  --seal:#8f3a2f;
+  --olive:#6a7148;
+  --azure:#3f5c7a;
   --gilt:#a5812c;
   --line:#c3ac7f;
   --line-soft:#d3c19a;
@@ -28,9 +28,7 @@
 
   --maxw:1260px;
   --shadow:0 2px 0 rgba(47,37,23,.05), 0 14px 30px -22px rgba(47,37,23,.55);
-  /* paper grain */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  /* scattered hand-drawn butterfly doodles, tiled across the page */
   --doodles:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%232f2517%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
   --doodles-green:url("%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27480%27 height=%27480%27 viewBox=%270 0 480 480%27%3E%3Cg fill=%27none%27 stroke=%27%233d4a2e%27 stroke-width=%271%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 opacity=%270.16%27%3E%3Cg transform=%27translate(60,70) rotate(-18) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(260,400) rotate(-30) scale(0.9)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cg transform=%27translate(400,90) rotate(-10) scale(0.8)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3Cpath d=%27M0,-8 C1,4 1,18 0,29%27 stroke-width=%271.4%27/%3E%3Cpath d=%27M-1,-8 C-6,-16 -11,-19 -15,-20%27/%3E%3Cpath d=%271,-8 C6,-16 11,-19 15,-20%27/%3E%3Cg transform=%27scale(-1,1)%27%3E%3Cpath d=%27M0,-4 C-14,-26 -40,-24 -44,-8 C-46,4 -30,10 -16,7 C-6,5 -1,-2 0,-7%27/%3E%3Cpath d=%27M0,5 C-12,9 -28,12 -32,24 C-34,33 -24,39 -15,35 C-6,30 -1,15 0,7%27/%3E%3C/g%3E%3C/g%3E%3Cpath d=%27M40,440 C120,400 180,460 260,420 C320,390 380,440 450,410%27 stroke-dasharray=%272 6%27 opacity=%270.14%27/%3E%3C/g%3E%3C/svg%3E");
   --board-green:#dfe6d1;
@@ -78,7 +76,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   background:
     linear-gradient(180deg, rgba(255,251,240,.5), rgba(255,251,240,0) 60%);
 }
-.masthead::after{ /* ruled baseline flourish */
+.masthead::after{
   content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:var(--rule);opacity:.6;
 }
 .masthead-inner{
@@ -121,7 +119,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow);
   transform:rotate(1.4deg);position:relative;
 }
-.collection-stats::before,.collection-stats::after{ /* tape corners */
+.collection-stats::before,.collection-stats::after{
   content:"";position:absolute;width:52px;height:20px;
   background:rgba(143,58,47,.22);border:1px solid rgba(143,58,47,.3);
   top:-9px;transform:rotate(-6deg);
@@ -221,7 +219,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   box-shadow:var(--shadow);text-align:left;padding:0;display:flex;flex-direction:column;
   transition:transform .2s ease, box-shadow .2s ease;position:relative;
 }
-.specimen::before{ /* the pin */
+.specimen::before{
   content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);
   width:9px;height:9px;border-radius:50%;z-index:2;
   background:radial-gradient(circle at 35% 30%, #b9564a, var(--seal) 60%, #5f231c);
@@ -256,6 +254,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .leaflet-popup-content{font-family:var(--f-body);margin:.7rem .9rem}
 .leaflet-popup-content .sci{font-size:1.15rem}
 .leaflet-popup-content .pmeta{font-family:var(--f-type);font-size:.66rem;color:var(--faint);margin-top:.2rem}
+.leaflet-popup-content .pmeta-approx{color:var(--seal);font-style:italic;line-height:1.4;margin-top:.5rem}
 .leaflet-popup-content button{margin-top:.5rem;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:2px;padding:.3rem .6rem;font-family:var(--f-type);font-size:.66rem}
 .loc-label{
   background:var(--card);border:1px solid var(--ink);border-radius:2px;color:var(--ink);
@@ -381,5 +380,4 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* ensure the hidden attribute always wins over display rules (fixes invisible overlay eating clicks) */
 [hidden]{display:none !important}
