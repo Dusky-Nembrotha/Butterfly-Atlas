@@ -68,6 +68,22 @@ BUTTERFLY_FAMILIES = {
 # purposes is a miss. Fuzzy matches are accepted only when confident.
 MIN_FUZZY_CONFIDENCE = 92
 
+# When GBIF's backbone lists a genus under more than one butterfly family,
+# prefer the modern placement. Riodinidae was long treated as the subfamily
+# Riodininae inside Lycaenidae, so legacy Lycaenidae entries persist for
+# genera such as Emesis, Melanis and Baeotis — Riodinidae is the current
+# accepted family and should win.
+FAMILY_PREFERENCE = ["Riodinidae", "Hesperiidae", "Papilionidae",
+                     "Pieridae", "Nymphalidae", "Lycaenidae"]
+
+
+def preferred_family(families):
+    """Pick the best family from a set, by modern-placement preference."""
+    for fam in FAMILY_PREFERENCE:
+        if fam in families:
+            return fam
+    return None
+
 LEPIDOPTERA_SCOPE = {
     "kingdom": "Animalia",
     "phylum": "Arthropoda",
@@ -167,6 +183,52 @@ class Taxonomy:
             p["family"] = family_hint
         return self._match(p)
 
+    def genus_family_counts(self, genus):
+        """How many backbone entries place this genus in each family.
+
+        GBIF marks essentially every entry ACCEPTED, so status cannot
+        separate a real placement from a stray record. The weight of entries
+        can: Emesis is ~14 Riodinidae vs 4 Lycaenidae, whereas Zizula is 19
+        Lycaenidae vs a single Riodinidae outlier. A majority vote gets both
+        right where "does a Riodinidae entry exist?" got Zizula wrong."""
+        counts = {}
+        try:
+            r = self.s.get(SEARCH, params={"q": genus, "rank": "GENUS", "limit": 50},
+                           headers={"User-Agent": UA}, timeout=25)
+            if r.status_code != 200:
+                return counts
+            for item in (r.json().get("results") or []):
+                if (item.get("genus") or "").lower() != genus.lower():
+                    continue
+                fam = (item.get("family") or "").strip().title()  # "LYCAENIDAE" -> "Lycaenidae"
+                if fam in BUTTERFLY_FAMILIES:
+                    counts[fam] = counts.get(fam, 0) + 1
+        except Exception:
+            pass
+        return counts
+
+    def genus_families_from_search(self, genus):
+        """Every butterfly family GBIF's backbone associates with this genus.
+
+        The backbone contains legacy entries: many riodinid genera also appear
+        under Lycaenidae because Riodinidae used to be treated as the subfamily
+        Riodininae within it. Returning the full set lets the caller choose."""
+        fams = set()
+        try:
+            r = self.s.get(SEARCH, params={"q": genus, "rank": "GENUS", "limit": 20},
+                           headers={"User-Agent": UA}, timeout=25)
+            if r.status_code != 200:
+                return fams
+            for item in (r.json().get("results") or []):
+                if (item.get("genus") or "").lower() != genus.lower():
+                    continue          # a different genus entirely (Baeotis vs Baeotus)
+                fam = item.get("family")
+                if fam in BUTTERFLY_FAMILIES:
+                    fams.add(fam)
+        except Exception:
+            pass
+        return fams
+
     def genus_by_search(self, genus):
         """Last resort: GBIF's search endpoint.
 
@@ -204,6 +266,11 @@ class Taxonomy:
         for fam in ("Riodinidae", "Lycaenidae", "Nymphalidae",
                     "Hesperiidae", "Papilionidae", "Pieridae"):
             m = self.genus_lookup(genus, family_hint=fam)
+            # The probe must ALSO confirm the genus name came back unchanged.
+            # Without this, "Baeotis" fuzzy-matches to the nymphalid "Baeotus"
+            # and the Nymphalidae hint then appears to confirm it.
+            if m and (m.get("genus") or "").lower() != genus.lower():
+                continue
             if m and m.get("family") == fam:
                 mtype = (m.get("matchType") or "NONE").upper()
                 conf = m.get("confidence") or 0
@@ -226,32 +293,47 @@ class Taxonomy:
             self.cache[species] = {"result": None, "reason": "deliberately unidentified"}
             return None, "deliberately unidentified"
 
-        # 1) constrained species-level match. The genus GBIF returns may be an
-        #    accepted name differing from the written one (a synonym) — we keep
-        #    the written genus and take only the family.
-        m = self.species_lookup(species)
-        ok, why = acceptable(m)
-        if ok:
-            result = {"family": m["family"], "genus": genus or m.get("genus"),
-                      "order": m.get("order") or "Lepidoptera", "source": "species"}
-            self.stats["species_ok"] += 1
-            self.cache[species] = {"result": result, "reason": "species match"}
-            return result, "species match"
-        reason = why
-
-        # 2) genus-level rescue — more dependable for family placement
+        # 1) GENUS FIRST. The family of a genus is a far more dependable fact
+        #    than whatever a species-level fuzzy match happens to return: a
+        #    weak species match can come back with a plausible-but-wrong
+        #    butterfly family (Emesis, Melanis and Baeotis are all Riodinidae
+        #    but were being filed under Lycaenidae/Nymphalidae this way).
+        #    Genus placement is stable, so it decides the family.
         if genus:
             gm = self.genus_lookup(genus)
+            # A genus lookup that answers with a DIFFERENT genus name is a
+            # mis-match, not a synonym — Baeotis fuzzy-matched to Baeotus.
+            if gm and (gm.get("genus") or "").lower() != genus.lower():
+                gm = None
             gok, gwhy = acceptable(gm)
             if gok:
-                result = {"family": gm["family"], "genus": genus,
-                          "order": gm.get("order") or "Lepidoptera", "source": "genus"}
+                fam = gm["family"]
+                source = "genus"
+                # ONLY Lycaenidae answers are second-guessed. Riodinidae was
+                # long treated as the subfamily Riodininae inside Lycaenidae,
+                # so the backbone still returns Lycaenidae with full
+                # confidence for genera like Emesis and Melanis. Every other
+                # family is taken at face value — applying this check more
+                # widely wrongly reclassified Danaus, Eurytides and others.
+                if fam == "Lycaenidae":
+                    counts = self.genus_family_counts(genus)
+                    rio = counts.get("Riodinidae", 0)
+                    lyc = counts.get("Lycaenidae", 0)
+                    # Only override on a clear majority. A lone Riodinidae
+                    # record among many Lycaenidae ones (Zizula, Panthiades)
+                    # is an outlier, not the modern placement.
+                    if rio > lyc:
+                        fam = "Riodinidae"
+                        source = "genus+riodinid-correction (%d riodinid vs %d lycaenid entries)" % (rio, lyc)
+                        self.stats["riodinid_fix"] = self.stats.get("riodinid_fix", 0) + 1
+                result = {"family": fam, "genus": genus,
+                          "order": gm.get("order") or "Lepidoptera", "source": source}
                 self.stats["genus_rescue"] += 1
-                self.cache[species] = {"result": result, "reason": "genus match"}
-                return result, "genus match after: %s" % reason
-            reason = "%s; genus lookup: %s" % (reason, gwhy)
+                self.cache[species] = {"result": result, "reason": source}
+                return result, source
+            reason = "genus lookup: %s" % gwhy
 
-            # 3) homonym probe — ask family by family (Caria, Lasaia, Lemonias...)
+            # 1b) homonym probe — ask family by family (Caria, Lasaia, Lemonias)
             pm = self.genus_by_family_probe(genus)
             if pm:
                 result = {"family": pm["family"], "genus": genus,
@@ -260,7 +342,7 @@ class Taxonomy:
                 self.cache[species] = {"result": result, "reason": "resolved by family probe"}
                 return result, "resolved by family probe"
 
-            # 4) search-endpoint fallback (catches most Riodinidae genera)
+            # 1c) search endpoint (catches most remaining Riodinidae genera)
             sm = self.genus_by_search(genus)
             if sm:
                 result = {"family": sm["family"], "genus": genus,
@@ -268,6 +350,19 @@ class Taxonomy:
                 self.stats["search_rescue"] = self.stats.get("search_rescue", 0) + 1
                 self.cache[species] = {"result": result, "reason": "resolved via species search"}
                 return result, "resolved via species search"
+
+        # 2) only if the genus cannot be placed at all, fall back to the
+        #    species-level match.
+        m = self.species_lookup(species)
+        ok, why = acceptable(m)
+        if ok:
+            result = {"family": m["family"], "genus": genus or m.get("genus"),
+                      "order": m.get("order") or "Lepidoptera", "source": "species"}
+            self.stats["species_ok"] += 1
+            self.cache[species] = {"result": result, "reason": "species match (genus unplaceable)"}
+            return result, "species match"
+        reason = "%s; species lookup: %s" % (reason, why)
+
 
         self.stats["unresolved"] += 1
         self.cache[species] = {"result": None, "reason": reason}
@@ -374,6 +469,9 @@ def run(dry_run=False, report_path=None):
     else:
         print("\nDRY RUN — nothing written.")
 
+    if tax.stats.get("riodinid_fix"):
+        print("  %d genera corrected from legacy Lycaenidae to Riodinidae"
+              % tax.stats["riodinid_fix"])
     print("\n  %d at species level, %d via genus, %d via family probe, %d via search, %d unresolved"
           % (tax.stats["species_ok"], tax.stats["genus_rescue"],
              tax.stats.get("probe_rescue", 0), tax.stats.get("search_rescue", 0),
@@ -419,6 +517,18 @@ def self_test():
 
     check("no match rejected", acceptable({"matchType": "NONE"})[0], False)
     check("queries are scoped to Lepidoptera", LEPIDOPTERA_SCOPE["order"], "Lepidoptera")
+
+    # The real-world cases: GBIF lists these genera under BOTH families
+    # (legacy Lycaenidae + modern Riodinidae). Riodinidae must win.
+    check("Emesis: Riodinidae beats legacy Lycaenidae",
+          preferred_family({"Lycaenidae", "Nymphalidae", "Riodinidae"}), "Riodinidae")
+    check("Melanis: Riodinidae beats legacy Lycaenidae",
+          preferred_family({"Lycaenidae", "Riodinidae"}), "Riodinidae")
+    check("a genuine lycaenid stays Lycaenidae",
+          preferred_family({"Lycaenidae"}), "Lycaenidae")
+    check("a genuine nymphalid stays Nymphalidae",
+          preferred_family({"Nymphalidae"}), "Nymphalidae")
+    check("no butterfly family -> None", preferred_family({"Tachinidae"}), None)
 
     print("\n==== %s ====" % ("ALL PASS" if ok else "FAILURES"))
     sys.exit(0 if ok else 1)

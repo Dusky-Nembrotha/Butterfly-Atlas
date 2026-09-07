@@ -1684,7 +1684,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Theope",
    "gbifKey": 7008894
   },
@@ -2329,7 +2329,7 @@
   "Leucochimona icare": {
    "count": 2,
    "commonName": "",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Leucochimona",
    "order": "Lepidoptera"
   },
@@ -2369,7 +2369,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935863
   },
@@ -3652,7 +3652,7 @@
   "Satyrium armenum": {
    "count": 3,
    "commonName": "Rebel's Hairstreak",
-   "family": "Nymphalidae",
+   "family": "Lycaenidae",
    "genus": "Satyrium",
    "order": "Lepidoptera"
   },
@@ -4536,7 +4536,7 @@
    "kingdom": "Animalia",
    "genus": "Caria",
    "gbifKey": 5141056,
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Caria sponsa": {
@@ -4545,7 +4545,7 @@
    "kingdom": "Animalia",
    "genus": "Caria",
    "gbifKey": 5141076,
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Crocozona coecias": {
@@ -4565,7 +4565,7 @@
    "kingdom": "Animalia",
    "genus": "Baeotis",
    "gbifKey": 1936163,
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Lasaia arsis": {
@@ -4618,7 +4618,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Melanis",
    "gbifKey": 9622955
   },
@@ -4637,7 +4637,7 @@
    "kingdom": "Animalia",
    "genus": "Anteros",
    "gbifKey": 5141102,
-   "family": "Pieridae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Emesis mandana": {
@@ -4647,7 +4647,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935888
   },
@@ -4658,7 +4658,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935901
   },
@@ -4669,7 +4669,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935889
   },
@@ -4680,7 +4680,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Aricoris",
    "gbifKey": 1936473
   },
@@ -7673,7 +7673,7 @@
   "Leucochimona lagora": {
    "count": 1,
    "commonName": "",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Leucochimona",
    "order": "Lepidoptera"
   },
@@ -9683,7 +9683,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Nymphalidae",
    "genus": "Brintesia",
    "gbifKey": 4535529
   },
@@ -10232,7 +10232,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Euselasia",
    "gbifKey": 1936871
   },
@@ -10290,7 +10290,7 @@
    "kingdom": "Animalia",
    "genus": "Caria",
    "gbifKey": 5141063,
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Caria mantinea": {
@@ -10299,7 +10299,7 @@
    "kingdom": "Animalia",
    "genus": "Caria",
    "gbifKey": 5141059,
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Crocozona fasciata": {
@@ -10319,7 +10319,7 @@
    "kingdom": "Animalia",
    "genus": "Baeotis",
    "gbifKey": 1936181,
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Baeotis creusis": {
@@ -10328,7 +10328,7 @@
    "kingdom": "Animalia",
    "genus": "Baeotis",
    "gbifKey": 1936179,
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Siseme alectryo": {
@@ -10355,7 +10355,7 @@
    "kingdom": "Animalia",
    "genus": "Symmachia",
    "gbifKey": 5141031,
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "order": "Lepidoptera"
   },
   "Emesis angularis": {
@@ -10365,7 +10365,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935903
   },
@@ -10376,7 +10376,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "gbifKey": 1935920
   },
@@ -10407,7 +10407,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "order": "Lepidoptera",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Theope",
    "gbifKey": 7008894
   },
@@ -11536,7 +11536,7 @@
    "phylum": "Arthropoda",
    "class": "Insecta",
    "gbifKey": 216,
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Erythia",
    "order": "Lepidoptera"
   },
@@ -18324,7 +18324,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/55198490957_c7dc6c2bdf_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55198490957",
    "description": "DSC01860",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Theope",
    "order": "Lepidoptera"
   },
@@ -20340,7 +20340,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/55153099041_c83cd7a656_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55153099041",
    "description": "DSC02909",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Leucochimona",
    "order": "Lepidoptera"
   },
@@ -20369,7 +20369,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/55153469135_bed01cb75c_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55153469135",
    "description": "DSC02912",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Leucochimona",
    "order": "Lepidoptera"
   },
@@ -20601,7 +20601,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/55149744905_49814cb6e8_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55149744905",
    "description": "DSC02483",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -20630,7 +20630,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/55152795719_ea955ca4c5_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55152795719",
    "description": "DSC02786",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -26673,7 +26673,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54682132423_108f6b4790_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54682132423",
    "description": "DSC00562",
-   "family": "Nymphalidae",
+   "family": "Lycaenidae",
    "genus": "Satyrium",
    "order": "Lepidoptera"
   },
@@ -26703,7 +26703,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54681079702_b04650accf_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54681079702",
    "description": "DSC00643",
-   "family": "Nymphalidae",
+   "family": "Lycaenidae",
    "genus": "Satyrium",
    "order": "Lepidoptera"
   },
@@ -26733,7 +26733,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54681906836_2970b68271_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54681906836",
    "description": "DSC00501",
-   "family": "Nymphalidae",
+   "family": "Lycaenidae",
    "genus": "Satyrium",
    "order": "Lepidoptera"
   },
@@ -30957,7 +30957,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54252939766_feb223863a_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54252939766",
    "description": "DSC08270",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -30986,7 +30986,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54256051568_a99e05eb52_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54256051568",
    "description": "DSC10115",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -31015,7 +31015,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54255638765_0696026207_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54255638765",
    "description": "DSC09855",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -31073,7 +31073,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54257226178_fff21ef835_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54257226178",
    "description": "DSC08546",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Baeotis",
    "order": "Lepidoptera"
   },
@@ -31335,7 +31335,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54254344377_73efff2c59_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54254344377",
    "description": "DSC09756",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Melanis",
    "order": "Lepidoptera"
   },
@@ -31364,7 +31364,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54255467568_e8a5e78c45_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54255467568",
    "description": "DSC09762",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Melanis",
    "order": "Lepidoptera"
   },
@@ -31422,7 +31422,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54254998115_28057f8881_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54254998115",
    "description": "DSC09489",
-   "family": "Pieridae",
+   "family": "Riodinidae",
    "genus": "Anteros",
    "order": "Lepidoptera"
   },
@@ -31451,7 +31451,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54252987126_7264b1bc31_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54252987126",
    "description": "DSC08449",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -31480,7 +31480,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54251952182_388c047255_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54251952182",
    "description": "DSC08193",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -31509,7 +31509,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54254708494_dc69f4bff5_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54254708494",
    "description": "DSC09088",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -31538,7 +31538,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54252090277_8473db3936_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54252090277",
    "description": "DSC08444",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -31567,7 +31567,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54255824251_3d0354cbb4_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54255824251",
    "description": "DSC10067",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Aricoris",
    "order": "Lepidoptera"
   },
@@ -31596,7 +31596,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/54252987006_5a71e24e19_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54252987006",
    "description": "DSC08480",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Aricoris",
    "order": "Lepidoptera"
   },
@@ -46181,7 +46181,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/53727346147_f082cab10b_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53727346147",
    "description": "DSC05935",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Leucochimona",
    "order": "Lepidoptera",
    "geoApprox": true
@@ -62069,7 +62069,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/51161183545_6b402a4524_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/51161183545",
    "description": "DSC02788",
-   "family": "Lycaenidae",
+   "family": "Nymphalidae",
    "genus": "Brintesia",
    "order": "Lepidoptera"
   },
@@ -65217,7 +65217,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50810537883_45929e57d6_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50810537883",
    "description": "07_Nov_015_01",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Euselasia",
    "order": "Lepidoptera"
   },
@@ -65872,7 +65872,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814318521_26b49ea683_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814318521",
    "description": "07_Nov_078_01",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -65901,7 +65901,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814319891_b41b6712b5_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814319891",
    "description": "09_Nov_020_01",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -65930,7 +65930,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814423307_890e2196fb_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814423307",
    "description": "11_Nov_030_01",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -65959,7 +65959,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814424422_d3c0c5cea7_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814424422",
    "description": "13_Nov_023_01",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Caria",
    "order": "Lepidoptera"
   },
@@ -66017,7 +66017,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814318671_5a14f13798_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814318671",
    "description": "07_Nov_077_02",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Baeotis",
    "order": "Lepidoptera"
   },
@@ -66046,7 +66046,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50813565253_94a636f40a_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50813565253",
    "description": "08_Nov_085_01",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Baeotis",
    "order": "Lepidoptera"
   },
@@ -66075,7 +66075,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50814415027_5277d11c40_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814415027",
    "description": "14_Nov_034_01",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Baeotis",
    "order": "Lepidoptera"
   },
@@ -66307,7 +66307,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834850636_9abe406d82_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834850636",
    "description": "07_Nov_028_01",
-   "family": "Hesperiidae",
+   "family": "Riodinidae",
    "genus": "Symmachia",
    "order": "Lepidoptera"
   },
@@ -66336,7 +66336,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834856291_00bbce00fa_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834856291",
    "description": "13_Nov_020_01",
-   "family": "Pieridae",
+   "family": "Riodinidae",
    "genus": "Anteros",
    "order": "Lepidoptera"
   },
@@ -66365,7 +66365,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834853266_9147b50e71_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834853266",
    "description": "10_Nov_029_01",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -66394,7 +66394,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834120258_540e91898e_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834120258",
    "description": "08_Nov_083_01",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -66423,7 +66423,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834857556_33b48bd58b_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834857556",
    "description": "18_Nov_009_01",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Emesis",
    "order": "Lepidoptera"
   },
@@ -66539,7 +66539,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50834232298_c1bf737609_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50834232298",
    "description": "18_Nov_001_01",
-   "family": "Nymphalidae",
+   "family": "Riodinidae",
    "genus": "Theope",
    "order": "Lepidoptera"
   },
@@ -74219,7 +74219,7 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50813718173_b5774aa0b5_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50813718173",
    "description": "07_Nov_052_01",
-   "family": "Lycaenidae",
+   "family": "Riodinidae",
    "genus": "Erythia",
    "order": "Lepidoptera"
   },
