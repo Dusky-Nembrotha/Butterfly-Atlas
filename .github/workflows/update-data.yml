@@ -1,17 +1,30 @@
 name: Update butterfly data
 
-# Runs the collector and commits a refreshed data/butterflies.json.
-# - Weekly on Monday 04:00 UTC
-# - Or manually from the Actions tab ("Run workflow")
+# Full pipeline. Scraping ALONE is not enough — the raw collector output
+# needs the geocoding and taxonomy passes afterwards, or every weekly run
+# would undo those corrections. Order matters:
+#
+#   1. fetch_flickr.py   pull titles/photos from Flickr (parser patched so
+#                        butterfly names no longer leak into localities)
+#   2. fix_geocode.py    resolve localities, validated against country boxes
+#   3. fix_taxonomy.py   resolve family/genus via GBIF, genus-first
+#
+# The geocode and taxonomy caches are committed, so subsequent runs only
+# look up what is genuinely new and stay well inside API rate limits.
+
 on:
-  # schedule:  # DISABLED until fetch_flickr.py title parser is fixed
-    # - cron: "0 4 * * 1"
+  schedule:
+    - cron: "0 4 * * 1"        # Mondays, 04:00 UTC
   workflow_dispatch:
     inputs:
       user:
         description: "Flickr username, NSID, or photos URL"
         required: true
         default: "robertgodden"
+      full_regeocode:
+        description: "Re-geocode every locality, not just new/approximate ones"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -29,20 +42,56 @@ jobs:
       - name: Install dependencies
         run: pip install -r scraper/requirements.txt
 
-      - name: Run collector
+      - name: Ensure the title parser is patched
+        run: python3 scraper/patch_scraper.py --check
+
+      - name: 1. Scrape Flickr
         env:
-          # Optional but recommended: add a free Flickr API key as a repo secret
-          # named FLICKR_API_KEY (Settings -> Secrets and variables -> Actions).
-          # If absent, the collector falls back to keyless site-key mode.
           FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
+        run: python3 scraper/fetch_flickr.py --user "${{ github.event.inputs.user || 'robertgodden' }}"
+
+      - name: 2. Resolve localities
         run: |
-          python3 scraper/fetch_flickr.py --user "${{ github.event.inputs.user || 'robertgodden' }}"
+          if [ "${{ github.event.inputs.full_regeocode }}" = "true" ]; then
+            python3 scraper/fix_geocode.py --all
+          else
+            python3 scraper/fix_geocode.py
+          fi
+
+      - name: 3. Resolve taxonomy
+        run: python3 scraper/fix_taxonomy.py
+
+      - name: Sanity check before committing
+        run: |
+          python3 - <<'PY'
+          import json, collections, sys
+          d = json.load(open("data/butterflies.json", encoding="utf-8"))
+          photos = d.get("photos", [])
+          fams = collections.Counter((s.get("family") or "?") for s in d.get("species", {}).values())
+          ok = True
+          # A collapse in photo count means the scrape failed; don't commit that.
+          if len(photos) < 1000:
+              print("FAIL: only %d photos — scrape looks broken" % len(photos)); ok = False
+          # Non-butterfly families mean the taxonomy pass didn't run properly.
+          junk = [f for f in fams if f not in
+                  {"Papilionidae","Pieridae","Nymphalidae","Lycaenidae",
+                   "Riodinidae","Hesperiidae","?"}]
+          if junk:
+              print("FAIL: non-butterfly families present: %s" % junk); ok = False
+          # Everything on one coordinate means geocoding didn't run.
+          coords = {(p.get("lat"), p.get("lon")) for p in photos if p.get("lat") is not None}
+          if len(coords) < 20:
+              print("FAIL: only %d distinct coordinates — geocoding looks broken" % len(coords)); ok = False
+          print("photos=%d species=%d distinct-coords=%d" % (len(photos), len(d.get("species", {})), len(coords)))
+          print("families:", dict(fams))
+          sys.exit(0 if ok else 1)
+          PY
 
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/butterflies.json scraper/geocache.json scraper/taxocache.json
+          git add data/butterflies.json scraper/geocache2.json scraper/taxocache2.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
