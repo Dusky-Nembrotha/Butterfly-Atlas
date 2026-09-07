@@ -165,6 +165,7 @@
     }
     $("#sampleBanner").hidden = !data.is_sample;
 
+    applyTaxonomyOverrides();
     buildStats();
     buildFilterOptions();
     bindUI();
@@ -196,6 +197,27 @@
   // in a butterfly collection.
   var BUTTERFLY_FAMILIES = FAMILY_COLORS; // same six keys, reused as a lookup set
   function isBadFamily(fam) { return !!fam && !BUTTERFLY_FAMILIES[fam]; }
+
+  // Known genus -> family corrections. GBIF's fuzzy species-matching sometimes
+  // files a genus under the wrong family (or a non-butterfly one entirely),
+  // and those wrong values are baked into the collected data. Rather than
+  // re-running the whole collector for a handful of cases, these overrides are
+  // applied at load. Add a line here whenever you spot another mis-filed genus.
+  var GENUS_FAMILY_OVERRIDES = {
+    Aricoris: "Riodinidae"
+  };
+  // Applied to every record before the filter lists are built, so the
+  // corrected family flows through to the dropdowns, card tags and map colours.
+  function applyTaxonomyOverrides() {
+    state.all.forEach(function (p) {
+      var fix = p.genus && GENUS_FAMILY_OVERRIDES[p.genus];
+      if (fix) {
+        p.family = fix;
+        var s = state.species[p.species];
+        if (s) s.family = fix;
+      }
+    });
+  }
 
   // Canonical country names, so "UK"/"U.K."/"United Kingdom" all collapse to
   // one dropdown entry, and a locality mistakenly stored where the country
@@ -503,8 +525,11 @@
 
       // Clear, well-labelled base map (CARTO Voyager — free for this kind of
       // light use, and far easier to read than the previously-filtered tiles).
-      var base = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-        attribution: '© OpenStreetMap contributors © CARTO', subdomains: "abcd", maxZoom: 19
+      // Esri World Street Map — keyless. (CARTO's raster basemaps started
+      // requiring an API key in Aug 2026 and now stamp an "API KEY REQUIRED"
+      // watermark on anonymous tiles, so all basemaps here moved to Esri.)
+      var base = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "Tiles © Esri", maxZoom: 19
       }).addTo(state.map);
 
       // Satellite imagery laid over the top at partial opacity, so terrain
@@ -615,8 +640,8 @@
       '<div class="pmeta">' + esc(dateRangeLabel(g.photos)) + '</div>' +
       '<div class="pmeta">' + g.photos.length + ' photo' + (g.photos.length === 1 ? "" : "s") +
       ' · ' + speciesCount + ' species' + '</div>' +
-      (isApprox ? '<div class="pmeta pmeta-approx">Pin is approximate — an exact address for "' + esc(label) +
-        '" couldn\'t be found, so this uses a broader area/region match instead.</div>' : '') +
+      (isApprox ? '<div class="pmeta pmeta-approx">Location is approximate — an exact match for "' + esc(label) +
+        '" wasn\'t found when the data was built, so a broader area is shown instead.</div>' : '') +
       '<button data-view>View these specimens →</button>';
   }
 
@@ -1073,8 +1098,8 @@
       setTimeout(function () {
         try {
           state.miniMap = L.map(host, { zoomControl: false, attributionControl: false, dragging: true, scrollWheelZoom: false }).setView([p.lat, p.lon], 5);
-          // Same look as the main map: Voyager base + satellite overlay at 60% opacity.
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(state.miniMap);
+          // Same look as the main map: Esri street base + satellite overlay at 60%.
+          L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}").addTo(state.miniMap);
           L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { opacity: 0.6 }).addTo(state.miniMap);
           L.circleMarker([p.lat, p.lon], { radius: 8, color: "#fff", weight: 2, fillColor: famColor(p.family), fillOpacity: 1 }).addTo(state.miniMap);
           state.miniMap.invalidateSize();
@@ -1105,10 +1130,15 @@
     try {
       var map = L.map(host, { zoomControl: true, attributionControl: false, scrollWheelZoom: false, worldCopyJump: true }).setView([15, 10], 1);
       state.distMap = map;
-      // Dark basemap — GBIF's occurrence points render in warm yellow/orange
-      // tones that all but disappear on a light map; dark tiles give them
-      // real contrast, and country outlines/labels still read clearly.
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd" }).addTo(map);
+      // Dark basemap — GBIF's occurrence hexagons render in warm yellow/orange
+      // tones that all but disappear on a light map. Esri Dark Gray Canvas is
+      // keyless (unlike CARTO's dark tiles since Aug 2026); its own labels are
+      // sparse, so a boundaries+places reference layer is added on top so
+      // country names stay clearly readable.
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        { attribution: "Tiles © Esri" }).addTo(map);
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        { opacity: 0.9 }).addTo(map);
       L.tileLayer("https://api.gbif.org/v2/map/occurrence/density/{z}/{x}/{y}@1x.png?taxonKey=" + key + "&style=classic.poly&bin=hex&hexPerTile=20",
         { attribution: "GBIF" }).addTo(map);
 
