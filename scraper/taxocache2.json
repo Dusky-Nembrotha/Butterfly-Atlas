@@ -10684,5 +10684,14 @@
    "source": "genus"
   },
   "reason": "genus"
+ },
+ "Agara pardalina": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Agara",
+   "order": "Lepidoptera",
+   "source": "search"
+  },
+  "reason": "resolved via species search"
  }
 }
