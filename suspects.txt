@@ -1,0 +1,13 @@
+UNRESOLVED SPECIES NAMES — check these Flickr titles
+=======================================================
+
+Unknown species	49 photo(s)	deliberately unidentified
+Unidentified species	13 photo(s)	deliberately unidentified
+
+
+CORRECTED FAMILIES
+=======================================================
+
+Biblis hyperia	Sesiidae -> Nymphalidae	(via genus)
+Corra coryna	Hygrophoraceae -> Hesperiidae	(via genus)
+Stephenia pseudegina	Tachinidae -> Nymphalidae	(via genus)
