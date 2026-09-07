@@ -628,6 +628,41 @@
     return dates[0] + " – " + dates[dates.length - 1];
   }
 
+  // Everything known about one location, gathered from the WHOLE collection
+  // (not just the current filter) — used by the specimen mini-map popup so it
+  // can report how much has been recorded there overall.
+  function locationStats(p) {
+    var key = locationKey(p);
+    if (!key) return null;
+    var here = state.all.filter(function (x) { return locationKey(x) === key; });
+    var speciesSet = {}, approx = 0;
+    here.forEach(function (x) {
+      if (x.species) speciesSet[x.species] = 1;
+      if (x.geoApprox) approx++;
+    });
+    return {
+      key: key,
+      label: p.location || p.country || "Unknown location",
+      country: p.country || "",
+      photos: here.length,
+      speciesCount: Object.keys(speciesSet).length,
+      dateRange: dateRangeLabel(here),
+      isApprox: approx > 0
+    };
+  }
+
+  // Popup shown when the marker on a specimen's mini-map is tapped.
+  function specimenLocationPopupHTML(st) {
+    return '<span class="sci" style="font-style:normal">' + esc(st.label) + '</span>' +
+      (st.country && st.country !== st.label ? '<div class="pmeta">' + esc(st.country) + '</div>' : '') +
+      '<div class="pmeta">' + esc(st.dateRange) + '</div>' +
+      '<div class="pmeta">' + st.photos + ' photo' + (st.photos === 1 ? "" : "s") +
+      ' · ' + st.speciesCount + ' species recorded here</div>' +
+      (st.isApprox ? '<div class="pmeta pmeta-approx">Location is approximate — an exact match for "' +
+        esc(st.label) + '" wasn\'t found when the data was built.</div>' : '') +
+      '<button data-view>View all specimens from here →</button>';
+  }
+
   function locationPopupHTML(g, key) {
     var speciesSet = {};
     g.photos.forEach(function (p) { if (p.species) speciesSet[p.species] = 1; });
@@ -1101,7 +1136,23 @@
           // Same look as the main map: Esri street base + satellite overlay at 60%.
           L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}").addTo(state.miniMap);
           L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { opacity: 0.6 }).addTo(state.miniMap);
-          L.circleMarker([p.lat, p.lon], { radius: 8, color: "#fff", weight: 2, fillColor: famColor(p.family), fillOpacity: 1 }).addTo(state.miniMap);
+          var mk = L.circleMarker([p.lat, p.lon], { radius: 8, color: "#fff", weight: 2, fillColor: famColor(p.family), fillOpacity: 1 }).addTo(state.miniMap);
+          // Name the place on the map itself, and make the marker tappable for
+          // a fuller summary of everything recorded at this location.
+          var st = locationStats(p);
+          if (st) {
+            mk.bindTooltip(esc(st.label) + (st.isApprox ? " ~approx." : ""),
+              { permanent: true, direction: "top", className: "loc-label", opacity: 0.92 });
+            mk.bindPopup(specimenLocationPopupHTML(st));
+            mk.on("popupopen", function (e) {
+              var btn = e.popup._contentNode.querySelector("button[data-view]");
+              if (btn) btn.addEventListener("click", function () {
+                state.filters.locationKey = st.key;
+                state.filters.locationLabel = st.label;
+                navigateToFiltered(); // filters the board and closes this modal
+              });
+            });
+          }
           state.miniMap.invalidateSize();
         } catch (e) {}
       }, 40);
