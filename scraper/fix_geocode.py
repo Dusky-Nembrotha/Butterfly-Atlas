@@ -52,6 +52,41 @@ CACHE = os.path.join(HERE, "geocache2.json")
 UA = "ButterflyAtlas/1.0 (locality re-geocoder; contact via github)"
 
 MAX_ATTEMPTS = 6
+
+# Rough bounding boxes + ISO codes for the countries in this collection.
+# Used to REJECT results that land in the wrong country — geocoders happily
+# return "Bolivia, Missouri" for Bolivia and a Mexican "Milpi" for an
+# Ecuadorean one, which is how pins ended up on the wrong continent.
+COUNTRY_BOX = {
+    "Uganda":         ("ug", -1.6,   4.3,  29.5,  35.1),
+    "Brazil":         ("br", -34.0,  5.4, -74.1, -34.7),
+    "Argentina":      ("ar", -55.2, -21.7, -73.6, -53.6),
+    "Romania":        ("ro",  43.6,  48.3,  20.2,  29.8),
+    "Turkey":         ("tr",  35.8,  42.2,  25.6,  44.9),
+    "Peru":           ("pe", -18.4,  0.1, -81.4, -68.6),
+    "Ghana":          ("gh",   4.7,  11.2,  -3.3,   1.3),
+    "Ecuador":        ("ec",  -5.1,   1.5, -81.1, -75.1),
+    "Spain":          ("es",  35.1,  43.9,  -9.4,   4.4),
+    "Bolivia":        ("bo", -23.0,  -9.6, -69.7, -57.4),
+    "Armenia":        ("am",  38.8,  41.4,  43.4,  46.7),
+    "United Kingdom": ("gb",  49.8,  61.0,  -8.7,   1.9),
+    "UK":             ("gb",  49.8,  61.0,  -8.7,   1.9),
+}
+
+
+def country_code(country):
+    e = COUNTRY_BOX.get((country or "").strip())
+    return e[0] if e else None
+
+
+def in_country(hit, country):
+    """True if the coordinates plausibly sit inside the named country.
+    Unknown countries pass (we can only check what we have a box for)."""
+    e = COUNTRY_BOX.get((country or "").strip())
+    if not e or not hit:
+        return True
+    _, lat_min, lat_max, lon_min, lon_max = e
+    return (lat_min <= hit["lat"] <= lat_max) and (lon_min <= hit["lon"] <= lon_max)
 NOMINATIM = "https://nominatim.openstreetmap.org/search"
 PHOTON = "https://photon.komoot.io/api"
 
@@ -158,6 +193,8 @@ def clean_locality(text):
         re.sub(r"\s+\b(NT|CP|RDA|LNR)\b\s*$", "", t, flags=re.IGNORECASE).strip()
         for t in s.split(",")
     )
+    # a location that is really just the album name ("Bolivia Butterflies")
+    s = re.sub(r"^\s*[A-Z][a-z]+\s+Butterflies\s*$", "", s)
     # unbalanced junk: "Bwindi (high altitude", "Kibale 25.11.2017 (1"
     s = re.sub(r"\(.*$", "", s)
     s = re.sub(r"\b\d{1,2}\.\d{1,2}\.\d{4}\b", "", s)
@@ -268,6 +305,7 @@ def build_queries(location, country):
 
 class Geocoder:
     def __init__(self, session, cache, delay=1.1):
+        self._current_country = ""
         self.s = session
         self.cache = cache
         self.delay = delay
@@ -291,6 +329,9 @@ class Geocoder:
 
     def nominatim(self, kind, payload):
         params = {"format": "json", "limit": 1}
+        cc = country_code(self._current_country)
+        if cc:
+            params["countrycodes"] = cc
         if kind == "structured":
             params.update({k: v for k, v in payload.items() if v})
         else:
@@ -319,6 +360,7 @@ class Geocoder:
 
     def resolve(self, location, country):
         """Return (result_or_None, is_approx)."""
+        self._current_country = country or ""
         ckey = (location or "") + "|" + (country or "")
         if ckey in self.cache:
             self.stats["cached"] += 1
@@ -347,21 +389,25 @@ class Geocoder:
 
         for kind, payload in precise:
             hit = self.nominatim(kind, payload)
-            if hit:
+            if hit and in_country(hit, country):
                 self.cache[ckey] = {"hit": hit, "approx": False}
                 return hit, False
+            elif hit:
+                self.stats["wrong_country"] = self.stats.get("wrong_country", 0) + 1
 
         # Photon before falling back — it is far better at reserves, hills and
         # parks that Nominatim will not match as a whole string.
         for text in [t for t in (primary, strip_accents(primary)) if t]:
             hit = self.photon(text, country)
-            if hit:
+            if hit and in_country(hit, country):
                 self.cache[ckey] = {"hit": hit, "approx": False}
                 return hit, False
+            elif hit:
+                self.stats["wrong_country"] = self.stats.get("wrong_country", 0) + 1
 
         for kind, payload in vague:
             hit = self.nominatim(kind, payload)
-            if hit:
+            if hit and in_country(hit, country):
                 self.cache[ckey] = {"hit": hit, "approx": True}
                 return hit, True
 
@@ -472,6 +518,9 @@ def run(redo_all=False, dry_run=False):
     print("  exact matches now: %d localities" % fixed)
     print("  still approximate: %d" % still_approx)
     print("  no match at all  : %d" % failed)
+    if geo.stats.get("wrong_country"):
+        print("  rejected %d result(s) that fell outside the stated country"
+              % geo.stats["wrong_country"])
     print("  provider: %d via Nominatim, %d via Photon, %d cached, %d throttled"
           % (geo.stats["nominatim"], geo.stats["photon"], geo.stats["cached"], geo.stats["throttled"]))
     if not dry_run:
