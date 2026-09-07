@@ -4,8 +4,8 @@ name: Update butterfly data
 # - Weekly on Monday 04:00 UTC
 # - Or manually from the Actions tab ("Run workflow")
 on:
-  schedule:
-    - cron: "0 4 * * 1"
+  # schedule:  # DISABLED until fetch_flickr.py title parser is fixed
+    # - cron: "0 4 * * 1"
   workflow_dispatch:
     inputs:
       user:
