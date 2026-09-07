@@ -329,7 +329,8 @@
     }
     $("#fYearMin").addEventListener("input", function () { state.filters.yearMin = this.value; apply(); });
     $("#fYearMax").addEventListener("input", function () { state.filters.yearMax = this.value; apply(); });
-    $("#fGeo").addEventListener("change", function () { state.filters.geoOnly = this.checked; apply(); });
+    var fGeo = $("#fGeo");   // control removed from the page; guard in case it returns
+    if (fGeo) fGeo.addEventListener("change", function () { state.filters.geoOnly = this.checked; apply(); });
     $("#resetFilters").addEventListener("click", resetFilters);
     $("#emptyReset").addEventListener("click", resetFilters);
     $("#viewSpecimens").addEventListener("click", function () { setView("specimens"); });
@@ -363,7 +364,7 @@
     $("#fAlbum").value = state.filters.album;
     $("#fYearMin").value = state.filters.yearMin;
     $("#fYearMax").value = state.filters.yearMax;
-    $("#fGeo").checked = state.filters.geoOnly;
+    var geoBox = $("#fGeo"); if (geoBox) geoBox.checked = state.filters.geoOnly;
     $("#sort").value = state.filters.sort;
   }
 
@@ -497,6 +498,22 @@
     return p.lat.toFixed(4) + "," + p.lon.toFixed(4);
   }
 
+  // Some records carry no real locality at all — a camera filename
+  // ("DSC06167"), a stray "Copy", or just the album name. Any coordinates
+  // attached to those are an accident of geocoding rather than a real
+  // sighting, so they are left off the map instead of dropping a marker in
+  // the wrong part of the world.
+  var JUNK_LOCALITY_RE = /^(?:dsc[_\s-]?\d+|img[_\s-]?\d+|p\d{6,}|copy|untitled|unknown|butterflies)\b/i;
+  function hasRealLocality(p) {
+    var loc = (p.location || "").trim();
+    if (!loc) return false;
+    if (JUNK_LOCALITY_RE.test(loc)) return false;
+    if (/^[A-Z][a-z]+\s+Butterflies$/.test(loc)) return false;  // album name as locality
+    return true;
+  }
+  // A record is mappable only if it has coordinates AND a locality worth trusting.
+  function isMappable(p) { return hasCoords(p) && hasRealLocality(p); }
+
   function fmtCoord(lat, lon) {
     var a = Math.abs(lat).toFixed(3) + "° " + (lat >= 0 ? "N" : "S");
     var b = Math.abs(lon).toFixed(3) + "° " + (lon >= 0 ? "E" : "W");
@@ -554,6 +571,7 @@
     // pile of identical overlapping dots.
     var groups = {};
     state.filtered.forEach(function (p) {
+      if (!isMappable(p)) return;   // skip junk localities entirely
       var k = locationKey(p);
       if (!k) return;
       if (!groups[k]) groups[k] = { lat: p.lat, lon: p.lon, photos: [], locNames: {}, families: {}, approxCount: 0 };
