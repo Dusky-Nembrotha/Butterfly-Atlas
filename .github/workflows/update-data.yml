@@ -5,12 +5,17 @@ name: Update butterfly data
 # would undo those corrections. Order matters:
 #
 #   1. fetch_flickr.py   pull titles/photos from Flickr (parser patched so
-#                        butterfly names no longer leak into localities)
+#                        butterfly names no longer leak into localities).
+#                        --skip-geocode: step 2 resolves every record that has
+#                        no coordinates anyway, and does it far better, so
+#                        geocoding here is duplicated work at ~1 request/second.
 #   2. fix_geocode.py    resolve localities, validated against country boxes
 #   3. fix_taxonomy.py   resolve family/genus via GBIF, genus-first
 #
-# The geocode and taxonomy caches are committed, so subsequent runs only
-# look up what is genuinely new and stay well inside API rate limits.
+# ALL FOUR caches are committed below, so subsequent runs only look up what is
+# genuinely new and stay well inside API rate limits. fetch_flickr.py uses
+# geocache.json/taxocache.json; the two fix_*.py scripts use the "2" pair.
+# Committing only one pair silently discards the other half every week.
 
 on:
   schedule:
@@ -48,7 +53,7 @@ jobs:
       - name: 1. Scrape Flickr
         env:
           FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
-        run: python3 scraper/fetch_flickr.py --user "${{ github.event.inputs.user || 'robertgodden' }}"
+        run: python3 scraper/fetch_flickr.py --user "${{ github.event.inputs.user || 'robertgodden' }}" --skip-geocode
 
       - name: 2. Resolve localities
         run: |
@@ -62,6 +67,44 @@ jobs:
         run: python3 scraper/fix_taxonomy.py
 
       - name: Sanity check before committing
+        run: |
+          python3 - <<'PY'
+          import json, collections, sys
+          d = json.load(open("data/butterflies.json", encoding="utf-8"))
+          photos = d.get("photos", [])
+          fams = collections.Counter((s.get("family") or "?") for s in d.get("species", {}).values())
+          ok = True
+          # A collapse in photo count means the scrape failed; don't commit that.
+          if len(photos) < 1000:
+              print("FAIL: only %d photos — scrape looks broken" % len(photos)); ok = False
+          # Non-butterfly families mean the taxonomy pass didn't run properly.
+          junk = [f for f in fams if f not in
+                  {"Papilionidae","Pieridae","Nymphalidae","Lycaenidae",
+                   "Riodinidae","Hesperiidae","?"}]
+          if junk:
+              print("FAIL: non-butterfly families present: %s" % junk); ok = False
+          # Everything on one coordinate means geocoding didn't run.
+          coords = {(p.get("lat"), p.get("lon")) for p in photos if p.get("lat") is not None}
+          if len(coords) < 20:
+              print("FAIL: only %d distinct coordinates — geocoding looks broken" % len(coords)); ok = False
+          print("photos=%d species=%d distinct-coords=%d" % (len(photos), len(d.get("species", {})), len(coords)))
+          print("families:", dict(fams))
+          sys.exit(0 if ok else 1)
+          PY
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/butterflies.json \
+                  scraper/geocache.json scraper/taxocache.json \
+                  scraper/geocache2.json scraper/taxocache2.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update butterfly data ($(date -u +%Y-%m-%d))"
+            git push
+          fi      - name: Sanity check before committing
         run: |
           python3 - <<'PY'
           import json, collections, sys
