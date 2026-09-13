@@ -10693,5 +10693,288 @@
    "source": "search"
   },
   "reason": "resolved via species search"
+ },
+ "Acraea sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Acraea",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Ancyluris sp.": {
+  "result": {
+   "family": "Riodinidae",
+   "genus": "Ancyluris",
+   "order": "Lepidoptera",
+   "source": "search"
+  },
+  "reason": "resolved via species search"
+ },
+ "Bebearia sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Bebearia",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Bicyclus sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Bicyclus",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Detritivora sp.": {
+  "result": {
+   "family": "Riodinidae",
+   "genus": "Detritivora",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Epargyreus sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Epargyreus",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Euphaedra sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Euphaedra",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Eurema sp.": {
+  "result": {
+   "family": "Pieridae",
+   "genus": "Eurema",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Gargina sp.": {
+  "result": {
+   "family": "Lycaenidae",
+   "genus": "Gargina",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Gorgythion sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Gorgythion",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Hamadryas sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Hamadryas",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Hypolycaena sp.": {
+  "result": {
+   "family": "Lycaenidae",
+   "genus": "Hypolycaena",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Ithomia sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Ithomia",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Leptotes sp.": {
+  "result": {
+   "family": "Lycaenidae",
+   "genus": "Leptotes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Memphis sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Memphis",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Mylothris sp.": {
+  "result": {
+   "family": "Pieridae",
+   "genus": "Mylothris",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Neptis sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Neptis",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Nymphalidae sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Nymphalidae",
+   "order": "Lepidoptera",
+   "source": "search"
+  },
+  "reason": "resolved via species search"
+ },
+ "Opsiphanes sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Opsiphanes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Osmodes sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Osmodes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Palla sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Palla",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Panyapedaliodes sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Panyapedaliodes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Pardaleodes sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Pardaleodes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Pedaliodes sp.": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Pedaliodes",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Phoebis sp.": {
+  "result": {
+   "family": "Pieridae",
+   "genus": "Phoebis",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Platylesches sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Platylesches",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Polyommatus sp.": {
+  "result": {
+   "family": "Lycaenidae",
+   "genus": "Polyommatus",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Prosopalpus sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Prosopalpus",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Skipper sp.": {
+  "result": null,
+  "reason": "genus lookup: no response; species lookup: only matched above species level"
+ },
+ "Spialia sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Spialia",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Telipna sp.": {
+  "result": {
+   "family": "Lycaenidae",
+   "genus": "Telipna",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Urbanus sp.": {
+  "result": {
+   "family": "Hesperiidae",
+   "genus": "Urbanus",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
  }
 }

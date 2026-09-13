@@ -33,7 +33,7 @@
     mapMarkers: [],       // {marker, key} for the current map draw, so tooltip visibility can be toggled by zoom
     miniMap: null,
     distMap: null,
-    filters: { q: "", family: "", genus: "", order: "", album: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
+    filters: { q: "", family: "", genus: "", order: "", album: "", continent: "", country: "", yearMin: "", yearMax: "", geoOnly: false, sort: "species", locationKey: "" }
   };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -139,7 +139,6 @@
     state.all = (data.photos || []).map(function (p, i) {
       p._i = i;
       p.year = p.year || (p.date ? parseInt(String(p.date).slice(0, 4), 10) : null);
-      var sp = state ? null : null;
       return p;
     });
     state.species = data.species || {};
@@ -155,7 +154,9 @@
         p.order = p.order || s.order;
         p.commonName = p.commonName || s.commonName;
       }
-      if (!p.genus && p.species) p.genus = p.species.split(" ")[0];
+      if (!p.genus && p.species && /^[A-Z][a-z]+ [a-z][a-z-]+$/.test(p.species)) {
+        p.genus = p.species.split(" ")[0];
+      }
     });
 
     if (data.photographer) { $("#photographer").textContent = data.photographer; }
@@ -256,27 +257,73 @@
   function canonicalCountry(p) {
     return canonicalCountryString(p.country) || canonicalCountryString(p.albumTitle) || null;
   }
+  // The country a record is FILED under. Every part of the UI that reads,
+  // displays, sorts or filters by country must go through this one function,
+  // or they disagree: 112 records store an album name ("Armenia Butterflies")
+  // or a locality ("Khosrov Forest") in their country field, so the raw value
+  // is not a country and is not what the Country dropdown is keyed on.
+  // Falls back to the raw value so a country absent from COUNTRY_CANON is
+  // still shown and still filterable, rather than vanishing.
+  function countryOf(p) {
+    return canonicalCountry(p) || (p.country || "");
+  }
+
+  // Continent by country. A country may belong to more than one: Turkey and
+  // Armenia straddle Europe and Asia, and a Western Palearctic species found
+  // in eastern Anatolia is one a visitor would reasonably expect to find
+  // under either. Listing both is more useful here than picking a side.
+  // Covers every country in COUNTRY_CANON, including ones not yet
+  // photographed, so the filter keeps working as albums are added.
+  var CONTINENTS = {
+    "Uganda": ["Africa"], "Ghana": ["Africa"], "Kenya": ["Africa"],
+    "Tanzania": ["Africa"], "South Africa": ["Africa"],
+    "Brazil": ["South America"], "Argentina": ["South America"],
+    "Peru": ["South America"], "Ecuador": ["South America"],
+    "Bolivia": ["South America"], "Colombia": ["South America"],
+    "Costa Rica": ["North America"], "Mexico": ["North America"],
+    "Panama": ["North America"], "United States": ["North America"],
+    "United Kingdom": ["Europe"], "Spain": ["Europe"], "Romania": ["Europe"],
+    "France": ["Europe"], "Italy": ["Europe"], "Greece": ["Europe"],
+    "Portugal": ["Europe"],
+    "Turkey": ["Europe", "Asia"], "Armenia": ["Europe", "Asia"],
+    "India": ["Asia"], "Malaysia": ["Asia"], "Indonesia": ["Asia"],
+    "Thailand": ["Asia"], "Vietnam": ["Asia"]
+  };
+  // Continent order for the dropdown — by where the collection actually is,
+  // rather than alphabetically, so the big regions lead.
+  var CONTINENT_ORDER = ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"];
+  function continentsOf(p) {
+    return CONTINENTS[countryOf(p)] || [];
+  }
 
   function buildFilterOptions() {
-    var fam = {}, ctry = {};
-    var genusByFamily = {}, allGenus = {};
+    var fam = {}, ctry = {}, cont = {};
+    var genusByFamily = {}, allGenus = {}, countryByContinent = {};
     state.all.forEach(function (p) {
       if (p.family && !isBadFamily(p.family)) fam[p.family] = (fam[p.family] || 0) + 1;
-      if (p.genus && !isBadFamily(p.family)) {
+      if (p.genus && BUTTERFLY_FAMILIES[p.family]) {
         allGenus[p.genus] = (allGenus[p.genus] || 0) + 1;
         if (p.family) {
           genusByFamily[p.family] = genusByFamily[p.family] || {};
           genusByFamily[p.family][p.genus] = (genusByFamily[p.family][p.genus] || 0) + 1;
         }
       }
-      var cc = canonicalCountry(p);
+      var cc = countryOf(p);
       if (cc) ctry[cc] = (ctry[cc] || 0) + 1;
+      continentsOf(p).forEach(function (k) {
+        cont[k] = (cont[k] || 0) + 1;
+        countryByContinent[k] = countryByContinent[k] || {};
+        if (cc) countryByContinent[k][cc] = (countryByContinent[k][cc] || 0) + 1;
+      });
     });
     state._genusByFamily = genusByFamily;
     state._allGenusCounts = allGenus;
+    state._countryByContinent = countryByContinent;
+    state._allCountryCounts = ctry;
     fillSelect($("#fFamily"), fam, true);
     updateGenusOptions("");
-    fillSelect($("#fCountry"), ctry, true);
+    fillSelectOrdered($("#fContinent"), cont, CONTINENT_ORDER);
+    updateCountryOptions("");
     var albs = {};
     state.albums.forEach(function (a) { albs[a.title] = a.count || 0; });
     if (!Object.keys(albs).length) state.all.forEach(function (p) { if (p.albumTitle) albs[p.albumTitle] = (albs[p.albumTitle] || 0) + 1; });
@@ -296,6 +343,33 @@
       state.filters.genus = "";
     }
     sel.value = state.filters.genus;
+  }
+
+  // Rebuilds the Country dropdown to list only countries on the chosen
+  // continent (or every country, if no continent is selected) — the same
+  // cascade the Family -> Genus pair uses. A country left selected that
+  // isn't on the new continent is cleared rather than silently filtering
+  // on a stale value that can match nothing.
+  function updateCountryOptions(continentValue) {
+    var sel = $("#fCountry"); if (!sel) return;
+    var counts = continentValue ? (state._countryByContinent[continentValue] || {}) : state._allCountryCounts;
+    sel.innerHTML = '<option value="">All countries</option>';
+    fillSelect(sel, counts, true);
+    if (state.filters.country && !counts[state.filters.country]) {
+      state.filters.country = "";
+    }
+    sel.value = state.filters.country;
+  }
+
+  // Like fillSelect, but keeps a caller-supplied order instead of sorting.
+  function fillSelectOrdered(sel, counts, order) {
+    if (!sel) return;
+    order.forEach(function (k) {
+      if (!counts[k]) return;
+      var o = el("option", null, k + " (" + counts[k] + ")");
+      o.value = k;
+      sel.appendChild(o);
+    });
   }
 
   function fillSelect(sel, counts, showCount) {
@@ -319,6 +393,14 @@
       var node = $(pair[0]); if (!node) return;
       node.addEventListener("change", function () { state.filters[pair[1]] = node.value; apply(); });
     });
+    var fContinent = $("#fContinent");
+    if (fContinent) {
+      fContinent.addEventListener("change", function () {
+        state.filters.continent = fContinent.value;
+        updateCountryOptions(fContinent.value); // keeps Country consistent with the chosen Continent
+        apply();
+      });
+    }
     var fFamily = $("#fFamily");
     if (fFamily) {
       fFamily.addEventListener("change", function () {
@@ -352,7 +434,7 @@
   }
 
   function resetFilters() {
-    state.filters = { q: "", family: "", genus: "", order: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort, locationKey: "" };
+    state.filters = { q: "", family: "", genus: "", order: "", continent: "", country: "", album: "", yearMin: "", yearMax: "", geoOnly: false, sort: state.filters.sort, locationKey: "" };
     state.filters.locationLabel = "";
     syncControls(); apply();
   }
@@ -360,6 +442,8 @@
     $("#search").value = state.filters.q;
     $("#fFamily").value = state.filters.family;
     updateGenusOptions(state.filters.family); // keep Genus options consistent with Family on load/reset too
+    $("#fContinent").value = state.filters.continent;
+    updateCountryOptions(state.filters.continent); // keep Country options consistent with Continent on load/reset too
     $("#fCountry").value = state.filters.country;
     $("#fAlbum").value = state.filters.album;
     $("#fYearMin").value = state.filters.yearMin;
@@ -379,15 +463,16 @@
       if (f.family && p.family !== f.family) return false;
       if (f.genus && p.genus !== f.genus) return false;
       if (f.order && p.order !== f.order) return false;
-      if (f.country && canonicalCountry(p) !== f.country) return false;
+      if (f.continent && continentsOf(p).indexOf(f.continent) === -1) return false;
+      if (f.country && countryOf(p) !== f.country) return false;
       if (f.album && p.albumTitle !== f.album) return false;
       if (f.geoOnly && !(hasCoords(p))) return false;
       if (f.locationKey && locationKey(p) !== f.locationKey) return false;
       if (ymin && (!p.year || p.year < ymin)) return false;
       if (ymax && (!p.year || p.year > ymax)) return false;
       if (terms.length) {
-        var hay = [p.species, p.commonName, p.location, p.country, p.family, p.genus, p.albumTitle,
-                   (p.tags || []).join(" ")].join(" ").toLowerCase();
+        var hay = [p.species, p.commonName, p.location, countryOf(p), p.family, p.genus, p.albumTitle,
+                   continentsOf(p).join(" "), (p.tags || []).join(" ")].join(" ").toLowerCase();
         for (var i = 0; i < terms.length; i++) if (hay.indexOf(terms[i]) === -1) return false;
       }
       return true;
@@ -409,7 +494,7 @@
       if (aU !== bU) return aU ? 1 : -1;
       if (s === "date-desc") return (b.date || "").localeCompare(a.date || "");
       if (s === "date-asc") return (a.date || "").localeCompare(b.date || "");
-      if (s === "country") return (a.country || "").localeCompare(b.country || "") || (a.species || "").localeCompare(b.species || "");
+      if (s === "country") return countryOf(a).localeCompare(countryOf(b)) || (a.species || "").localeCompare(b.species || "");
       return (a.species || "").localeCompare(b.species || "") || (a.date || "").localeCompare(b.date || "");
     });
   }
@@ -431,6 +516,7 @@
     if (f.family) chips.push(["Family: " + f.family, function () { f.family = ""; }]);
     if (f.genus) chips.push(["Genus: " + f.genus, function () { f.genus = ""; }]);
     if (f.order) chips.push(["Order: " + f.order, function () { f.order = ""; }]);
+    if (f.continent) chips.push(["Continent: " + f.continent, function () { f.continent = ""; }]);
     if (f.country) chips.push(["Country: " + f.country, function () { f.country = ""; }]);
     if (f.album) chips.push(["Album: " + f.album, function () { f.album = ""; }]);
     if (f.yearMin || f.yearMax) chips.push(["Year: " + (f.yearMin || "…") + "–" + (f.yearMax || "…"), function () { f.yearMin = ""; f.yearMax = ""; }]);
@@ -594,9 +680,13 @@
       var isApprox = g.approxCount > 0; // true if any photo here relied on a fallback geocode
       seenFam[famKey] = col;
 
-      var radius = Math.min(8 + Math.sqrt(count) * 2.6, 26);
+      // A single location must read as smaller than a cluster bubble (those
+      // are 40px across), or an unclustered point looks more important than a
+      // cluster of many. Kept to a 4–10px radius: still scaled by how much was
+      // recorded there, but always visibly a point rather than a blob.
+      var radius = Math.min(3.5 + Math.sqrt(count), 10);
       var m = L.circleMarker([g.lat, g.lon], {
-        radius: radius, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: .85,
+        radius: radius, color: "#fff", weight: 1.2, fillColor: col, fillOpacity: .85,
         dashArray: isApprox ? "3,3" : null // dashed ring flags an approximate (fallback-geocoded) point
       });
       var tooltipText = esc(label) + " (" + count + ")" + (isApprox ? " ~approx." : "");
@@ -613,13 +703,17 @@
 
     updateLocationLabelVisibility();
     if (!state.map._labelZoomBound) {
-      state.map.on("zoomend", updateLocationLabelVisibility);
+      // Clustering is recomputed on zoom/pan, and markercluster finishes its
+      // work on "animationend" — later than "zoomend", so both are needed or
+      // the labels lag a frame behind the bubbles they belong to.
+      state.map.on("zoomend moveend", updateLocationLabelVisibility);
+      if (state.cluster && state.cluster.on) state.cluster.on("animationend", updateLocationLabelVisibility);
       state.map._labelZoomBound = true;
     }
 
     buildLegend(seenFam);
     if (bounds.length) { try { state.map.fitBounds(bounds, { padding: [40, 40], maxZoom: 8 }); } catch (e) {} }
-    setTimeout(function () { state.map.invalidateSize(); }, 60);
+    setTimeout(function () { state.map.invalidateSize(); updateLocationLabelVisibility(); }, 60);
   }
 
   function topKey(counts) {
@@ -628,14 +722,25 @@
     return best;
   }
 
-  // Location labels only show once zoomed in enough to be legible and
-  // non-overlapping; zoomed out, the marker cluster bubbles do that job instead.
-  var LABEL_MIN_ZOOM = 6;
+  // A location is labelled as soon as it stands alone on the map. While it is
+  // still absorbed into a cluster bubble the label has nothing to point at, so
+  // it stays hidden — the bubble's own count does that job. This asks the
+  // cluster group directly rather than guessing from a fixed zoom threshold,
+  // which got it wrong both ways: an isolated point on a world view stayed
+  // unlabelled, while points still buried in a cluster were labelled once the
+  // zoom crossed 6.
   function updateLocationLabelVisibility() {
     if (!state.map) return;
-    var show = state.map.getZoom() >= LABEL_MIN_ZOOM;
+    // markercluster takes a marker off the map while it is absorbed into a
+    // cluster and puts it back when the cluster breaks apart, so "is it on the
+    // map" IS "does it stand alone".
+    //
+    // Note: markercluster's own getVisibleParent() cannot answer this here. It
+    // walks up the tree looking for _icon, which only icon-based markers have —
+    // these are circleMarkers (_path), so it never returns the marker itself
+    // and every point would test as clustered.
     state.mapMarkers.forEach(function (m) {
-      if (show) m.openTooltip(); else m.closeTooltip();
+      if (state.map.hasLayer(m)) m.openTooltip(); else m.closeTooltip();
     });
   }
 
@@ -757,7 +862,8 @@
     // field data
     var facts = el("dl", "factrow");
     addClickableFact(facts, "Locality", p.location || "—", hasCoords(p) ? function () { filterByLocality(p); } : null);
-    addClickableFact(facts, "Country", p.country || "—", p.country ? function () { filterByField("country", p.country); } : null);
+    var pCountry = countryOf(p);
+    addClickableFact(facts, "Country", pCountry || "—", pCountry ? function () { filterByField("country", pCountry); } : null);
     if (hasCoords(p)) addFact(facts, "Coordinates", fmtCoord(p.lat, p.lon));
     addClickableFact(facts, "Date", p.date || "—", p.year ? function () { filterByYear(p.year); } : null);
     if (p.albumTitle) addClickableFact(facts, "Album", p.albumTitle, function () { filterByField("album", p.albumTitle); });
@@ -1235,7 +1341,7 @@
   /* ---------- URL hash state ---------- */
   function writeHash() {
     var f = state.filters, parts = [];
-    ["q", "family", "genus", "country", "album", "yearMin", "yearMax", "sort"].forEach(function (k) {
+    ["q", "family", "genus", "continent", "country", "album", "yearMin", "yearMax", "sort"].forEach(function (k) {
       if (f[k]) parts.push(k + "=" + encodeURIComponent(f[k]));
     });
     if (f.geoOnly) parts.push("geo=1");

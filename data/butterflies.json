@@ -12998,6 +12998,228 @@
   "Unidentified species": {
    "count": 13,
    "commonName": ""
+  },
+  "Eurema sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Eurema",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
+  },
+  "Opsiphanes sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Opsiphanes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Nymphalidae sp.": {
+   "count": 3,
+   "commonName": "",
+   "family": "Nymphalidae",
+   "genus": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Hamadryas sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Hamadryas",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Epargyreus sp.": {
+   "count": 3,
+   "commonName": "",
+   "genus": "Epargyreus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Polyommatus sp.": {
+   "count": 7,
+   "commonName": "",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
+  },
+  "Mylothris sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Mylothris",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
+  },
+  "Telipna sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Telipna",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
+  },
+  "Hypolycaena sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Hypolycaena",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
+  },
+  "Leptotes sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Leptotes",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
+  },
+  "Bicyclus sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Bicyclus",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Palla sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Palla",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Neptis sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Neptis",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Bebearia sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Bebearia",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Euphaedra sp.": {
+   "count": 5,
+   "commonName": "",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Acraea sp.": {
+   "count": 7,
+   "commonName": "",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Spialia sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Spialia",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Prosopalpus sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Prosopalpus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Pardaleodes sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Pardaleodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Osmodes sp.": {
+   "count": 3,
+   "commonName": "",
+   "genus": "Osmodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Platylesches sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Platylesches",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Detritivora sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Detritivora",
+   "family": "Riodinidae",
+   "order": "Lepidoptera"
+  },
+  "Pedaliodes sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Pedaliodes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Panyapedaliodes sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Panyapedaliodes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Urbanus sp.": {
+   "count": 3,
+   "commonName": "",
+   "genus": "Urbanus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
+  },
+  "Ancyluris sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Ancyluris",
+   "family": "Riodinidae",
+   "order": "Lepidoptera"
+  },
+  "Skipper sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Skipper"
+  },
+  "Phoebis sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Phoebis",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
+  },
+  "Gargina sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Gargina",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
+  },
+  "Memphis sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Memphis",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Ithomia sp.": {
+   "count": 1,
+   "commonName": "",
+   "genus": "Ithomia",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
+  },
+  "Gorgythion sp.": {
+   "count": 2,
+   "commonName": "",
+   "genus": "Gorgythion",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   }
  },
  "photos": [
@@ -17755,7 +17977,7 @@
   {
    "id": "55178408744",
    "title": "Eurema sp, Itororó Eco Lodge, Nova Friburgo, RJ, Brazil 23/02/2026",
-   "species": "",
+   "species": "Eurema sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Itororó Eco Lodge, Nova Friburgo, RJ, Brazil",
@@ -17771,7 +17993,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55178408744_2411ba81d5_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55178408744_52155b28f6_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55178408744",
-   "description": "DSC03047"
+   "description": "DSC03047",
+   "genus": "Eurema",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55178271214",
@@ -19130,7 +19355,7 @@
   {
    "id": "55198488257",
    "title": "Opsiphanes sp, Regua Reserve, RJ, Brazil 11/02/2026",
-   "species": "",
+   "species": "Opsiphanes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Regua Reserve, RJ, Brazil",
@@ -19146,7 +19371,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55198488257_4c7793b89e_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55198488257_fb125e40f9_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55198488257",
-   "description": "DSC01901"
+   "description": "DSC01901",
+   "genus": "Opsiphanes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55182677667",
@@ -19570,7 +19798,7 @@
   {
    "id": "55178152091",
    "title": "Nymphalidae sp, Itororó Eco Lodge, Nova Friburgo, RJ, Brazil 23/02/2026",
-   "species": "",
+   "species": "Nymphalidae sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Itororó Eco Lodge, Nova Friburgo, RJ, Brazil",
@@ -19586,7 +19814,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55178152091_580d3a03cb_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55178152091_a5739d67f2_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55178152091",
-   "description": "DSC03058"
+   "description": "DSC03058",
+   "family": "Nymphalidae",
+   "genus": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55180426266",
@@ -21201,7 +21432,7 @@
   {
    "id": "55149706147",
    "title": "Hamadryas sp, Iguazu NP, Misiones, Argentina 19/02/2026",
-   "species": "",
+   "species": "Hamadryas sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Iguazu NP, Misiones, Argentina",
@@ -21221,12 +21452,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/55149706147_04d149b295_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55149706147_7d222ec9a1_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55149706147",
-   "description": "DSC02564"
+   "description": "DSC02564",
+   "genus": "Hamadryas",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55150760068",
    "title": "Hamadryas sp, Iguazu NP, Misiones, Argentina 19/02/2026",
-   "species": "",
+   "species": "Hamadryas sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Iguazu NP, Misiones, Argentina",
@@ -21246,7 +21480,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55150760068_2c870c708e_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55150760068_f88e1afeff_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55150760068",
-   "description": "DSC02569"
+   "description": "DSC02569",
+   "genus": "Hamadryas",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55153158279",
@@ -21889,7 +22126,7 @@
   {
    "id": "55151923925",
    "title": "Opsiphanes sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Opsiphanes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -21910,7 +22147,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55151923925_5237ac34c8_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55151923925_f5b4b53390_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55151923925",
-   "description": "DSC02595"
+   "description": "DSC02595",
+   "genus": "Opsiphanes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55153208883",
@@ -22031,7 +22271,7 @@
   {
    "id": "55152924226",
    "title": "Nymphalidae sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Nymphalidae sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -22047,12 +22287,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/55152924226_1833b8811a_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55152924226_ef6b494de2_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55152924226",
-   "description": "DSC02827"
+   "description": "DSC02827",
+   "family": "Nymphalidae",
+   "genus": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55153420880",
    "title": "Nymphalidae sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Nymphalidae sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -22068,7 +22311,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55153420880_73ff74034a_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55153420880_ae819c8495_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55153420880",
-   "description": "DSC02889"
+   "description": "DSC02889",
+   "family": "Nymphalidae",
+   "genus": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55148476582",
@@ -22363,7 +22609,7 @@
   {
    "id": "55150694637",
    "title": "Epargyreus sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Epargyreus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -22383,12 +22629,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/55150694637_918ef18c97_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55150694637_a34b1930d3_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55150694637",
-   "description": "DSC02730"
+   "description": "DSC02730",
+   "genus": "Epargyreus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55151749293",
    "title": "Epargyreus sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Epargyreus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -22408,12 +22657,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/55151749293_77caa9ccd3_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55151749293_102d7dea7d_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55151749293",
-   "description": "DSC02664"
+   "description": "DSC02664",
+   "genus": "Epargyreus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55153420395",
    "title": "Epargyreus sp, Surucuá Eco Lodge, Misiones, Argentina 20/02/2026",
-   "species": "",
+   "species": "Epargyreus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Surucuá Eco Lodge, Misiones, Argentina",
@@ -22433,7 +22685,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/55153420395_37c1a83954_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55153420395_6a67dfcc12_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55153420395",
-   "description": "DSC02876"
+   "description": "DSC02876",
+   "genus": "Epargyreus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "55151821374",
@@ -26316,7 +26571,7 @@
   {
    "id": "54680553301",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26336,12 +26591,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54680553301_00c623ebef_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54680553301_7222e25d82_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54680553301",
-   "description": "DSC00723"
+   "description": "DSC00723",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54680783583",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26361,12 +26619,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54680783583_8d0b70fe56_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54680783583_e538c71ee0_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54680783583",
-   "description": "DSC00725"
+   "description": "DSC00725",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54680783314",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26386,12 +26647,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54680783314_93e0a29922_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54680783314_229c46fc6b_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54680783314",
-   "description": "DSC00754"
+   "description": "DSC00754",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54679728037",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26411,12 +26675,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54679728037_fb1722a99a_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54679728037_bd85832e78_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54679728037",
-   "description": "DSC00769"
+   "description": "DSC00769",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54680553306",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26436,12 +26703,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54680553306_70fb6ca312_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54680553306_76957d6a14_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54680553306",
-   "description": "DSC00766"
+   "description": "DSC00766",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54679728317",
    "title": "Polyommatus sp, Güzeldere, Van, Turkey, 25/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Güzeldere, Van, Turkey",
@@ -26461,12 +26731,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/54679728317_ef8d35251e_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54679728317_6ef0c75b07_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54679728317",
-   "description": "DSC00854"
+   "description": "DSC00854",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54680881965",
    "title": "Polyommatus sp, Budakli, Bitlis, Turkey, 26/06/2025",
-   "species": "",
+   "species": "Polyommatus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Budakli, Bitlis, Turkey",
@@ -26486,7 +26759,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/54680881965_efd38713b8_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/54680881965_9a4e739a3e_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/54680881965",
-   "description": "DSC00923"
+   "description": "DSC00923",
+   "genus": "Polyommatus",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "54680882720",
@@ -38790,7 +39066,7 @@
   {
    "id": "53988502358",
    "title": "Mylothris sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Mylothris sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -38810,7 +39086,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988502358_6c9bd11a43_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988502358_e420646277_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988502358",
-   "description": "DSC04590"
+   "description": "DSC04590",
+   "genus": "Mylothris",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53988584729",
@@ -38902,7 +39181,7 @@
   {
    "id": "53987375742",
    "title": "Telipna sp, Kakum NP, Ghana, 12/11/2023",
-   "species": "",
+   "species": "Telipna sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -38922,7 +39201,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53987375742_6ad27aa7fd_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53987375742_2258979238_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53987375742",
-   "description": "DSC04843"
+   "description": "DSC04843",
+   "genus": "Telipna",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53795308038",
@@ -39391,7 +39673,7 @@
   {
    "id": "53988641524",
    "title": "Hypolycaena sp, Hohoe, Ghana, 10/11/2023",
-   "species": "",
+   "species": "Hypolycaena sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Hohoe, Ghana",
@@ -39411,7 +39693,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988641524_083f7b1aa2_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988641524_7ccb87d8fe_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988641524",
-   "description": "DSC04651"
+   "description": "DSC04651",
+   "genus": "Hypolycaena",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53796021983",
@@ -39620,7 +39905,7 @@
   {
    "id": "53988367166",
    "title": "Leptotes sp, Mole NP, Ghana, 06/11/2023",
-   "species": "",
+   "species": "Leptotes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Mole NP, Ghana",
@@ -39640,12 +39925,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988367166_99c6edcd0c_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988367166_be90a7bffe_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988367166",
-   "description": "DSC04124"
+   "description": "DSC04124",
+   "genus": "Leptotes",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53987469452",
    "title": "Leptotes sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Leptotes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -39665,7 +39953,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53987469452_23ab2e9b39_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53987469452_491af67bfd_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53987469452",
-   "description": "DSC04581"
+   "description": "DSC04581",
+   "genus": "Leptotes",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53794857247",
@@ -40602,7 +40893,7 @@
   {
    "id": "53988691543",
    "title": "Bicyclus sp, Ankasa NP, Ghana, 19/11/2023",
-   "species": "",
+   "species": "Bicyclus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -40622,12 +40913,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988691543_b2bdea2f08_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988691543_b9bd29d940_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988691543",
-   "description": "DSC05408"
+   "description": "DSC05408",
+   "genus": "Bicyclus",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53987563477",
    "title": "Bicyclus sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Bicyclus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -40647,7 +40941,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53987563477_a70d0853fb_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53987563477_5d891a7c3e_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53987563477",
-   "description": "DSC04500"
+   "description": "DSC04500",
+   "genus": "Bicyclus",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53797836590",
@@ -41207,7 +41504,7 @@
   {
    "id": "53988813944",
    "title": "Palla sp, Kakum NP, Ghana, 12/11/2023",
-   "species": "",
+   "species": "Palla sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -41227,7 +41524,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988813944_d018dd24a1_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988813944_8aaa84681f_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988813944",
-   "description": "DSC04820"
+   "description": "DSC04820",
+   "genus": "Palla",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53800697526",
@@ -42251,7 +42551,7 @@
   {
    "id": "53989219436",
    "title": "Neptis sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Neptis sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -42271,7 +42571,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53989219436_e9e83f85f1_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53989219436_74122c9ec7_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989219436",
-   "description": "DSC04532"
+   "description": "DSC04532",
+   "genus": "Neptis",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53989533774",
@@ -42951,7 +43254,7 @@
   {
    "id": "53989738309",
    "title": "Bebearia sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Bebearia sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -42971,12 +43274,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53989738309_323255d897_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53989738309_d5d70bc705_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989738309",
-   "description": "DSC04521"
+   "description": "DSC04521",
+   "genus": "Bebearia",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53988529127",
    "title": "Bebearia sp, Kakum NP, Ghana, 13/11/2023",
-   "species": "",
+   "species": "Bebearia sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -42996,7 +43302,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988529127_d498b60397_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988529127_9b288ec4db_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988529127",
-   "description": "DSC04935"
+   "description": "DSC04935",
+   "genus": "Bebearia",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53989440031",
@@ -43674,7 +43983,7 @@
   {
    "id": "53988974802",
    "title": "Euphaedra sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Euphaedra sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -43694,12 +44003,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53988974802_425a74d3dc_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53988974802_b2dff67843_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53988974802",
-   "description": "DSC04517"
+   "description": "DSC04517",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990185489",
    "title": "Euphaedra sp., Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Euphaedra sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -43720,7 +44032,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990185489_da1c9117bb_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990185489_752151f485_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990185489",
-   "description": "DSC04496"
+   "description": "DSC04496",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990105168",
@@ -43870,7 +44185,7 @@
   {
    "id": "53990340148",
    "title": "Euphaedra sp, Kakum NP, Ghana, 12/11/2023",
-   "species": "",
+   "species": "Euphaedra sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -43890,12 +44205,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990340148_1fa2c422f9_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990340148_49945b53ff_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990340148",
-   "description": "DSC04892"
+   "description": "DSC04892",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990336998",
    "title": "Euphaedra sp, Kakum NP, Ghana, 14/11/2023",
-   "species": "",
+   "species": "Euphaedra sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -43915,12 +44233,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990336998_d3fbbe5b85_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990336998_e39e19b5c9_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990336998",
-   "description": "DSC05105"
+   "description": "DSC05105",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990337013",
    "title": "Euphaedra sp, Kakum NP, Ghana, 14/11/2023",
-   "species": "",
+   "species": "Euphaedra sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -43940,7 +44261,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990337013_af6ca1210e_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990337013_29cbf6c786_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990337013",
-   "description": "DSC05106"
+   "description": "DSC05106",
+   "genus": "Euphaedra",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990344413",
@@ -44558,7 +44882,7 @@
   {
    "id": "53990256176",
    "title": "Acraea sp, Hohoe, Ghana, 10/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Hohoe, Ghana",
@@ -44578,12 +44902,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990256176_4d32ca0fd7_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990256176_f614503b15_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990256176",
-   "description": "DSC04654"
+   "description": "DSC04654",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990769645",
    "title": "Acraea sp, Ankasa NP, Ghana, 17/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44603,12 +44930,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990769645_eae7206a00_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990769645_5490a31a89_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990769645",
-   "description": "DSC05145"
+   "description": "DSC05145",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990774730",
    "title": "Acraea sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44628,12 +44958,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990774730_6ad66cb87c_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990774730_b1794fc27b_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990774730",
-   "description": "DSC05310"
+   "description": "DSC05310",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990663644",
    "title": "Acraea sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44653,12 +44986,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990663644_5c36765ff1_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990663644_10a6c77a50_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990663644",
-   "description": "DSC05271"
+   "description": "DSC05271",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53989453382",
    "title": "Acraea sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44678,12 +45014,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53989453382_2849379b60_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53989453382_93d888d246_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989453382",
-   "description": "DSC05272"
+   "description": "DSC05272",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990663589",
    "title": "Acraea sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44703,12 +45042,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990663589_38edf8e54b_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990663589_1baefc8836_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990663589",
-   "description": "DSC05309"
+   "description": "DSC05309",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990592838",
    "title": "Acraea sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Acraea sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -44728,7 +45070,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990592838_b43c9313bd_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990592838_ac79ce8ed1_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990592838",
-   "description": "DSC05314"
+   "description": "DSC05314",
+   "genus": "Acraea",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990776885",
@@ -44994,7 +45339,7 @@
   {
    "id": "53990881549",
    "title": "Spialia sp, Mole NP, Ghana, 06/11/2023",
-   "species": "",
+   "species": "Spialia sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Mole NP, Ghana",
@@ -45014,12 +45359,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990881549_3de4d0d1a5_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990881549_d7e0a7aa72_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990881549",
-   "description": "DSC03992"
+   "description": "DSC03992",
+   "genus": "Spialia",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990992590",
    "title": "Spialia sp, Mole NP, Ghana, 06/11/2023",
-   "species": "",
+   "species": "Spialia sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Mole NP, Ghana",
@@ -45039,12 +45387,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990992590_707017b393_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990992590_0de4f9911b_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990992590",
-   "description": "DSC03986"
+   "description": "DSC03986",
+   "genus": "Spialia",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53989670247",
    "title": "Prosopalpus sp, Ankasa NP, Ghana, 17/11/2023",
-   "species": "",
+   "species": "Prosopalpus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -45064,7 +45415,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53989670247_cb87995a43_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53989670247_4e0a52ee98_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989670247",
-   "description": "DSC05146"
+   "description": "DSC05146",
+   "genus": "Prosopalpus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53991041470",
@@ -45127,7 +45481,7 @@
   {
    "id": "53990852523",
    "title": "Pardaleodes sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Pardaleodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -45147,7 +45501,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990852523_c1e567bcea_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990852523_d9fee034f3_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990852523",
-   "description": "DSC04519"
+   "description": "DSC04519",
+   "genus": "Pardaleodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990932774",
@@ -45182,7 +45539,7 @@
   {
    "id": "53990617131",
    "title": "Osmodes sp, Ankasa NP, Ghana, 18/11/2023",
-   "species": "",
+   "species": "Osmodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Ankasa NP, Ghana",
@@ -45202,12 +45559,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990617131_cc5a133bd7_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990617131_f765d72295_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990617131",
-   "description": "DSC05255"
+   "description": "DSC05255",
+   "genus": "Osmodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990618451",
    "title": "Osmodes sp, Kyabobo NP, Ghana, 09/11/2023",
-   "species": "",
+   "species": "Osmodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kyabobo NP, Ghana",
@@ -45227,12 +45587,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990618451_f3321c1911_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990618451_5ba1819cdb_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990618451",
-   "description": "DSC04486"
+   "description": "DSC04486",
+   "genus": "Osmodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990933774",
    "title": "Osmodes sp, Kakum NP, Ghana, 13/11/2023",
-   "species": "",
+   "species": "Osmodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Kakum NP, Ghana",
@@ -45252,7 +45615,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53990933774_fbb03eef42_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53990933774_3f699279e0_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53990933774",
-   "description": "DSC04930"
+   "description": "DSC04930",
+   "genus": "Osmodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990621061",
@@ -45430,7 +45796,7 @@
   {
    "id": "53991088895",
    "title": "Platylesches sp, Mole NP, Ghana, 06/11/2023",
-   "species": "",
+   "species": "Platylesches sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Mole NP, Ghana",
@@ -45450,7 +45816,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53991088895_d1888c5e8a_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53991088895_90968b494f_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53991088895",
-   "description": "DSC03974"
+   "description": "DSC03974",
+   "genus": "Platylesches",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53990898503",
@@ -46383,7 +46752,7 @@
   {
    "id": "53731796760",
    "title": "Detritivora sp, Sacha Lodge, Ecuador 300m 12/02/2024",
-   "species": "",
+   "species": "Detritivora sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Sacha Lodge, Ecuador",
@@ -46401,7 +46770,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53731796760_3c5a64e707_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53731796760_9e88ed82fc_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53731796760",
-   "description": "DSC05968"
+   "description": "DSC05968",
+   "genus": "Detritivora",
+   "family": "Riodinidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53729366309",
@@ -47423,7 +47795,7 @@
   {
    "id": "53730143445",
    "title": "Pedaliodes sp, Zuro Loma, Ecuador 3200m 08/02/2024",
-   "species": "",
+   "species": "Pedaliodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Zuro Loma, Ecuador",
@@ -47443,7 +47815,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53730143445_e134b7a6c6_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53730143445_586fdd3fc7_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53730143445",
-   "description": "DSC05540"
+   "description": "DSC05540",
+   "genus": "Pedaliodes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53729719966",
@@ -47941,7 +48316,7 @@
   {
    "id": "53731571273",
    "title": "Panyapedaliodes sp, Rio Alambi, Ecuador 1800m 08/02/2024",
-   "species": "",
+   "species": "Panyapedaliodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Rio Alambi, Ecuador",
@@ -47961,7 +48336,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53731571273_9fdae118fe_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53731571273_7b05dd22d9_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53731571273",
-   "description": "DSC05577"
+   "description": "DSC05577",
+   "genus": "Panyapedaliodes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53730144141",
@@ -48024,7 +48402,7 @@
   {
    "id": "53730450127",
    "title": "Urbanus sp, Rio Quijos, Ecuador 1800m 17/02/2024",
-   "species": "",
+   "species": "Urbanus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Rio Quijos, Ecuador",
@@ -48042,12 +48420,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/53730450127_51a58b3f65_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53730450127_d379d11a51_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53730450127",
-   "description": "DSC06380"
+   "description": "DSC06380",
+   "genus": "Urbanus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53730450122",
    "title": "Urbanus sp, Rio Quijos, Ecuador 1800m 17/02/2024",
-   "species": "",
+   "species": "Urbanus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Rio Quijos, Ecuador",
@@ -48065,7 +48446,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/53730450122_3f10ba1bcb_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/53730450122_07866731ce_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53730450122",
-   "description": "DSC06395"
+   "description": "DSC06395",
+   "genus": "Urbanus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "53730342293",
@@ -65446,7 +65830,7 @@
   {
    "id": "50817193637",
    "title": "Ancyluris sp, Santiago de Sura Sura, near Coroico, Bolivia 10/11/2019",
-   "species": "",
+   "species": "Ancyluris sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Santiago de Sura Sura, near Coroico, Bolivia",
@@ -65466,12 +65850,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/50817193637_1a2ee2bcda_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50817193637_ef68ceb5f5_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50817193637",
-   "description": "10_Nov_038_01"
+   "description": "10_Nov_038_01",
+   "genus": "Ancyluris",
+   "family": "Riodinidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50817096891",
    "title": "Ancyluris sp, Santiago de Sura Sura, near Coroico, Bolivia 10/11/2019",
-   "species": "",
+   "species": "Ancyluris sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Santiago de Sura Sura, near Coroico, Bolivia",
@@ -65491,7 +65878,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50817096891_490195d17b_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50817096891_60b8dea861_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50817096891",
-   "description": "10_Nov_038_02"
+   "description": "10_Nov_038_02",
+   "genus": "Ancyluris",
+   "family": "Riodinidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50811278531",
@@ -65645,7 +66035,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "",
-   "country": "Bolivia Butterflies",
+   "country": "Bolivia",
    "lat": null,
    "lon": null,
    "date": "2019-11-08",
@@ -77691,7 +78081,7 @@
   {
    "id": "50062017417",
    "title": "Skipper sp (Osmodes sp, possibly omar) Entebbe Botanic Gardens, Uganda 05/11/2017",
-   "species": "",
+   "species": "Skipper sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Entebbe Botanic Gardens, Uganda",
@@ -77712,7 +78102,8 @@
    "urlLarge": "https://live.staticflickr.com/65535/50062017417_d1d1c96298_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50062017417_0c52c898f0_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50062017417",
-   "description": "DSC05931"
+   "description": "DSC05931",
+   "genus": "Skipper"
   },
   {
    "id": "50075953658",
@@ -77841,7 +78232,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06167",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77862,7 +78253,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06168",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77883,7 +78274,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06169",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77904,7 +78295,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06170",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77925,7 +78316,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06171",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77946,7 +78337,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06172",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77967,7 +78358,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "DSC06173",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": null,
    "lon": null,
    "date": "2017-11-25",
@@ -77988,7 +78379,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "Copy",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": 0.3141557,
    "lon": 32.5846761,
    "date": "2017-11-25",
@@ -78012,7 +78403,7 @@
    "subspecies": "",
    "commonName": "",
    "location": "Kibale",
-   "country": "Uganda Butterflies",
+   "country": "Uganda",
    "lat": 0.4495692,
    "lon": 30.4301352,
    "date": "2017-11-25",
@@ -78036,7 +78427,7 @@
    "subspecies": "",
    "commonName": "Scarce Swallowtail",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -78096,7 +78487,7 @@
    "subspecies": "",
    "commonName": "Bowden's White",
    "location": "Syunik Vorota Pass",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6871371,
    "lon": 45.7135373,
    "date": "2019-05-27",
@@ -78126,7 +78517,7 @@
    "subspecies": "",
    "commonName": "Bowden's White",
    "location": "Syunik Vorota Pass",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6871371,
    "lon": 45.7135373,
    "date": "2019-05-27",
@@ -78156,7 +78547,7 @@
    "subspecies": "",
    "commonName": "Eastern Dappled White",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -78186,7 +78577,7 @@
    "subspecies": "",
    "commonName": "Eastern Orange Tip",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -78216,7 +78607,7 @@
    "subspecies": "",
    "commonName": "Eastern Orange Tip",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -78246,7 +78637,7 @@
    "subspecies": "",
    "commonName": "Eastern Orange Tip",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -78276,7 +78667,7 @@
    "subspecies": "",
    "commonName": "Eastern Orange Tip",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -78306,7 +78697,7 @@
    "subspecies": "",
    "commonName": "Eastern Wood White",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -78336,7 +78727,7 @@
    "subspecies": "",
    "commonName": "Eastern Wood White",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -78366,7 +78757,7 @@
    "subspecies": "",
    "commonName": "Romanoff's Vernal Copper",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -78396,7 +78787,7 @@
    "subspecies": "",
    "commonName": "Blue-spot Hairstreak",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -78426,7 +78817,7 @@
    "subspecies": "",
    "commonName": "Gerhard's Black Hairstreak",
    "location": "Shvanidzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9368608,
    "lon": 46.3711981,
    "date": "2019-05-29",
@@ -78456,7 +78847,7 @@
    "subspecies": "",
    "commonName": "Hyrcanian Black Hairstreak",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -78486,7 +78877,7 @@
    "subspecies": "",
    "commonName": "Hyrcanian Black Hairstreak",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -78516,7 +78907,7 @@
    "subspecies": "",
    "commonName": "Hyrcanian Black Hairstreak",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -78546,7 +78937,7 @@
    "subspecies": "",
    "commonName": "Orange-banded Hairstreak",
    "location": "near Arpi",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 41.0619306,
    "lon": 43.6258139,
    "date": "2019-05-31",
@@ -78576,7 +78967,7 @@
    "subspecies": "",
    "commonName": "Orange-banded Hairstreak",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -78606,7 +78997,7 @@
    "subspecies": "",
    "commonName": "Green Hairstreak",
    "location": "near Arpi",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 41.0619306,
    "lon": 43.6258139,
    "date": "2019-05-31",
@@ -78636,7 +79027,7 @@
    "subspecies": "",
    "commonName": "Sovinsky's Green Hairstreak",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -78666,7 +79057,7 @@
    "subspecies": "",
    "commonName": "Sovinsky's Green Hairstreak",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -78696,7 +79087,7 @@
    "subspecies": "",
    "commonName": "Pfeiffer's Green Hairstreak",
    "location": "near Aghnjadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8993438,
    "lon": 45.2488976,
    "date": "2019-06-03",
@@ -78726,7 +79117,7 @@
    "subspecies": "",
    "commonName": "Pfeiffer's Green Hairstreak",
    "location": "near Aghnjadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8993438,
    "lon": 45.2488976,
    "date": "2019-06-03",
@@ -78756,7 +79147,7 @@
    "subspecies": "",
    "commonName": "Sooty Copper",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -78786,7 +79177,7 @@
    "subspecies": "",
    "commonName": "Purple-shot Copper",
    "location": "Arpa Gorge",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.144685,
    "lon": 44.4938518,
    "date": "2019-06-01",
@@ -78816,7 +79207,7 @@
    "subspecies": "",
    "commonName": "Lesser Fiery Copper",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -78846,7 +79237,7 @@
    "subspecies": "",
    "commonName": "Lesser Fiery Copper",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -78876,7 +79267,7 @@
    "subspecies": "",
    "commonName": "Anatolian Fiery Copper",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -78906,7 +79297,7 @@
    "subspecies": "",
    "commonName": "Turkish Fiery Copper",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -78936,7 +79327,7 @@
    "subspecies": "",
    "commonName": "Caucasian Turan Copper",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-29",
@@ -78966,7 +79357,7 @@
    "subspecies": "",
    "commonName": "Caucasian Turan Copper",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -78996,7 +79387,7 @@
    "subspecies": "",
    "commonName": "Caucasian Turan Copper",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-29",
@@ -79026,7 +79417,7 @@
    "subspecies": "",
    "commonName": "Little Tiger Blue",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -79056,7 +79447,7 @@
    "subspecies": "",
    "commonName": "Osiris Blue",
    "location": "Lanjanist",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8719986,
    "lon": 44.9507549,
    "date": "2019-05-26",
@@ -79086,7 +79477,7 @@
    "subspecies": "",
    "commonName": "Green-underside Blue",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -79116,7 +79507,7 @@
    "subspecies": "",
    "commonName": "Green-underside Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79146,7 +79537,7 @@
    "subspecies": "",
    "commonName": "Green-underside Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79176,7 +79567,7 @@
    "subspecies": "",
    "commonName": "Bavius Blue",
    "location": "Gnishik",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6571912,
    "lon": 45.2978647,
    "date": "2019-06-02",
@@ -79206,7 +79597,7 @@
    "subspecies": "",
    "commonName": "Bavius Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79236,7 +79627,7 @@
    "subspecies": "",
    "commonName": "Bavius Blue",
    "location": "Gnishik",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6571912,
    "lon": 45.2978647,
    "date": "2019-06-02",
@@ -79266,7 +79657,7 @@
    "subspecies": "",
    "commonName": "Odd-spot Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79296,7 +79687,7 @@
    "subspecies": "",
    "commonName": "Odd-spot Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79326,7 +79717,7 @@
    "subspecies": "",
    "commonName": "Odd-spot Blue",
    "location": "Garni Gorge",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-06-06",
@@ -79356,7 +79747,7 @@
    "subspecies": "",
    "commonName": "Christoph's Blue",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -79386,7 +79777,7 @@
    "subspecies": "",
    "commonName": "Christoph's Blue",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -79416,7 +79807,7 @@
    "subspecies": "",
    "commonName": "Christoph's Blue",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -79446,7 +79837,7 @@
    "subspecies": "",
    "commonName": "Christoph's Blue",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -79476,7 +79867,7 @@
    "subspecies": "modicus",
    "commonName": "Zephyr Blue",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -79507,7 +79898,7 @@
    "subspecies": "modicus",
    "commonName": "Zephyr Blue",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -79538,7 +79929,7 @@
    "subspecies": "modicus",
    "commonName": "Zephyr Blue",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -79569,7 +79960,7 @@
    "subspecies": "",
    "commonName": "Bosnian Blue",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -79599,7 +79990,7 @@
    "subspecies": "",
    "commonName": "Bosnian Blue",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -79629,7 +80020,7 @@
    "subspecies": "",
    "commonName": "Geranium Argus",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -79659,7 +80050,7 @@
    "subspecies": "",
    "commonName": "Geranium Argus",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -79689,7 +80080,7 @@
    "subspecies": "",
    "commonName": "Pontic Blue",
    "location": "Lanjanist",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8719986,
    "lon": 44.9507549,
    "date": "2019-05-26",
@@ -79719,7 +80110,7 @@
    "subspecies": "",
    "commonName": "Pontic Blue",
    "location": "Lanjanist",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8719986,
    "lon": 44.9507549,
    "date": "2019-05-26",
@@ -79749,7 +80140,7 @@
    "subspecies": "",
    "commonName": "Amanda's Blue",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79779,7 +80170,7 @@
    "subspecies": "",
    "commonName": "Amanda's Blue",
    "location": "near Yeghednadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7601008,
    "lon": 45.3302273,
    "date": "2019-06-02",
@@ -79809,7 +80200,7 @@
    "subspecies": "",
    "commonName": "Common Blue",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-29",
@@ -79839,7 +80230,7 @@
    "subspecies": "",
    "commonName": "Nettle-Tree Butterfly",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-29",
@@ -79869,7 +80260,7 @@
    "subspecies": "",
    "commonName": "Nettle-Tree Butterfly",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -79899,7 +80290,7 @@
    "subspecies": "",
    "commonName": "Ionian Emperor",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -79929,7 +80320,7 @@
    "subspecies": "",
    "commonName": "Southern White Admiral",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -79959,7 +80350,7 @@
    "subspecies": "",
    "commonName": "Southern White Admiral",
    "location": "Yerevan Botanical Gardens",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-06-07",
@@ -79989,7 +80380,7 @@
    "subspecies": "",
    "commonName": "Hungarian Glider",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80019,7 +80410,7 @@
    "subspecies": "",
    "commonName": "Painted Lady",
    "location": "Khor Virap Monastery",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": null,
    "lon": null,
    "date": "2019-05-25",
@@ -80049,7 +80440,7 @@
    "subspecies": "",
    "commonName": "Marsh Fritillary",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -80079,7 +80470,7 @@
    "subspecies": "",
    "commonName": "Marsh Fritillary",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80139,7 +80530,7 @@
    "subspecies": "",
    "commonName": "Glanville Fritillary",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80199,7 +80590,7 @@
    "subspecies": "",
    "commonName": "Glanville Fritillary",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80229,7 +80620,7 @@
    "subspecies": "",
    "commonName": "Freyer's Fritillary",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -80259,7 +80650,7 @@
    "subspecies": "",
    "commonName": "Freyer's Fritillary",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -80289,7 +80680,7 @@
    "subspecies": "",
    "commonName": "Freyer's Fritillary",
    "location": "Arpa Gorge",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.144685,
    "lon": 44.4938518,
    "date": "2019-06-01",
@@ -80319,7 +80710,7 @@
    "subspecies": "",
    "commonName": "Eastern Knapweed Fritillary",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -80349,7 +80740,7 @@
    "subspecies": "",
    "commonName": "Eastern Knapweed Fritillary",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -80379,7 +80770,7 @@
    "subspecies": "",
    "commonName": "Transcaucasian Fritillary",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -80409,7 +80800,7 @@
    "subspecies": "",
    "commonName": "Transcaucasian Fritillary",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-04",
@@ -80439,7 +80830,7 @@
    "subspecies": "",
    "commonName": "Spotted Fritillary",
    "location": "near Aghnjadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8993438,
    "lon": 45.2488976,
    "date": "2019-06-03",
@@ -80469,7 +80860,7 @@
    "subspecies": "",
    "commonName": "Persian Fritillary",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-27",
@@ -80499,7 +80890,7 @@
    "subspecies": "",
    "commonName": "Persian Fritillary",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80529,7 +80920,7 @@
    "subspecies": "",
    "commonName": "Cardinal",
    "location": "Herher",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7753797,
    "lon": 45.5383515,
    "date": "2019-06-01",
@@ -80559,7 +80950,7 @@
    "subspecies": "",
    "commonName": "Niobe Fritillary",
    "location": "near Yeghednadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7601008,
    "lon": 45.3302273,
    "date": "2019-06-02",
@@ -80589,7 +80980,7 @@
    "subspecies": "",
    "commonName": "Eastern Grayling",
    "location": "near Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-28",
@@ -80619,7 +81010,7 @@
    "subspecies": "",
    "commonName": "Dalmatian/Steppe Ringlet",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -80709,7 +81100,7 @@
    "subspecies": "",
    "commonName": "Oriental Meadow Brown",
    "location": "Shvanidzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9368608,
    "lon": 46.3711981,
    "date": "2019-05-29",
@@ -80739,7 +81130,7 @@
    "subspecies": "",
    "commonName": "Russian Heath",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -80769,7 +81160,7 @@
    "subspecies": "",
    "commonName": "Saadi's Heath",
    "location": "near Arpi",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 41.0619306,
    "lon": 43.6258139,
    "date": "2019-05-31",
@@ -80799,7 +81190,7 @@
    "subspecies": "",
    "commonName": "Large Wall Brown",
    "location": "near Aghnjadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8993438,
    "lon": 45.2488976,
    "date": "2019-06-03",
@@ -80829,7 +81220,7 @@
    "subspecies": "",
    "commonName": "Yellow-banded Skipper",
    "location": "Khosrov Forest",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.0373046,
    "lon": 44.9263411,
    "date": "2019-05-26",
@@ -80859,7 +81250,7 @@
    "subspecies": "",
    "commonName": "Aegean Skipper",
    "location": "Arevik NP",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9462839,
    "lon": 46.4395831,
    "date": "2019-05-30",
@@ -80889,7 +81280,7 @@
    "subspecies": "",
    "commonName": "Tessellated Skipper",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -80919,7 +81310,7 @@
    "subspecies": "",
    "commonName": "Tessellated Skipper",
    "location": "Tsapatagh",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 40.4105639,
    "lon": 45.4742099,
    "date": "2019-06-05",
@@ -80949,7 +81340,7 @@
    "subspecies": "",
    "commonName": "Reverdin's Marbled Skipper",
    "location": "near Aghnjadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.8993438,
    "lon": 45.2488976,
    "date": "2019-06-03",
@@ -80979,7 +81370,7 @@
    "subspecies": "",
    "commonName": "Inky Skipper",
    "location": "Noravank",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.6848231,
    "lon": 45.2330392,
    "date": "2019-05-31",
@@ -81009,7 +81400,7 @@
    "subspecies": "",
    "commonName": "Inky Skipper",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -81039,7 +81430,7 @@
    "subspecies": "",
    "commonName": "Levantine Skipper",
    "location": "near Agarakadzor",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 39.7350462,
    "lon": 45.348773,
    "date": "2019-06-02",
@@ -81069,7 +81460,7 @@
    "subspecies": "",
    "commonName": "Mediterranean Skipper",
    "location": "Meghri",
-   "country": "Armenia Butterflies",
+   "country": "Armenia",
    "lat": 38.9013004,
    "lon": 46.2459121,
    "date": "2019-05-29",
@@ -93768,7 +94159,7 @@
   {
    "id": "50814464771",
    "title": "Phoebis sp, Pozas del Vagante, Bolivia 07/11/2019",
-   "species": "",
+   "species": "Phoebis sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Pozas del Vagante, Bolivia",
@@ -93787,7 +94178,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50814464771_3db3266996_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50814464771_961b6d3506_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814464771",
-   "description": "07_Nov_070_01"
+   "description": "07_Nov_070_01",
+   "genus": "Phoebis",
+   "family": "Pieridae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50814571167",
@@ -93888,7 +94282,7 @@
   {
    "id": "50816568588",
    "title": "Gargina sp, Pozas del Vagante, Bolivia 18/11/2019",
-   "species": "",
+   "species": "Gargina sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Pozas del Vagante, Bolivia",
@@ -93907,7 +94301,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50816568588_ef077e2686_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50816568588_806425b80a_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50816568588",
-   "description": "18_Nov_007_01"
+   "description": "18_Nov_007_01",
+   "genus": "Gargina",
+   "family": "Lycaenidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50832886291",
@@ -93960,7 +94357,7 @@
   {
    "id": "50814113843",
    "title": "Pedaliodes sp, San Pedro de la Loma, Bolivia 08/11/2019",
-   "species": "",
+   "species": "Pedaliodes sp.",
    "subspecies": "",
    "commonName": "",
    "location": "San Pedro de la Loma, Bolivia",
@@ -93979,7 +94376,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50814113843_9f04d37275_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50814113843_f850f1dc75_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50814113843",
-   "description": "08_Nov_009_01"
+   "description": "08_Nov_009_01",
+   "genus": "Pedaliodes",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50814963122",
@@ -94296,7 +94696,7 @@
   {
    "id": "50817193082",
    "title": "Memphis sp, Santiago de Sura Sura, near Coroico, Bolivia 10/11/2019",
-   "species": "",
+   "species": "Memphis sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Santiago de Sura Sura, near Coroico, Bolivia",
@@ -94315,7 +94715,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50817193082_bd02d90d15_c.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50817193082_694b3436d4_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50817193082",
-   "description": "10_Nov_039_01"
+   "description": "10_Nov_039_01",
+   "genus": "Memphis",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50817150346",
@@ -94608,7 +95011,7 @@
   {
    "id": "50817407002",
    "title": "Ithomia sp, Coroico - Sol y Luna, Bolivia 18/11/2019",
-   "species": "",
+   "species": "Ithomia sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Coroico, Sol y Luna, Bolivia",
@@ -94627,7 +95030,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50817407002_fcae782e7b_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50817407002_5a2a1e836d_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50817407002",
-   "description": "18_Nov_019_01"
+   "description": "18_Nov_019_01",
+   "genus": "Ithomia",
+   "family": "Nymphalidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50817152111",
@@ -94728,7 +95134,7 @@
   {
    "id": "50817247412",
    "title": "Gorgythion sp, San Pedro, Bolivia 11/11/2019",
-   "species": "",
+   "species": "Gorgythion sp.",
    "subspecies": "",
    "commonName": "",
    "location": "San Pedro, Bolivia",
@@ -94747,12 +95153,15 @@
    "urlLarge": "https://live.staticflickr.com/65535/50817247412_0e8520db08_c.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50817247412_c19cc45018_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50817247412",
-   "description": "11_Nov_009_01"
+   "description": "11_Nov_009_01",
+   "genus": "Gorgythion",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50832967772",
    "title": "Gorgythion sp, Tamborapa, Marañon Valley, Cajamarca, Peru, 06/07/2018",
-   "species": "",
+   "species": "Gorgythion sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Tamborapa, Marañon Valley, Cajamarca, Peru",
@@ -94771,7 +95180,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50832967772_b3388e3979_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50832967772_22a8477c80_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50832967772",
-   "description": "DSC07360"
+   "description": "DSC07360",
+   "genus": "Gorgythion",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50814431521",
@@ -94872,7 +95284,7 @@
   {
    "id": "50832953866",
    "title": "Urbanus sp, Plataforma, San Martin, Peru, 15/07/2018",
-   "species": "",
+   "species": "Urbanus sp.",
    "subspecies": "",
    "commonName": "",
    "location": "Plataforma, San Martin, Peru",
@@ -94891,7 +95303,10 @@
    "urlLarge": "https://live.staticflickr.com/65535/50832953866_cf2f531905_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/50832953866_da311fa3a1_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50832953866",
-   "description": "DSC07642"
+   "description": "DSC07642",
+   "genus": "Urbanus",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50815200277",

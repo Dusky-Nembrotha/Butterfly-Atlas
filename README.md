@@ -77,9 +77,17 @@ Refresh the site and the full collection appears.
 
 ## 3. Keep it up to date automatically
 
-`.github/workflows/update-data.yml` runs the collector every Monday and
+`.github/workflows/update-data.yml` runs the full pipeline every Monday and
 whenever you trigger it manually (**Actions → Update butterfly data → Run
 workflow**). It commits any changes back to the repo.
+
+The pipeline is three steps, and the order matters: `fetch_flickr.py` pulls
+from Flickr, then `fix_geocode.py` resolves localities, then `fix_taxonomy.py`
+resolves taxonomy. The collector runs with `--skip-geocode` there, because
+`fix_geocode.py` re-resolves every record without coordinates anyway and does
+it far better. All four cache files are committed — `fetch_flickr.py` uses
+`geocache.json`/`taxocache.json` and the two `fix_*.py` scripts use the `2`
+pair, so committing only one pair silently discards the other half each week.
 
 To use the more reliable API-key path in the Action, add your key as a repo
 secret: **Settings → Secrets and variables → Actions → New repository secret**,
@@ -105,8 +113,17 @@ From that it extracts:
 - **Species** — the leading `Genus species` binomial (an optional third word
   is treated as a subspecies only when it's a clean Latin epithet, so
   descriptive notes like "*Charaxes candiope* basking on fruit" are handled).
+- **Genus-level determinations** — a title such as `Polyommatus sp, Güzeldere,
+  Van, Turkey` is a real identification to genus, not a failure to identify.
+  These are recorded in open-nomenclature form (`Polyommatus sp.`) with the
+  genus set, so they appear under their genus and family instead of being
+  discarded as "Unidentified". `Nymphalidae sp.` is handled the same way at
+  family rank. A name that isn't really a genus (`Skipper sp.`) resolves to no
+  family and is listed in `suspects.txt` for review.
 - **Locality / country** — the comma-separated text after the name; the album
-  name (often a country) is used as a fallback.
+  name (often a country) is used as a fallback, with any trailing
+  "Butterflies" stripped so an album called *Armenia Butterflies* yields the
+  country *Armenia*.
 
 Taxonomy (order / family / genus) is then looked up per species from **GBIF**,
 and any photo without Flickr coordinates is geocoded from its locality text via
@@ -135,7 +152,9 @@ python3 scraper/fetch_flickr.py --self-test
   "albums":  [ { "id": "...", "title": "Uganda", "count": 120 } ],
   "species": { "Papilio dardanus": { "order": "...", "family": "Papilionidae",
                                       "genus": "Papilio", "gbifKey": 1795841,
-                                      "count": 3 } },
+                                      "count": 3 },
+               "Polyommatus sp.":  { "family": "Lycaenidae",
+                                      "genus": "Polyommatus", "count": 7 } },
   "photos":  [ { "id": "...", "species": "Papilio dardanus",
                  "location": "Bwindi, Uganda", "country": "Uganda",
                  "lat": -1.08, "lon": 29.67, "date": "2026-02-14",
@@ -149,6 +168,13 @@ The front-end computes everything else (filter lists, counts, the map) from
 this file, and enriches species notes live from GBIF + Wikipedia in the
 visitor's browser (cached in `localStorage`).
 
+One thing it can't derive from the data is which continent a country is on,
+so `js/app.js` carries a `CONTINENTS` lookup for the Continent filter. **Add a
+line there when you add a country to a new part of the world**, or its records
+won't appear under any continent. A country can list more than one — Turkey
+and Armenia are under both Europe and Asia, since a Western Palearctic species
+found in eastern Anatolia is one you'd look for under either.
+
 ---
 
 ## Optional: test the front-end locally
@@ -158,7 +184,9 @@ visitor's browser (cached in `localStorage`).
 python3 -m http.server 8000
 # open http://localhost:8000
 
-# (optional) run the headless UI smoke test
+# (optional) run the headless UI test suite — exercises the real data:
+# filter/count agreement, the record popup's click-to-filter round-trip,
+# genus-level records, search and species enrichment
 npm install jsdom
 node scraper/_test_frontend.js
 ```

@@ -103,6 +103,45 @@ COUNTRIES = {
     "italy", "greece", "portugal", "thailand", "vietnam", "panama",
 }
 
+# "Polyommatus sp." / "Acraea spp." — an identification to genus (or family)
+# but deliberately not to species. These are real determinations, not failures:
+# without this they parsed to no species AND no genus, so they showed as
+# "Unidentified" and were missing from the Genus filter entirely.
+GENUS_ONLY_RE = re.compile(r"\b([A-Z][a-z]+)\s+(?:sp|spp)\.?(?![a-z])")
+
+# The six recognised true-butterfly families, for family-level determinations
+# such as "Nymphalidae sp.".
+BUTTERFLY_FAMILIES = {
+    "Papilionidae", "Pieridae", "Nymphalidae",
+    "Lycaenidae", "Riodinidae", "Hesperiidae",
+}
+
+
+def _find_genus_only(text):
+    """First "Genus sp." style match that isn't really place text."""
+    for m in GENUS_ONLY_RE.finditer(text):
+        if m.group(1).lower() in PLACE_WORDS:
+            continue
+        return m
+    return None
+
+
+def open_nomenclature_rank(species):
+    """Classify an open-nomenclature name written by parse_title().
+
+    "Polyommatus sp."  -> ("genus", "Polyommatus")
+    "Nymphalidae sp."  -> ("family", "Nymphalidae")
+    "Papilio dardanus" -> (None, "")
+    """
+    m = re.match(r"^([A-Z][a-z]+)\s+sp\.$", (species or "").strip())
+    if not m:
+        return None, ""
+    head = m.group(1)
+    if head.endswith(("idae", "inae")):
+        return "family", head
+    return "genus", head
+
+
 def _find_binomial(text):
     """Scan left-to-right for the first plausible Genus[+species] match,
     skipping candidates that are really locality or descriptive text."""
@@ -156,9 +195,19 @@ def parse_title(title, album_title=""):
         rest = re.sub(r"^[\s,\)]+", "", title[end_pos:])
         loc_parts = [p.strip(" )") for p in rest.split(",") if p.strip(" )")]
     else:
-        # nothing recognisable as a binomial — keep the whole title as
-        # locality text rather than inventing a species that isn't there.
-        loc_parts = [p.strip() for p in title.split(",") if p.strip()]
+        gm = _find_genus_only(title)
+        if gm:
+            # Identified to genus only. Recorded in the standard open-
+            # nomenclature form so it reads correctly and still files under
+            # its genus, rather than being discarded as "Unidentified".
+            species = "%s sp." % gm.group(1)
+            common = re.sub(r"[\s,\(]+$", "", title[:gm.start()]).strip()
+            rest = re.sub(r"^[\s,\)]+", "", title[gm.end():])
+            loc_parts = [p.strip(" )") for p in rest.split(",") if p.strip(" )")]
+        else:
+            # nothing recognisable as a binomial — keep the whole title as
+            # locality text rather than inventing a species that isn't there.
+            loc_parts = [p.strip() for p in title.split(",") if p.strip()]
 
     location = ", ".join(loc_parts).strip()
     country = ""
@@ -169,8 +218,10 @@ def parse_title(title, album_title=""):
     # fall back to album title (albums are named by place in this collection)
     if not country and album_title:
         at = album_title.strip()
-        # album may be "Uganda 2026" -> take the wordy part
-        cand = re.sub(r"\b\d{4}\b", "", at).strip()
+        # album may be "Uganda 2026" or "Armenia Butterflies" -> take the
+        # place part only. Leaving "Butterflies" on produced a country field
+        # of "Armenia Butterflies" on 107 records, which is not a country.
+        cand = re.sub(r"\b\d{4}\b|\bButterflies\b", "", at, flags=re.IGNORECASE).strip(" ,-")
         country = cand
         if not location:
             location = cand
@@ -403,7 +454,7 @@ def first_url(p):
             return u
     return ""
 
-def build(user, api_key):
+def build(user, api_key, skip_geocode=False):
     session = requests.Session()
     session.headers.update({"User-Agent": UA})
     fl = Flickr(api_key=api_key, session=session)
@@ -458,6 +509,12 @@ def build(user, api_key):
                 "flickrPage": "https://www.flickr.com/photos/%s/%s" % (nsid, p.get("id")),
                 "description": (p.get("description", {}) or {}).get("_content", ""),
             }
+            rank, taxon = open_nomenclature_rank(species)
+            if rank == "genus":
+                rec["genus"] = taxon
+            elif rank == "family" and taxon in BUTTERFLY_FAMILIES:
+                rec["family"] = taxon
+
             photos_out.append(rec)
             if species and species not in species_tbl:
                 species_tbl[species] = {"count": 0, "commonName": ""}
@@ -474,15 +531,20 @@ def build(user, api_key):
     save_cache(TAXOCACHE, taxo_cache)
 
     # backfill family/genus onto photos + geocode those without coordinates
-    print("Geocoding localities without Flickr coordinates (this can take a while — "
-          "Nominatim allows ~1 request/second)…")
+    if skip_geocode:
+        print("Skipping geocoding — fix_geocode.py resolves every record with no "
+              "coordinates, and does it better (abbreviation expansion, structured "
+              "queries, Photon fallback, country-box validation).")
+    else:
+        print("Geocoding localities without Flickr coordinates (this can take a while — "
+              "Nominatim allows ~1 request/second)…")
     geo_stats = {"throttled": 0, "errors": 0, "last_error": "", "exact": 0, "approx": 0, "none": 0}
     for i, rec in enumerate(photos_out):
         s = species_tbl.get(rec["species"], {})
         rec_family = s.get("family", "")
         if rec_family:
             rec["family"] = rec_family
-        if rec["lat"] is None and (rec["location"] or rec["country"]):
+        if not skip_geocode and rec["lat"] is None and (rec["location"] or rec["country"]):
             g, approx = geocode(session, rec["location"], rec["country"], geo_cache, geo_stats)
             if g:
                 rec["lat"], rec["lon"] = g["lat"], g["lon"]
@@ -493,12 +555,13 @@ def build(user, api_key):
                     geo_stats["exact"] += 1
             else:
                 geo_stats["none"] += 1
-    save_cache(GEOCACHE, geo_cache)
-    print("  geocoded: %d exact, %d approximate (country/region-level), %d not found"
-          % (geo_stats["exact"], geo_stats["approx"], geo_stats["none"]))
-    if geo_stats["throttled"] or geo_stats["errors"]:
-        print("  (%d requests throttled, %d failed outright — last error: %s)"
-              % (geo_stats["throttled"], geo_stats["errors"], geo_stats["last_error"]))
+    if not skip_geocode:
+        save_cache(GEOCACHE, geo_cache)
+        print("  geocoded: %d exact, %d approximate (country/region-level), %d not found"
+              % (geo_stats["exact"], geo_stats["approx"], geo_stats["none"]))
+        if geo_stats["throttled"] or geo_stats["errors"]:
+            print("  (%d requests throttled, %d failed outright — last error: %s)"
+                  % (geo_stats["throttled"], geo_stats["errors"], geo_stats["last_error"]))
 
     payload = {
         "generated": datetime.now(timezone.utc).isoformat(),
@@ -552,6 +615,18 @@ def self_test():
         # locality text that could look like a binomial ("San" + "Pedro") must
         # NOT be mistaken for a species when a real one precedes it — this is
         # implicitly checked by the Peacock case above already resolving Spain.
+        # open nomenclature: identified to genus (or family) but not species.
+        ("Polyommatus sp, G\u00fczeldere, Van, Turkey, 25/06/2025",
+         ("Polyommatus sp.", "", "Turkey", "")),
+        ("Acraea sp, Ankasa NP, Ghana, 18/11/2023",
+         ("Acraea sp.", "", "Ghana", "")),
+        ("Urbanus sp, Rio Quijos, Ecuador 1800m 17/02/2024",
+         ("Urbanus sp.", "", "Ecuador", "")),
+        ("Nymphalidae sp, Suruc\u00faa Eco Lodge, Misiones, Argentina 20/02/2026",
+         ("Nymphalidae sp.", "", "Argentina", "")),
+        # a real binomial still wins over any later "sp." in the same title
+        ("Charaxes candiope, Acraea sp nearby, Kibale, Uganda",
+         ("Charaxes candiope", "", "Uganda", "")),
     ]
     ok = True
     for title, exp in cases:
@@ -563,11 +638,29 @@ def self_test():
               "| %-50s -> sp=%r ss=%r common=%r loc=%r ctry=%r"
               % (title[:50], sp, ss, common, loc, ctry))
         ok = ok and good
+    # open-nomenclature rank classification
+    for name, exp_rank, exp_taxon in [
+        ("Polyommatus sp.", "genus", "Polyommatus"),
+        ("Nymphalidae sp.", "family", "Nymphalidae"),
+        ("Papilio dardanus", None, ""),
+    ]:
+        got = open_nomenclature_rank(name)
+        good = got == (exp_rank, exp_taxon)
+        print(("PASS" if good else "FAIL"),
+              "| open_nomenclature_rank(%-18r) -> %r" % (name, got))
+        ok = ok and good
+
     # album fallback (no country in title at all)
     sp, ss, loc, ctry, common = parse_title("Danaus plexippus", album_title="Peru 2025")
     print(("PASS" if ctry == "Peru" else "FAIL"),
           "| album fallback -> ctry=%r (expected Peru)" % ctry)
     ok = ok and ctry == "Peru"
+
+    # "Armenia Butterflies" is an album name, not a country
+    sp, ss, loc, ctry, common = parse_title("Vanessa atalanta", album_title="Armenia Butterflies")
+    print(("PASS" if ctry == "Armenia" else "FAIL"),
+          "| album fallback strips 'Butterflies' -> ctry=%r (expected Armenia)" % ctry)
+    ok = ok and ctry == "Armenia"
 
     # geocode fallback candidate list (offline — no network — just checks the
     # progressive query list is sane and ends at the country)
@@ -591,6 +684,8 @@ def main():
     ap = argparse.ArgumentParser(description="Build butterflies.json from a Flickr photostream.")
     ap.add_argument("--user", help="Flickr username, NSID, or photos URL (e.g. robertgodden)")
     ap.add_argument("--self-test", action="store_true", help="run offline parser tests and exit")
+    ap.add_argument("--skip-geocode", action="store_true",
+                    help="don't geocode here; leave it to fix_geocode.py (used by the weekly workflow)")
     # parse_known_args so a stray argument from IDLE/double-click can't crash it
     args, _ = ap.parse_known_args()
 
@@ -611,7 +706,7 @@ def main():
         raise SystemExit("The 'requests' package is required: pip install -r scraper/requirements.txt")
 
     try:
-        build(user, os.environ.get("FLICKR_API_KEY"))
+        build(user, os.environ.get("FLICKR_API_KEY"), skip_geocode=args.skip_geocode)
     except SystemExit:
         raise
     except Exception as e:
