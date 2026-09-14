@@ -2009,5 +2009,208 @@
    "lon": 43.0591978
   },
   "approx": false
+ },
+ "Arevik NP|Armenia": {
+  "hit": {
+   "lat": 38.9462839,
+   "lon": 46.4395831
+  },
+  "approx": false
+ },
+ "Arpa Gorge|Armenia": {
+  "hit": {
+   "lat": 39.733671,
+   "lon": 45.3772423
+  },
+  "approx": false
+ },
+ "Bolivia|Bolivia": {
+  "hit": {
+   "lat": -17.7834217,
+   "lon": -63.1820853
+  },
+  "approx": false
+ },
+ "Copy|Uganda": {
+  "hit": {
+   "lat": 0.3140568,
+   "lon": 32.5821722
+  },
+  "approx": false
+ },
+ "DSC06167|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06168|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06169|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06170|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06171|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06172|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "DSC06173|Uganda": {
+  "hit": {
+   "lat": 1.5333554,
+   "lon": 32.2166578
+  },
+  "approx": true
+ },
+ "Garni Gorge|Armenia": {
+  "hit": {
+   "lat": 40.1223308,
+   "lon": 44.7420188
+  },
+  "approx": false
+ },
+ "Gnishik|Armenia": {
+  "hit": {
+   "lat": 39.6571912,
+   "lon": 45.2978647
+  },
+  "approx": false
+ },
+ "Herher|Armenia": {
+  "hit": {
+   "lat": 39.7753797,
+   "lon": 45.5383515
+  },
+  "approx": false
+ },
+ "Khor Virap Monastery|Armenia": {
+  "hit": {
+   "lat": 39.8783603,
+   "lon": 44.5761544
+  },
+  "approx": false
+ },
+ "Khosrov Forest|Armenia": {
+  "hit": {
+   "lat": 39.9225892,
+   "lon": 44.8171766
+  },
+  "approx": false
+ },
+ "Kibale|Uganda": {
+  "hit": {
+   "lat": 0.616667,
+   "lon": 30.266667
+  },
+  "approx": false
+ },
+ "Lanjanist|Armenia": {
+  "hit": {
+   "lat": 39.8719986,
+   "lon": 44.9507549
+  },
+  "approx": false
+ },
+ "Meghri|Armenia": {
+  "hit": {
+   "lat": 38.9013004,
+   "lon": 46.2459121
+  },
+  "approx": false
+ },
+ "Noravank|Armenia": {
+  "hit": {
+   "lat": 39.6848231,
+   "lon": 45.2330392
+  },
+  "approx": false
+ },
+ "Shvanidzor|Armenia": {
+  "hit": {
+   "lat": 38.9368608,
+   "lon": 46.3711981
+  },
+  "approx": false
+ },
+ "Syunik Vorota Pass|Armenia": {
+  "hit": {
+   "lat": 39.6871371,
+   "lon": 45.7135373
+  },
+  "approx": false
+ },
+ "Tsapatagh|Armenia": {
+  "hit": {
+   "lat": 40.4105639,
+   "lon": 45.4742099
+  },
+  "approx": false
+ },
+ "Yerevan Botanical Gardens|Armenia": {
+  "hit": {
+   "lat": 40.2108571,
+   "lon": 44.5568364
+  },
+  "approx": false
+ },
+ "near Agarakadzor|Armenia": {
+  "hit": {
+   "lat": 39.7350462,
+   "lon": 45.348773
+  },
+  "approx": false
+ },
+ "near Aghnjadzor|Armenia": {
+  "hit": {
+   "lat": 39.8993438,
+   "lon": 45.2488976
+  },
+  "approx": false
+ },
+ "near Arpi|Armenia": {
+  "hit": {
+   "lat": 39.7389601,
+   "lon": 45.2669547
+  },
+  "approx": false
+ },
+ "near Meghri|Armenia": {
+  "hit": {
+   "lat": 38.9013004,
+   "lon": 46.2459121
+  },
+  "approx": false
+ },
+ "near Yeghednadzor|Armenia": {
+  "hit": {
+   "lat": 39.7601008,
+   "lon": 45.3302273
+  },
+  "approx": false
  }
 }
