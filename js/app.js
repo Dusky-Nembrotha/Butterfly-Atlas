@@ -220,35 +220,137 @@
     });
   }
 
-  // Canonical country names, so "UK"/"U.K."/"United Kingdom" all collapse to
-  // one dropdown entry, and a locality mistakenly stored where the country
-  // should be (e.g. a nature reserve name) doesn't create a bogus "country".
-  var COUNTRY_CANON = {
-    "uganda": "Uganda", "brazil": "Brazil", "argentina": "Argentina", "romania": "Romania",
-    "turkey": "Turkey", "peru": "Peru", "ghana": "Ghana", "ecuador": "Ecuador", "spain": "Spain",
-    "bolivia": "Bolivia", "armenia": "Armenia",
-    "united kingdom": "United Kingdom", "uk": "United Kingdom", "u.k.": "United Kingdom",
-    "england": "United Kingdom", "scotland": "United Kingdom", "wales": "United Kingdom",
-    "northern ireland": "United Kingdom",
-    "colombia": "Colombia", "costa rica": "Costa Rica", "mexico": "Mexico", "kenya": "Kenya",
-    "tanzania": "Tanzania", "south africa": "South Africa", "india": "India", "malaysia": "Malaysia",
-    "indonesia": "Indonesia",
-    "usa": "United States", "u.s.a.": "United States", "us": "United States", "united states": "United States",
-    "france": "France", "italy": "Italy", "greece": "Greece", "portugal": "Portugal",
-    "thailand": "Thailand", "vietnam": "Vietnam", "panama": "Panama"
+  // Every ISO 3166-1 country and territory, grouped by continent (UN M49
+  // regions, with the Americas split into North and South). Generated from
+  // the ISO 3166 dataset rather than hand-listed, so an album from any
+  // country works with no code change.
+  //
+  // A country appears in two groups where it genuinely straddles a boundary
+  // (Turkey, Russia, Kazakhstan, Egypt and the Caucasus states). Continent
+  // counts therefore sum to more than the collection size, by design.
+  var CONTINENT_COUNTRIES = {
+    "Africa":
+      "Algeria|Angola|Benin|Botswana|British Indian Ocean Territory|Burkina Faso|" +
+      "Burundi|Cameroon|Cape Verde|Central African Republic|Chad|Comoros|" +
+      "Côte d’Ivoire|DR Congo|Djibouti|Egypt|Equatorial Guinea|Eritrea|Eswatini|" +
+      "Ethiopia|French Southern Territories|Gabon|Gambia|Ghana|Guinea|" +
+      "Guinea-Bissau|Kenya|Lesotho|Liberia|Libya|Madagascar|Malawi|Mali|" +
+      "Mauritania|Mauritius|Mayotte|Morocco|Mozambique|Namibia|Niger|Nigeria|" +
+      "Republic of the Congo|Rwanda|Réunion|Senegal|Seychelles|Sierra Leone|" +
+      "Somalia|South Africa|South Sudan|St. Helena|Sudan|São Tomé & Príncipe|" +
+      "Tanzania|Togo|Tunisia|Uganda|Western Sahara|Zambia|Zimbabwe",
+    "Asia":
+      "Afghanistan|Armenia|Azerbaijan|Bahrain|Bangladesh|Bhutan|Brunei|Cambodia|" +
+      "China|Cyprus|Egypt|Georgia|Hong Kong|India|Indonesia|Iran|Iraq|Israel|" +
+      "Japan|Jordan|Kazakhstan|Kuwait|Kyrgyzstan|Laos|Lebanon|Macao|Malaysia|" +
+      "Maldives|Mongolia|Myanmar|Nepal|North Korea|Oman|Pakistan|Palestine|" +
+      "Philippines|Qatar|Russia|Saudi Arabia|Singapore|South Korea|Sri Lanka|" +
+      "Syria|Taiwan|Tajikistan|Thailand|Timor-Leste|Turkey|Turkmenistan|" +
+      "United Arab Emirates|Uzbekistan|Vietnam|Yemen",
+    "Europe":
+      "Albania|Andorra|Armenia|Austria|Azerbaijan|Belarus|Belgium|" +
+      "Bosnia & Herzegovina|Bulgaria|Croatia|Cyprus|Czechia|Denmark|Estonia|" +
+      "Faroe Islands|Finland|France|Georgia|Germany|Gibraltar|Greece|Guernsey|" +
+      "Hungary|Iceland|Ireland|Isle of Man|Italy|Jersey|Kazakhstan|Latvia|" +
+      "Liechtenstein|Lithuania|Luxembourg|Malta|Moldova|Monaco|Montenegro|" +
+      "Netherlands|North Macedonia|Norway|Poland|Portugal|Romania|Russia|" +
+      "San Marino|Serbia|Slovakia|Slovenia|Spain|Svalbard & Jan Mayen|Sweden|" +
+      "Switzerland|Turkey|Ukraine|United Kingdom|Vatican City|Åland Islands",
+    "North America":
+      "Anguilla|Antigua & Barbuda|Aruba|Bahamas|Barbados|Belize|Bermuda|" +
+      "British Virgin Islands|Canada|Caribbean Netherlands|Cayman Islands|" +
+      "Costa Rica|Cuba|Curaçao|Dominica|Dominican Republic|El Salvador|Greenland|" +
+      "Grenada|Guadeloupe|Guatemala|Haiti|Honduras|Jamaica|Martinique|Mexico|" +
+      "Montserrat|Nicaragua|Panama|Puerto Rico|Sint Maarten|St. Barthélemy|" +
+      "St. Kitts & Nevis|St. Lucia|St. Martin|St. Pierre & Miquelon|" +
+      "St. Vincent & Grenadines|Trinidad & Tobago|Turks & Caicos Islands|" +
+      "U.S. Virgin Islands|United States",
+    "South America":
+      "Argentina|Bolivia|Bouvet Island|Brazil|Chile|Colombia|Ecuador|" +
+      "Falkland Islands|French Guiana|Guyana|Paraguay|Peru|" +
+      "South Georgia & South Sandwich Islands|Suriname|Uruguay|Venezuela",
+    "Oceania":
+      "American Samoa|Australia|Christmas Island|Cocos Islands|Cook Islands|Fiji|" +
+      "French Polynesia|Guam|Heard & McDonald Islands|Kiribati|Marshall Islands|" +
+      "Micronesia|Nauru|New Caledonia|New Zealand|Niue|Norfolk Island|" +
+      "Northern Mariana Islands|Palau|Papua New Guinea|Pitcairn|Samoa|" +
+      "Solomon Islands|Tokelau|Tonga|Tuvalu|U.S. Outlying Islands|Vanuatu|" +
+      "Wallis & Futuna",
   };
-  var COUNTRY_KEYS_BY_LENGTH = Object.keys(COUNTRY_CANON).sort(function (a, b) { return b.length - a.length; });
+  var CONTINENT_ORDER = ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"];
+
+  // Spelling variants and common short forms. The canonical names above match
+  // themselves automatically, so only genuine alternates belong here.
+  var COUNTRY_ALIASES = {
+    "antigua and barbuda": "Antigua & Barbuda", "bosnia and herzegovina": "Bosnia & Herzegovina",
+    "britain": "United Kingdom", "burma": "Myanmar",
+    "cabo verde": "Cape Verde", "congo-brazzaville": "Republic of the Congo",
+    "congo-kinshasa": "DR Congo", "cote d'ivoire": "Côte d’Ivoire",
+    "czech republic": "Czechia", "côte d'ivoire": "Côte d’Ivoire",
+    "democratic republic of the congo": "DR Congo", "east timor": "Timor-Leste",
+    "england": "United Kingdom", "great britain": "United Kingdom",
+    "heard and mcdonald islands": "Heard & McDonald Islands", "holy see": "Vatican City",
+    "ivory coast": "Côte d’Ivoire", "lao pdr": "Laos",
+    "macedonia": "North Macedonia", "northern ireland": "United Kingdom",
+    "russian federation": "Russia", "saint barthélemy": "St. Barthélemy",
+    "saint helena": "St. Helena", "saint kitts & nevis": "St. Kitts & Nevis",
+    "saint lucia": "St. Lucia", "saint martin": "St. Martin",
+    "saint pierre & miquelon": "St. Pierre & Miquelon", "saint vincent & grenadines": "St. Vincent & Grenadines",
+    "scotland": "United Kingdom", "south georgia and south sandwich islands": "South Georgia & South Sandwich Islands",
+    "st. kitts and nevis": "St. Kitts & Nevis", "st. pierre and miquelon": "St. Pierre & Miquelon",
+    "st. vincent and grenadines": "St. Vincent & Grenadines", "svalbard and jan mayen": "Svalbard & Jan Mayen",
+    "swaziland": "Eswatini", "são tomé and príncipe": "São Tomé & Príncipe",
+    "trinidad and tobago": "Trinidad & Tobago", "turkiye": "Turkey",
+    "turks and caicos islands": "Turks & Caicos Islands", "türkiye": "Turkey",
+    "u.k.": "United Kingdom", "u.s.": "United States",
+    "u.s.a.": "United States", "uae": "United Arab Emirates",
+    "uk": "United Kingdom", "united states of america": "United States",
+    "usa": "United States", "viet nam": "Vietnam",
+    "wales": "United Kingdom", "wallis and futuna": "Wallis & Futuna",
+    "zaire": "DR Congo"
+  };
+
+  // Derived once at load: canonical name -> continent(s), and every lookup key
+  // (each canonical name lowercased, plus the aliases) -> canonical name.
+  var CONTINENTS = {}, COUNTRY_CANON = {};
+  Object.keys(CONTINENT_COUNTRIES).forEach(function (cont) {
+    CONTINENT_COUNTRIES[cont].split("|").forEach(function (name) {
+      (CONTINENTS[name] = CONTINENTS[name] || []).push(cont);
+      COUNTRY_CANON[name.toLowerCase()] = name;
+    });
+  });
+  Object.keys(COUNTRY_ALIASES).forEach(function (a) { COUNTRY_CANON[a] = COUNTRY_ALIASES[a]; });
+
+  // Longest key first, so "South Sudan" beats "Sudan" and "United Kingdom"
+  // beats "Kingdom". Compiled once rather than per call — there are ~300 keys
+  // and this is consulted for every record.
+  var COUNTRY_MATCHERS = Object.keys(COUNTRY_CANON)
+    .sort(function (a, b) { return b.length - a.length; })
+    .map(function (k) {
+      return {
+        re: new RegExp("\\b" + k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i"),
+        name: COUNTRY_CANON[k]
+      };
+    });
+
+  // Memoised. The collection holds only a handful of distinct country and
+  // album strings, but this is asked for every record on every filter and on
+  // every sort comparison, and a miss costs ~300 regex tests.
+  var _canonMemo = {};
   function canonicalCountryString(s) {
     if (!s) return null;
+    if (_canonMemo.hasOwnProperty(s)) return _canonMemo[s];
     var cleaned = s.replace(/\d{4}/g, "").trim().toLowerCase();
-    if (COUNTRY_CANON[cleaned]) return COUNTRY_CANON[cleaned];
-    // whole-word substring match, longest alias first (avoids partial-word false hits)
-    for (var i = 0; i < COUNTRY_KEYS_BY_LENGTH.length; i++) {
-      var key = COUNTRY_KEYS_BY_LENGTH[i];
-      var re = new RegExp("\\b" + key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i");
-      if (re.test(cleaned)) return COUNTRY_CANON[key];
+    var hit = COUNTRY_CANON[cleaned] || null;
+    if (!hit) {
+      // whole-word substring match, so an album called "Armenia Butterflies"
+      // still resolves to Armenia
+      for (var i = 0; i < COUNTRY_MATCHERS.length; i++) {
+        if (COUNTRY_MATCHERS[i].re.test(cleaned)) { hit = COUNTRY_MATCHERS[i].name; break; }
+      }
     }
-    return null;
+    _canonMemo[s] = hit;
+    return hit;
   }
   // A record's canonical country: try its own country field, then fall back
   // to the album title (albums in this collection are reliably named after
@@ -268,30 +370,6 @@
     return canonicalCountry(p) || (p.country || "");
   }
 
-  // Continent by country. A country may belong to more than one: Turkey and
-  // Armenia straddle Europe and Asia, and a Western Palearctic species found
-  // in eastern Anatolia is one a visitor would reasonably expect to find
-  // under either. Listing both is more useful here than picking a side.
-  // Covers every country in COUNTRY_CANON, including ones not yet
-  // photographed, so the filter keeps working as albums are added.
-  var CONTINENTS = {
-    "Uganda": ["Africa"], "Ghana": ["Africa"], "Kenya": ["Africa"],
-    "Tanzania": ["Africa"], "South Africa": ["Africa"],
-    "Brazil": ["South America"], "Argentina": ["South America"],
-    "Peru": ["South America"], "Ecuador": ["South America"],
-    "Bolivia": ["South America"], "Colombia": ["South America"],
-    "Costa Rica": ["North America"], "Mexico": ["North America"],
-    "Panama": ["North America"], "United States": ["North America"],
-    "United Kingdom": ["Europe"], "Spain": ["Europe"], "Romania": ["Europe"],
-    "France": ["Europe"], "Italy": ["Europe"], "Greece": ["Europe"],
-    "Portugal": ["Europe"],
-    "Turkey": ["Europe", "Asia"], "Armenia": ["Europe", "Asia"],
-    "India": ["Asia"], "Malaysia": ["Asia"], "Indonesia": ["Asia"],
-    "Thailand": ["Asia"], "Vietnam": ["Asia"]
-  };
-  // Continent order for the dropdown — by where the collection actually is,
-  // rather than alphabetically, so the big regions lead.
-  var CONTINENT_ORDER = ["Africa", "Asia", "Europe", "North America", "South America", "Oceania"];
   function continentsOf(p) {
     return CONTINENTS[countryOf(p)] || [];
   }

@@ -193,6 +193,22 @@ async function select(sel, value) { const n = q(sel); n.value = value; fire(n, "
   check("clearing the continent restores every country",
         opts("#fCountry").length === allCountries.size);
 
+  // Guard: a country with no continent mapping vanishes from the Continent
+  // facet silently — no error, it simply never appears under any continent.
+  // Every country in the collection must be reachable from some continent.
+  await select("#fContinent", "");
+  const everyCountry = opts("#fCountry").map(o => o.value);
+  const reachable = new Set();
+  for (const c of continents) {
+    await select("#fContinent", c.value);
+    opts("#fCountry").forEach(o => reachable.add(o.value));
+  }
+  await select("#fContinent", "");
+  const unmapped = everyCountry.filter(c => !reachable.has(c));
+  check("every country in the collection maps to a continent",
+        unmapped.length === 0,
+        unmapped.length ? "unmapped: " + unmapped.join(", ") : everyCountry.length + " countries all mapped");
+
   // continent survives a shareable URL
   await select("#fContinent", "Africa");
   check("continent is written to the URL hash", /continent=Africa/.test(window.location.hash),

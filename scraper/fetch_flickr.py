@@ -94,14 +94,64 @@ PLACE_WORDS = {
     "wood", "hill", "hills", "valley", "ridge", "camp",
 }
 
-# Rough country lexicon for the collection (extend freely — matching is best-effort).
-COUNTRIES = {
-    "uganda", "brazil", "argentina", "romania", "turkey", "peru", "ghana",
-    "ecuador", "spain", "bolivia", "armenia", "united kingdom", "uk",
-    "colombia", "costa rica", "mexico", "kenya", "tanzania", "south africa",
-    "india", "malaysia", "indonesia", "usa", "united states", "france",
-    "italy", "greece", "portugal", "thailand", "vietnam", "panama",
-}
+# Every ISO 3166-1 country and territory, plus common alternates. Used only
+# when a title's locality is a single part ("Genus species, Madagascar") —
+# with two or more parts the last is taken as the country regardless.
+# Generated from the ISO 3166 dataset so a new destination needs no edit.
+COUNTRIES = {c for c in (
+    "afghanistan|albania|algeria|american samoa|andorra|angola|anguilla|"
+    "antigua & barbuda|antigua and barbuda|argentina|armenia|aruba|australia|"
+    "austria|azerbaijan|bahamas|bahrain|bangladesh|barbados|belarus|belgium|"
+    "belize|benin|bermuda|bhutan|bolivia|bosnia & herzegovina|"
+    "bosnia and herzegovina|botswana|bouvet island|brazil|britain|"
+    "british indian ocean territory|british virgin islands|brunei|bulgaria|"
+    "burkina faso|burma|burundi|cabo verde|cambodia|cameroon|canada|"
+    "cape verde|caribbean netherlands|cayman islands|central african republic|"
+    "chad|chile|china|christmas island|cocos islands|colombia|comoros|"
+    "cook islands|costa rica|croatia|cuba|curaçao|cyprus|czech republic|"
+    "czechia|côte d'ivoire|côte d’ivoire|denmark|djibouti|dominica|"
+    "dominican republic|dr congo|east timor|ecuador|egypt|el salvador|england|"
+    "equatorial guinea|eritrea|estonia|eswatini|ethiopia|falkland islands|"
+    "faroe islands|fiji|finland|france|french guiana|french polynesia|"
+    "french southern territories|gabon|gambia|georgia|germany|ghana|gibraltar|"
+    "great britain|greece|greenland|grenada|guadeloupe|guam|guatemala|"
+    "guernsey|guinea|guinea-bissau|guyana|haiti|heard & mcdonald islands|"
+    "heard and mcdonald islands|holy see|honduras|hong kong|hungary|iceland|"
+    "india|indonesia|iran|iraq|ireland|isle of man|israel|italy|ivory coast|"
+    "jamaica|japan|jersey|jordan|kazakhstan|kenya|kiribati|kuwait|kyrgyzstan|"
+    "lao pdr|laos|latvia|lebanon|lesotho|liberia|libya|liechtenstein|"
+    "lithuania|luxembourg|macao|macedonia|madagascar|malawi|malaysia|maldives|"
+    "mali|malta|marshall islands|martinique|mauritania|mauritius|mayotte|"
+    "mexico|micronesia|moldova|monaco|mongolia|montenegro|montserrat|morocco|"
+    "mozambique|myanmar|namibia|nauru|nepal|netherlands|new caledonia|"
+    "new zealand|nicaragua|niger|nigeria|niue|norfolk island|north korea|"
+    "north macedonia|northern ireland|northern mariana islands|norway|oman|"
+    "pakistan|palau|palestine|panama|papua new guinea|paraguay|peru|"
+    "philippines|pitcairn|poland|portugal|puerto rico|qatar|"
+    "republic of the congo|romania|russia|russian federation|rwanda|réunion|"
+    "saint barthélemy|saint helena|saint kitts & nevis|saint kitts and nevis|"
+    "saint lucia|saint martin|saint pierre & miquelon|"
+    "saint pierre and miquelon|saint vincent & grenadines|"
+    "saint vincent and grenadines|samoa|san marino|saudi arabia|scotland|"
+    "senegal|serbia|seychelles|sierra leone|singapore|sint maarten|slovakia|"
+    "slovenia|solomon islands|somalia|south africa|"
+    "south georgia & south sandwich islands|"
+    "south georgia and south sandwich islands|south korea|south sudan|spain|"
+    "sri lanka|st. barthélemy|st. helena|st. kitts & nevis|"
+    "st. kitts and nevis|st. lucia|st. martin|st. pierre & miquelon|"
+    "st. pierre and miquelon|st. vincent & grenadines|"
+    "st. vincent and grenadines|sudan|suriname|svalbard & jan mayen|"
+    "svalbard and jan mayen|swaziland|sweden|switzerland|syria|"
+    "são tomé & príncipe|são tomé and príncipe|taiwan|tajikistan|tanzania|"
+    "thailand|timor-leste|togo|tokelau|tonga|trinidad & tobago|"
+    "trinidad and tobago|tunisia|turkey|turkiye|turkmenistan|"
+    "turks & caicos islands|turks and caicos islands|tuvalu|türkiye|u.k.|u.s.|"
+    "u.s. outlying islands|u.s. virgin islands|u.s.a.|uae|uganda|uk|ukraine|"
+    "united arab emirates|united kingdom|united states|"
+    "united states of america|uruguay|usa|uzbekistan|vanuatu|vatican city|"
+    "venezuela|viet nam|vietnam|wales|wallis & futuna|wallis and futuna|"
+    "western sahara|yemen|zaire|zambia|zimbabwe|åland islands"
+).split("|") if c}
 
 # "Polyommatus sp." / "Acraea spp." — an identification to genus (or family)
 # but deliberately not to species. These are real determinations, not failures:

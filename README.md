@@ -168,12 +168,21 @@ The front-end computes everything else (filter lists, counts, the map) from
 this file, and enriches species notes live from GBIF + Wikipedia in the
 visitor's browser (cached in `localStorage`).
 
-One thing it can't derive from the data is which continent a country is on,
-so `js/app.js` carries a `CONTINENTS` lookup for the Continent filter. **Add a
-line there when you add a country to a new part of the world**, or its records
-won't appear under any continent. A country can list more than one — Turkey
-and Armenia are under both Europe and Asia, since a Western Palearctic species
-found in eastern Anatolia is one you'd look for under either.
+Which continent a country sits on can't be derived from the data, so `js/app.js`
+carries a `CONTINENT_COUNTRIES` table for the Continent filter. It covers **every
+ISO 3166-1 country and territory** (248 of them), generated from the
+[ISO 3166 dataset](https://github.com/datasets/country-codes) rather than
+hand-listed — so adding an album from anywhere in the world needs no code change.
+
+A country appears under more than one continent where it genuinely straddles a
+boundary: Turkey, Russia, Kazakhstan, Egypt and the Caucasus states. Continent
+counts therefore add up to more than the size of the collection, which is
+intended. `COUNTRY_ALIASES` alongside it collapses spelling variants, so
+"UK", "Great Britain" and "England" all land on *United Kingdom*.
+
+If a country ever does go unmapped it fails loudly rather than quietly: the
+front-end test asserts that every country in the collection is reachable from
+some continent.
 
 ---
 
