@@ -301,9 +301,16 @@ class Taxonomy:
         #    Genus placement is stable, so it decides the family.
         if genus:
             gm = self.genus_lookup(genus)
-            # A genus lookup that answers with a DIFFERENT genus name is a
-            # mis-match, not a synonym — Baeotis fuzzy-matched to Baeotus.
-            if gm and (gm.get("genus") or "").lower() != genus.lower():
+            # A genus lookup that answers with a DIFFERENT genus name is
+            # trustworthy only when the match was EXACT. That means GBIF
+            # recognised the name itself and replaced it with the accepted one
+            # for a declared synonym — Medoniana -> Euphaedra, Telchinia ->
+            # Acraea, Muschampia -> Syrichtus. Those are correct answers.
+            # A FUZZY match onto a different name is the opposite: a spelling
+            # landing on a real but unrelated genus (Baeotis -> Baeotus), and
+            # must still be rejected.
+            if (gm and (gm.get("genus") or "").lower() != genus.lower()
+                    and (gm.get("matchType") or "").upper() != "EXACT"):
                 gm = None
             gok, gwhy = acceptable(gm)
             if gok:

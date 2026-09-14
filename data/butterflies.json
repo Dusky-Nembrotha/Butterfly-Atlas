@@ -7303,7 +7303,7 @@
    "class": "Insecta",
    "order": "Lepidoptera",
    "family": "Nymphalidae",
-   "genus": "Euphaedra",
+   "genus": "Medoniana",
    "gbifKey": 4707179
   },
   "Euphaedra hebes": {
@@ -7677,7 +7677,7 @@
    "gbifKey": 1945347
   },
   "Osmodes sp.": {
-   "count": 3,
+   "count": 4,
    "commonName": "",
    "kingdom": "Animalia",
    "phylum": "Arthropoda",
@@ -12419,10 +12419,6 @@
    "family": "Hesperiidae",
    "genus": "Metisella",
    "gbifKey": 5142151
-  },
-  "Skipper sp.": {
-   "count": 1,
-   "commonName": ""
   },
   "Paracleros biguttulus": {
    "count": 1,
@@ -43427,7 +43423,7 @@
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989440031",
    "description": "DSC04983",
    "family": "Nymphalidae",
-   "genus": "Euphaedra",
+   "genus": "Medoniana",
    "order": "Lepidoptera"
   },
   {
@@ -43456,7 +43452,7 @@
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/53989440036",
    "description": "DSC04985",
    "family": "Nymphalidae",
-   "genus": "Euphaedra",
+   "genus": "Medoniana",
    "order": "Lepidoptera"
   },
   {
@@ -78175,9 +78171,9 @@
   {
    "id": "50062017417",
    "title": "Skipper sp (Osmodes sp, possibly omar) Entebbe Botanic Gardens, Uganda 05/11/2017",
-   "species": "Skipper sp.",
+   "species": "Osmodes sp.",
    "subspecies": "",
-   "commonName": "",
+   "commonName": "Skipper",
    "location": "Entebbe Botanic Gardens, Uganda",
    "country": "Uganda",
    "lat": 0.0630694,
@@ -78197,7 +78193,9 @@
    "urlOriginal": "https://live.staticflickr.com/65535/50062017417_0c52c898f0_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/50062017417",
    "description": "DSC05931",
-   "genus": "Skipper"
+   "genus": "Osmodes",
+   "family": "Hesperiidae",
+   "order": "Lepidoptera"
   },
   {
    "id": "50075953658",

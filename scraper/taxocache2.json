@@ -6398,10 +6398,6 @@
   },
   "reason": "genus"
  },
- "Medoniana medon": {
-  "result": null,
-  "reason": "genus lookup: no response; species lookup: only matched above species level"
- },
  "Melanargia galathea": {
   "result": {
    "family": "Nymphalidae",
@@ -10389,14 +10385,6 @@
   },
   "reason": "genus"
  },
- "Unidentified species": {
-  "result": null,
-  "reason": "deliberately unidentified"
- },
- "Unknown species": {
-  "result": null,
-  "reason": "deliberately unidentified"
- },
  "Uranothauma antinorii": {
   "result": {
    "family": "Lycaenidae",
@@ -10946,10 +10934,6 @@
   },
   "reason": "genus"
  },
- "Skipper sp.": {
-  "result": null,
-  "reason": "genus lookup: no response; species lookup: only matched above species level"
- },
  "Spialia sp.": {
   "result": {
    "family": "Hesperiidae",
@@ -10976,5 +10960,22 @@
    "source": "genus"
   },
   "reason": "genus"
+ },
+ "Medoniana medon": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Medoniana",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
+ },
+ "Unidentified species": {
+  "result": null,
+  "reason": "deliberately unidentified"
+ },
+ "Unknown species": {
+  "result": null,
+  "reason": "deliberately unidentified"
  }
 }

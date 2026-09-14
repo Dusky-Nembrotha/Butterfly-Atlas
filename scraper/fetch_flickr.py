@@ -167,10 +167,35 @@ BUTTERFLY_FAMILIES = {
 }
 
 
+# Vernacular group names that get written exactly where a genus would go
+# ("Skipper sp", "Fritillary sp"). They are not genera, so GBIF can place
+# neither them nor a family, and taking one would mask a real determination
+# later in the same title — "Skipper sp (Osmodes sp, possibly omar)" is an
+# Osmodes, and says so.
+NOT_A_GENUS = {
+    "skipper", "skippers", "blue", "blues", "brown", "browns", "white",
+    "whites", "yellow", "yellows", "fritillary", "fritillaries", "hairstreak",
+    "hairstreaks", "copper", "coppers", "swallowtail", "swallowtails",
+    "metalmark", "metalmarks", "satyr", "satyrs", "admiral", "admirals",
+    "sailor", "sailors", "glider", "gliders", "ringlet", "ringlets",
+    "crescent", "crescents", "checkerspot", "checkerspots", "sulphur",
+    "sulphurs", "longwing", "longwings", "clearwing", "clearwings",
+    "leafwing", "leafwings", "swift", "swifts", "dart", "darts", "nymph",
+    "nymphs", "emperor", "emperors", "tiger", "tigers", "monarch",
+    "duskywing", "duskywings", "elfin", "elfins", "azure", "azures",
+    "tortoiseshell", "tortoiseshells", "peacock", "comma", "grass",
+}
+
+
 def _find_genus_only(text):
-    """First "Genus sp." style match that isn't really place text."""
+    """First "Genus sp." style match that is really a genus.
+
+    Skips place words and vernacular group names, so the scan reaches a
+    genuine genus written later in the title.
+    """
     for m in GENUS_ONLY_RE.finditer(text):
-        if m.group(1).lower() in PLACE_WORDS:
+        word = m.group(1).lower()
+        if word in PLACE_WORDS or word in NOT_A_GENUS:
             continue
         return m
     return None
@@ -252,6 +277,7 @@ def parse_title(title, album_title=""):
             # its genus, rather than being discarded as "Unidentified".
             species = "%s sp." % gm.group(1)
             common = re.sub(r"[\s,\(]+$", "", title[:gm.start()]).strip()
+            common = re.sub(r"\s+spp?\.?$", "", common).strip(" ,(")
             rest = re.sub(r"^[\s,\)]+", "", title[gm.end():])
             loc_parts = [p.strip(" )") for p in rest.split(",") if p.strip(" )")]
         else:
@@ -674,6 +700,10 @@ def self_test():
          ("Urbanus sp.", "", "Ecuador", "")),
         ("Nymphalidae sp, Suruc\u00faa Eco Lodge, Misiones, Argentina 20/02/2026",
          ("Nymphalidae sp.", "", "Argentina", "")),
+        # a vernacular group name is not a genus — the real determination is
+        # written later in the same title, and must win
+        ("Skipper sp (Osmodes sp, possibly omar) Entebbe Botanic Gardens, Uganda 05/11/2017",
+         ("Osmodes sp.", "", "Uganda", "Skipper")),
         # a real binomial still wins over any later "sp." in the same title
         ("Charaxes candiope, Acraea sp nearby, Kibale, Uganda",
          ("Charaxes candiope", "", "Uganda", "")),
