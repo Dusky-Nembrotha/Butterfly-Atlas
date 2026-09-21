@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-14T04:15:39.336511+00:00",
+ "generated": "2026-09-21T04:15:03.793027+00:00",
  "source": "https://www.flickr.com/photos/robertgodden",
  "photographer": "Robert Godden",
  "is_sample": false,
@@ -229,8 +229,8 @@
    "genus": "Metisella",
    "gbifKey": 5142160
   },
-  "Pardaleodes pusiella": {
-   "count": 1,
+  "Pardaleodes sator": {
+   "count": 2,
    "commonName": "",
    "kingdom": "Animalia",
    "phylum": "Arthropoda",
@@ -238,7 +238,7 @@
    "order": "Lepidoptera",
    "family": "Hesperiidae",
    "genus": "Pardaleodes",
-   "gbifKey": 1944196
+   "gbifKey": 1944192
   },
   "Pardaleodes incerta": {
    "count": 3,
@@ -250,17 +250,6 @@
    "family": "Hesperiidae",
    "genus": "Pardaleodes",
    "gbifKey": 1944200
-  },
-  "Pardaleodes sator": {
-   "count": 1,
-   "commonName": "",
-   "kingdom": "Animalia",
-   "phylum": "Arthropoda",
-   "class": "Insecta",
-   "order": "Lepidoptera",
-   "family": "Hesperiidae",
-   "genus": "Pardaleodes",
-   "gbifKey": 1944192
   },
   "Osmodes laronia": {
    "count": 1,
@@ -7678,7 +7667,7 @@
   },
   "Osmodes sp.": {
    "count": 4,
-   "commonName": "",
+   "commonName": "Skipper",
    "kingdom": "Animalia",
    "phylum": "Arthropoda",
    "class": "Insecta",
@@ -13808,9 +13797,9 @@
   },
   {
    "id": "55295548398",
-   "title": "Pardaleodes pusiella, Nkima Forest Lodge, Uganda 11/05/2026",
-   "species": "Pardaleodes pusiella",
-   "subspecies": "",
+   "title": "Pardaleodes sator pusiella, Nkima Forest Lodge, Uganda 11/05/2026",
+   "species": "Pardaleodes sator",
+   "subspecies": "pusiella",
    "commonName": "",
    "location": "Nkima Forest Lodge, Uganda",
    "country": "Uganda",
