@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-19T09:44:15.830810+00:00",
+ "generated": "2026-10-26T09:56:02.649493+00:00",
  "source": "https://www.flickr.com/photos/robertgodden",
  "photographer": "Robert Godden",
  "is_sample": false,
@@ -2041,7 +2041,7 @@
    "genus": "Pierella",
    "gbifKey": 8412215
   },
-  "Pseudodebis ypthima": {
+  "Taguaiba ypthima": {
    "count": 1,
    "commonName": "",
    "kingdom": "Animalia",
@@ -2049,8 +2049,8 @@
    "class": "Insecta",
    "order": "Lepidoptera",
    "family": "Nymphalidae",
-   "genus": "Pseudodebis",
-   "gbifKey": 1910771
+   "genus": "Taguaiba",
+   "gbifKey": 12292142
   },
   "Capronnieria galesus": {
    "count": 1,
@@ -19804,8 +19804,8 @@
   },
   {
    "id": "55184723557",
-   "title": "Pseudodebis ypthima, Itororó Eco Lodge, Nova Friburgo, RJ, Brazil 26/02/2026",
-   "species": "Pseudodebis ypthima",
+   "title": "Taguaiba ypthima, Itororó Eco Lodge, Nova Friburgo, RJ, Brazil 26/02/2026",
+   "species": "Taguaiba ypthima",
    "subspecies": "",
    "commonName": "",
    "location": "Itororó Eco Lodge, Nova Friburgo, RJ, Brazil",
@@ -19816,14 +19816,19 @@
    "year": 2026,
    "albumId": "72177720332804097",
    "albumTitle": "Brazil Butterflies",
-   "tags": [],
+   "tags": [
+    "taguaiba",
+    "ypthima",
+    "brazil",
+    "butterfly"
+   ],
    "urlThumb": "https://live.staticflickr.com/65535/55184723557_52789215d9_q.jpg",
    "urlLarge": "https://live.staticflickr.com/65535/55184723557_235458b047_h.jpg",
    "urlOriginal": "https://live.staticflickr.com/65535/55184723557_4812fd42f7_o.jpg",
    "flickrPage": "https://www.flickr.com/photos/186280439@N06/55184723557",
    "description": "P1010135",
    "family": "Nymphalidae",
-   "genus": "Pseudodebis",
+   "genus": "Taguaiba",
    "order": "Lepidoptera"
   },
   {

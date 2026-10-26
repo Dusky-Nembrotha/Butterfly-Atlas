@@ -10977,5 +10977,14 @@
  "Unknown species": {
   "result": null,
   "reason": "deliberately unidentified"
+ },
+ "Taguaiba ypthima": {
+  "result": {
+   "family": "Nymphalidae",
+   "genus": "Taguaiba",
+   "order": "Lepidoptera",
+   "source": "genus"
+  },
+  "reason": "genus"
  }
 }
