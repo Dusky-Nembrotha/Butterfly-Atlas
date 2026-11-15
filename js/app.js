@@ -913,13 +913,34 @@
     var img = new Image(); img.alt = p.species || "specimen";
     img.src = large(p) || placeholder(p, 800, 600);
     img.onerror = function () { img.onerror = null; img.src = placeholder(p, 800, 600); };
-    img.tabIndex = 0;
-    img.setAttribute("role", "button");
-    img.setAttribute("aria-label", "View photo enlarged");
-    img.addEventListener("click", function () { openLightbox(p); });
-    img.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(p); } });
-    fig.appendChild(img);
-    fig.appendChild(el("span", "zoom-hint", "⤢ Tap photo to enlarge"));
+    // The photo is a real link to the original on Flickr, so middle-click,
+    // "copy link address" and the rest of the native link behaviour all work.
+    // The in-page zoom view is one button away, bottom-right of the plate.
+    var figHref = flickrHref(p);
+    if (figHref) {
+      var figLink = link("", figHref);
+      figLink.className = "fig-link";
+      figLink.setAttribute("aria-label", "Open the original photo on Flickr in a new tab");
+      figLink.title = "Open the original on Flickr";
+      figLink.appendChild(img);
+      fig.appendChild(figLink);
+      fig.appendChild(el("span", "zoom-hint", "\u2197 Tap photo for the original on Flickr"));
+    } else {
+      // No Flickr link on this record — fall back to the old enlarge-on-tap.
+      img.tabIndex = 0;
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", "View photo enlarged");
+      img.title = "Enlarge";
+      img.addEventListener("click", function () { openLightbox(p); });
+      img.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(p); } });
+      fig.appendChild(img);
+      fig.appendChild(el("span", "zoom-hint", "\u2922 Tap photo to enlarge"));
+    }
+    var enlarge = el("button", "fig-zoom", "\u2922");
+    enlarge.setAttribute("aria-label", "Enlarge photo");
+    enlarge.title = "Enlarge";
+    enlarge.addEventListener("click", function () { openLightbox(p); });
+    fig.appendChild(enlarge);
 
     var body = el("div", "modal-body");
     var det = el("div", "determination");
@@ -1080,6 +1101,10 @@
     closeModal();
     var results = $("#results"); if (results && results.scrollIntoView) results.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+  // The original on Flickr: the photo's own Flickr page where available,
+  // otherwise the raw original image file.
+  function flickrHref(p) { return p.flickrPage || p.urlOriginal || ""; }
+
   function link(label, href) { var a = el("a", null, label); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; }
   function gbifLink(species) {
     var s = state.species[species] || {};
@@ -1119,6 +1144,14 @@
     var zoomOut = el("button", null, "–"); zoomOut.setAttribute("aria-label", "Zoom out");
     var zoomReset = el("button", null, "1:1"); zoomReset.setAttribute("aria-label", "Reset zoom");
     controls.appendChild(zoomOut); controls.appendChild(zoomReset); controls.appendChild(zoomIn);
+    var lbHref = flickrHref(p);
+    if (lbHref) {
+      var fl = link("\u2197", lbHref);
+      fl.className = "lightbox-flickr";
+      fl.setAttribute("aria-label", "Open the original photo on Flickr in a new tab");
+      fl.title = "Original on Flickr";
+      controls.appendChild(fl);
+    }
 
     box.appendChild(stage);
     box.appendChild(controls);
