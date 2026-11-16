@@ -49,30 +49,31 @@
   }
 
   /* ---------- image URLs ---------- */
-  // Flickr no longer serves its 1600px (_h), 2048px (_k) or original (_o)
-  // files to a hotlinking browser: an <img> pointing at one fails, even
-  // though the same URL still fetches fine outside a browser. The 1024px
-  // (_b) size is served, and its URL carries the same photo secret as the
-  // square thumbnail, so a working _b URL can be derived from urlThumb.
-  // Records collected before this are full of _h URLs, so the swap has to
-  // happen here as well as in the collector.
-  var HOTLINK_BLOCKED_RE = /_(?:h|k|o)\.jpg($|\?)/i;
-  function servable(p, url) {
-    if (!url || !HOTLINK_BLOCKED_RE.test(url)) return url || "";
+  function thumb(p) { return p.urlThumb || ""; }
+  function large(p) { return p.urlLarge || p.urlThumb || ""; }
+  // Deliberately NOT urlOriginal — that's Flickr's raw camera file (often
+  // 10-40MB), and it is one of the sizes Flickr may refuse to hand a browser.
+  function full(p) { return p.urlZoom || p.urlLarge || p.urlThumb || ""; }
+
+  // Flickr sometimes refuses to serve its bigger files (_h 1600px, _k 2048px,
+  // _o original) to a hotlinking browser: the <img> fails even though the same
+  // URL fetches fine outside a browser, and the record drops to a sketch. The
+  // 1024px (_b) file is served when those are not, and its URL carries the
+  // same photo secret as the square thumbnail, so it can be derived from
+  // urlThumb. Rather than downgrade every photo pre-emptively, each image
+  // starts at the best size the record offers and steps down only on failure.
+  function derivedWide(p) {
     var t = p.urlThumb || "";
     return /_q\.jpg($|\?)/i.test(t) ? t.replace(/_q\.jpg/i, "_b.jpg") : "";
   }
-  function thumb(p) { return p.urlThumb || ""; }
-  function large(p) { return servable(p, p.urlLarge) || p.urlThumb || ""; }
-  // Deliberately NOT urlOriginal by default — that's Flickr's raw camera
-  // file (often 10-40MB), it loads slowly, and it is hotlink-blocked anyway.
-  function full(p) { return servable(p, p.urlZoom) || servable(p, p.urlLarge) || p.urlThumb || ""; }
-
-  // One step down the ladder each time a source fails: thumbnail, then the
-  // hand-drawn sketch. Clearing onerror at the last step stops any loop.
+  // One rung down each time a source fails, ending at the hand-drawn sketch.
+  // onerror is cleared at the last rung so a failing sketch cannot loop.
   function stepDownSrc(img, p, w, h) {
-    var t = p.urlThumb || "";
-    if (t && img.src !== t && img.getAttribute("src") !== t) { img.src = t; return; }
+    var current = img.getAttribute("src") || "";
+    var rungs = [derivedWide(p), p.urlThumb || ""];
+    for (var i = 0; i < rungs.length; i++) {
+      if (rungs[i] && rungs[i] !== current && rungs.indexOf(current) < i) { img.src = rungs[i]; return; }
+    }
     img.onerror = null;
     img.src = placeholder(p, w, h);
   }
