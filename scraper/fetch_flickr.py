@@ -524,7 +524,10 @@ def geocode(session, location, country, cache, stats):
 # ----------------------------------------------------------------------------
 
 def first_url(p):
-    for suf in ("_h", "_b", "_c"):
+    # _b (1024px) first, NOT _h (1600px): Flickr refuses to serve _h, _k and
+    # _o to a hotlinking browser, so those URLs render as a broken image on
+    # the site even though they download fine with curl.
+    for suf in ("_b", "_c", "_h"):
         u = p.get("url" + suf)
         if u:
             return u

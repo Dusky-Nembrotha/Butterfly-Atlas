@@ -49,13 +49,33 @@
   }
 
   /* ---------- image URLs ---------- */
+  // Flickr no longer serves its 1600px (_h), 2048px (_k) or original (_o)
+  // files to a hotlinking browser: an <img> pointing at one fails, even
+  // though the same URL still fetches fine outside a browser. The 1024px
+  // (_b) size is served, and its URL carries the same photo secret as the
+  // square thumbnail, so a working _b URL can be derived from urlThumb.
+  // Records collected before this are full of _h URLs, so the swap has to
+  // happen here as well as in the collector.
+  var HOTLINK_BLOCKED_RE = /_(?:h|k|o)\.jpg($|\?)/i;
+  function servable(p, url) {
+    if (!url || !HOTLINK_BLOCKED_RE.test(url)) return url || "";
+    var t = p.urlThumb || "";
+    return /_q\.jpg($|\?)/i.test(t) ? t.replace(/_q\.jpg/i, "_b.jpg") : "";
+  }
   function thumb(p) { return p.urlThumb || ""; }
-  function large(p) { return p.urlLarge || p.urlThumb || ""; }
+  function large(p) { return servable(p, p.urlLarge) || p.urlThumb || ""; }
   // Deliberately NOT urlOriginal by default — that's Flickr's raw camera
-  // file (often 10-40MB) and is why the lightbox used to load so slowly.
-  // urlZoom (2048px) is sharp enough for on-screen zooming at a fraction
-  // of the size; urlOriginal is only used as an absolute last resort.
-  function full(p) { return p.urlZoom || p.urlLarge || p.urlThumb || p.urlOriginal || ""; }
+  // file (often 10-40MB), it loads slowly, and it is hotlink-blocked anyway.
+  function full(p) { return servable(p, p.urlZoom) || servable(p, p.urlLarge) || p.urlThumb || ""; }
+
+  // One step down the ladder each time a source fails: thumbnail, then the
+  // hand-drawn sketch. Clearing onerror at the last step stops any loop.
+  function stepDownSrc(img, p, w, h) {
+    var t = p.urlThumb || "";
+    if (t && img.src !== t && img.getAttribute("src") !== t) { img.src = t; return; }
+    img.onerror = null;
+    img.src = placeholder(p, w, h);
+  }
 
   // Inline SVG hand-drawn "field sketch" — shown when a photo is missing,
   // framed as the collector's own ink drawing. Wing shape + ink vary by species.
@@ -912,7 +932,9 @@
     var fig = el("div", "modal-fig");
     var img = new Image(); img.alt = p.species || "specimen";
     img.src = large(p) || placeholder(p, 800, 600);
-    img.onerror = function () { img.onerror = null; img.src = placeholder(p, 800, 600); };
+    // If the bigger file will not load, show the thumbnail rather than
+    // dropping straight to the sketch — a soft photo beats no photo.
+    img.onerror = function () { stepDownSrc(img, p, 800, 600); };
     // The photo is a real link to the original on Flickr, so middle-click,
     // "copy link address" and the rest of the native link behaviour all work.
     // The in-page zoom view is one button away, bottom-right of the plate.
@@ -1134,7 +1156,7 @@
     img.alt = p.species || "specimen";
     img.className = "lightbox-img";
     img.src = full(p) || placeholder(p, 1200, 900);
-    img.onerror = function () { img.onerror = null; img.src = placeholder(p, 1200, 900); };
+    img.onerror = function () { stepDownSrc(img, p, 1200, 900); };
     stage.appendChild(img);
 
     var close = el("button", "lightbox-close", "×"); close.setAttribute("aria-label", "Close");
